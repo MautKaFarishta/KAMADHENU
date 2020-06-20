@@ -9,14 +9,14 @@ enum Gender { male, female }
 enum Alert { wht, the }
 
 class Formscreen extends StatefulWidget {
-  @override
+  
   State<StatefulWidget> createState() {
     return FormscreenState();
   }
 }
 
 class FormscreenState extends State<Formscreen> {
-  @override
+  
   String _fname;
   String _address;
   String _usern;
