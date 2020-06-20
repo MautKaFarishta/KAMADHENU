@@ -3,8 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-enum UserType { individual, institution, organisation }
-enum Region { region1, region2, region3 }
+enum UserType { individual,organisation }
+enum Region { pune , jalgaon , gondia}
 enum Gender { male, female }
 enum Alert { wht, the }
 
@@ -39,14 +39,11 @@ class FormscreenState extends State<Formscreen> {
         children: <Widget>[
           Text("User Type  ", style: TextStyle(fontSize: 14)),
           DropdownButton(
+            value: _user,
             items: const <DropdownMenuItem<UserType>>[
               DropdownMenuItem<UserType>(
                 child: Text("Individual"),
                 value: UserType.individual,
-              ),
-              DropdownMenuItem<UserType>(
-                child: Text("Institution"),
-                value: UserType.institution,
               ),
               DropdownMenuItem<UserType>(
                 child: Text("Organisation"),
@@ -73,18 +70,19 @@ class FormscreenState extends State<Formscreen> {
         children: <Widget>[
           Text("Region  ", style: TextStyle(fontSize: 14)),
           DropdownButton(
+            value: _regn,
             items: const <DropdownMenuItem<Region>>[
               DropdownMenuItem<Region>(
-                child: Text("Region 1 "),
-                value: Region.region1,
+                child: Text("Pune"),
+                value: Region.pune,
               ),
               DropdownMenuItem<Region>(
-                child: Text("Region 2"),
-                value: Region.region2,
+                child: Text("Jalgaon"),
+                value: Region.jalgaon,
               ),
               DropdownMenuItem<Region>(
-                child: Text("Region 3"),
-                value: Region.region3,
+                child: Text("Gondia"),
+                value: Region.gondia,
               )
             ],
             onChanged: (Region val2) {
@@ -247,7 +245,7 @@ class FormscreenState extends State<Formscreen> {
         TextFormField(
           obscureText: true,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(labelText: 'Password'),
+          decoration: InputDecoration(labelText: 'Set Password'),
           validator: (String value) {
             if (value.isEmpty) {
               return 'Password is required';
@@ -260,7 +258,7 @@ class FormscreenState extends State<Formscreen> {
         TextFormField(
           obscureText: true,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(labelText: 'Password'),
+          decoration: InputDecoration(labelText: 'Confirm Password'),
           validator: (String value) {
             if (value != _password) {
               return 'Password does not match';
