@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         theme:new ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: new HomePage()//Redirect To Login PAge
+        home: new LoginPage()//Redirect To Login PAge
       );
     }
 
