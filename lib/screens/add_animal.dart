@@ -23,14 +23,14 @@ enum BreedBuffalo {
 enum Gender { male, female }
 
 class AddAnimal extends StatefulWidget {
-  @override
+  
   State<StatefulWidget> createState() {
     return AddAnimalForm();
   }
 }
 
 class AddAnimalForm extends State<AddAnimal> {
-  @override
+  
   Species _species;
   String _breedCow = "Select Breed";
   String _breedBuffalo = "Select Breed";
