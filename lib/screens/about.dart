@@ -35,6 +35,10 @@ class _AboutState extends State<About> {
                         'Livestock Ownership Database Controlled and Managed by Team Kamadhenu',
                         style: TextStyle(fontSize: 16, color: Colors.black38),
                       ),
+                      Text(
+                        'For any queries contact us at -kamadhenu.helpdesk@gmail.com',
+                        style: TextStyle(fontSize: 16, color: Colors.black38),
+                      ),
                       SizedBox(height: 8),
                     ],
                   ),
