@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum UserType { individual, institution, organisation }
 enum Region { region1, region2, region3 }
@@ -16,6 +17,8 @@ class Formscreen extends StatefulWidget {
 }
 
 class FormscreenState extends State<Formscreen> {
+
+  final _Firestore = Firestore.instance; 
   
   String _fname;
   String _address;
@@ -128,7 +131,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _adhar = value;
+        _land = value;
+        num.parse(_land).toInt();//to convert to int
       },
     );
   }
@@ -145,6 +149,7 @@ class FormscreenState extends State<Formscreen> {
       },
       onSaved: (String value) {
         _cattls = value;
+        num.parse(_cattls) is int;//to convert to int
       },
     );
   }
@@ -167,11 +172,11 @@ class FormscreenState extends State<Formscreen> {
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
-              onChanged: (Gender val) {
-                _ugender = Gender.female;
+              onChanged: ( value) {
+                _ugender = value;
                 print(_ugender);
                 setState(() {
-                  _ugender = val;
+                  _ugender = value;
                 });
               }),
           const Text("Female"),
@@ -245,7 +250,7 @@ class FormscreenState extends State<Formscreen> {
     return Column(
       children: <Widget>[
         TextFormField(
-          obscureText: true,
+          obscureText: false,
           keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: 'Password'),
           validator: (String value) {
@@ -255,15 +260,18 @@ class FormscreenState extends State<Formscreen> {
           },
           onSaved: (String value) {
             _password = value;
-          },
+            print(value);
+          }, 
         ),
         TextFormField(
-          obscureText: true,
+          obscureText: false,
           keyboardType: TextInputType.number,
-          decoration: InputDecoration(labelText: 'Password'),
+          decoration: InputDecoration(labelText: 'Confirm Password'),
           validator: (String value) {
             if (value != _password) {
+              print ("cnf pass"+value);
               return 'Password does not match';
+              
             }
           },
         ),
@@ -320,8 +328,11 @@ class FormscreenState extends State<Formscreen> {
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                   onPressed: () {
-                    if (!_formkey.currentState.validate()) {
-                      return;
+                    if (_formkey.currentState.validate()) {
+                      print("submit pressed") ;
+                    }
+                    else{
+                      print("invalid things in form") ;
                     }
 
                     _formkey.currentState.save();
@@ -333,6 +344,28 @@ class FormscreenState extends State<Formscreen> {
                     print(_adhar);
                     print(_mob);
                     print(_password);
+
+// database entry
+_Firestore.collection('users').add({'adhar':_adhar,
+
+
+'first name':_fname,
+
+//'gender':_ugender,
+
+'initial cattles':_cattls,
+
+'land':_land,
+
+'last name':_lname,
+
+'mobile':_mob,
+
+//'region':_regn,
+
+//'user type':_user
+});
+
                     showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
@@ -344,7 +377,7 @@ class FormscreenState extends State<Formscreen> {
                                 child: RaisedButton(
                                     child: Text("OK"),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/');
+                                      Navigator.pushNamed(context, '/login');
                                     }),
                               )
                             ],

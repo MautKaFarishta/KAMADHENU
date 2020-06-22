@@ -1,22 +1,27 @@
+import 'package:Kamadhenu/screens/create.dart';
+import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/login.dart';
 
 void main() {  //Main Function
-  runApp(new MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
 
   
     Widget build(BuildContext context){
-      return new MaterialApp(
+      return  MaterialApp(
 
-        title:'FLutter Login',
-        theme:new ThemeData(
+        title:'Kamadhenu', //title of app shown  when we press 'recent apps' button on android
+        theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: new LoginPage()//Redirect To Login PAge
+        routes: {
+           '/': (context) => Formscreen(),
+           '/login': (context) => LoginPage(),
+           '/home': (context) => HomePage(),
+         },        
       );
     }
 
