@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum UserType { individual,organisation }
 enum Region { pune , jalgaon , gondia}
+enum state {maharashta ,andhra}
 enum Gender { male, female }
 enum Alert { wht, the }
 
@@ -18,7 +19,7 @@ class Formscreen extends StatefulWidget {
 
 class FormscreenState extends State<Formscreen> {
 
-  final _Firestore = Firestore.instance; 
+  final _firestore = Firestore.instance; 
   
   String _fname;
   String _address;
@@ -30,6 +31,7 @@ class FormscreenState extends State<Formscreen> {
   String _adhar;
   String _land;
   String _cattls;
+  state _stt;
   Region _regn;
   UserType _user = UserType.individual;
   Gender _ugender = Gender.male;
@@ -102,6 +104,37 @@ class FormscreenState extends State<Formscreen> {
     );
   }
 
+  Widget _sttselect() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Text("State  ", style: TextStyle(fontSize: 14)),
+          DropdownButton(
+            value: _stt,
+            items: const <DropdownMenuItem<state>>[
+              DropdownMenuItem<state>(
+                child: Text("Maharashtra"),
+                value: state.maharashta,
+              ),
+              DropdownMenuItem<state>(
+                child: Text("Andhra Pradesh"),
+                value: state.andhra,
+              ),
+            ],
+            onChanged: ( val2) {
+              _stt = val2;
+              print(val2);
+              setState(() {
+                _stt = val2;
+              });
+            },
+            hint: Text("Select"),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildadhar() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Aadhar number"),
@@ -147,7 +180,7 @@ class FormscreenState extends State<Formscreen> {
       },
       onSaved: (String value) {
         _cattls = value;
-        num.parse(_cattls) is int;//to convert to int
+        num.parse(_cattls).toInt();//to convert to int
       },
     );
   }
@@ -249,12 +282,11 @@ class FormscreenState extends State<Formscreen> {
       children: <Widget>[
         TextFormField(
           obscureText: false,
-          keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: 'Set Password'),
-          validator: (String value) {
+          validator: (value) {
             if (value.isEmpty) {
               return 'Password is required';
-            }
+            }return null;
           },
           onSaved: (String value) {
             _password = value;
@@ -263,14 +295,13 @@ class FormscreenState extends State<Formscreen> {
         ),
         TextFormField(
           obscureText: false,
-          keyboardType: TextInputType.number,
           decoration: InputDecoration(labelText: 'Confirm Password'),
-          validator: (String value) {
-            if (value != _password) {
-              print ("cnf pass"+value);
+          validator: (value2) {
+            if (value2 != _password) {
+              print ("cnf pass"+value2);
               return 'Password does not match';
-              
             }
+            return null;
           },
         ),
       ],
@@ -307,8 +338,9 @@ class FormscreenState extends State<Formscreen> {
                   '----OTHER INFORMATION----',
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
                 ),
+                _sttselect(),
                 _regnselect(),
-                _usertype(),
+                //_usertype(),
                 _getcattlesnum(),
                 _getland(),
                 SizedBox(height: 25),
@@ -336,6 +368,8 @@ class FormscreenState extends State<Formscreen> {
                     _formkey.currentState.save();
                     print("\n\n\n");
                     print(_fname);
+                    print(_regn);
+                    print(_stt);
                     print(_lname);
                     print(_user);
                     print(_ugender);
@@ -343,26 +377,27 @@ class FormscreenState extends State<Formscreen> {
                     print(_mob);
                     print(_password);
 
-// database entry
-_Firestore.collection('users').add({'adhar':_adhar,
+                    // database entry
+                    print('updation');
+                    _firestore.collection('$_stt/$_regn/Users').add({'adhar':_adhar,
 
 
-'first name':_fname,
+                    'first name':_fname,
 
-//'gender':_ugender,
+                    //'gender':_ugender,
 
-'initial cattles':_cattls,
+                    'initial cattles':_cattls,
 
-'land':_land,
+                    'land':_land,
 
-'last name':_lname,
+                    'last name':_lname,
 
-'mobile':_mob,
+                    'mobile':_mob,
 
-//'region':_regn,
+                    //'region':_regn,
 
-//'user type':_user
-});
+                    //'user type':_user
+                    });
 
                     showDialog<void>(
                         context: context,
