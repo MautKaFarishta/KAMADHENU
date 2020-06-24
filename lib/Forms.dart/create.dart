@@ -2,9 +2,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum UserType { individual,organisation }
 enum Region { pune , jalgaon , gondia}
+enum state {maharashta ,andhra}
 enum Gender { male, female }
 enum Alert { wht, the }
 
@@ -16,6 +18,8 @@ class Formscreen extends StatefulWidget {
 }
 
 class FormscreenState extends State<Formscreen> {
+
+  final _firestore = Firestore.instance; 
   
   String _fname;
   String _address;
@@ -27,6 +31,7 @@ class FormscreenState extends State<Formscreen> {
   String _adhar;
   String _land;
   String _cattls;
+  state _stt;
   Region _regn;
   UserType _user = UserType.individual;
   Gender _ugender = Gender.male;
@@ -99,6 +104,37 @@ class FormscreenState extends State<Formscreen> {
     );
   }
 
+  Widget _sttselect() {
+    return Container(
+      child: Row(
+        children: <Widget>[
+          Text("State  ", style: TextStyle(fontSize: 14)),
+          DropdownButton(
+            value: _stt,
+            items: const <DropdownMenuItem<state>>[
+              DropdownMenuItem<state>(
+                child: Text("Maharashtra"),
+                value: state.maharashta,
+              ),
+              DropdownMenuItem<state>(
+                child: Text("Andhra Pradesh"),
+                value: state.andhra,
+              ),
+            ],
+            onChanged: ( val2) {
+              _stt = val2;
+              print(val2);
+              setState(() {
+                _stt = val2;
+              });
+            },
+            hint: Text("Select"),
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _buildadhar() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Aadhar number"),
@@ -126,7 +162,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _adhar = value;
+        _land = value;
+        num.parse(_land).toInt();//to convert to int
       },
     );
   }
@@ -143,6 +180,7 @@ class FormscreenState extends State<Formscreen> {
       },
       onSaved: (String value) {
         _cattls = value;
+        num.parse(_cattls).toInt();//to convert to int
       },
     );
   }
@@ -165,11 +203,11 @@ class FormscreenState extends State<Formscreen> {
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
-              onChanged: (Gender val) {
-                _ugender = Gender.female;
+              onChanged: ( value) {
+                _ugender = value;
                 print(_ugender);
                 setState(() {
-                  _ugender = val;
+                  _ugender = value;
                 });
               }),
           const Text("Female"),
@@ -243,26 +281,27 @@ class FormscreenState extends State<Formscreen> {
     return Column(
       children: <Widget>[
         TextFormField(
-          obscureText: true,
-          keyboardType: TextInputType.number,
+          obscureText: false,
           decoration: InputDecoration(labelText: 'Set Password'),
-          validator: (String value) {
+          validator: (value) {
             if (value.isEmpty) {
               return 'Password is required';
-            }
+            }return null;
           },
           onSaved: (String value) {
             _password = value;
-          },
+            print(value);
+          }, 
         ),
         TextFormField(
-          obscureText: true,
-          keyboardType: TextInputType.number,
+          obscureText: false,
           decoration: InputDecoration(labelText: 'Confirm Password'),
-          validator: (String value) {
-            if (value != _password) {
+          validator: (value2) {
+            if (value2 != _password) {
+              print ("cnf pass"+value2);
               return 'Password does not match';
             }
+            return null;
           },
         ),
       ],
@@ -299,8 +338,9 @@ class FormscreenState extends State<Formscreen> {
                   '----OTHER INFORMATION----',
                   style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
                 ),
+                _sttselect(),
                 _regnselect(),
-                _usertype(),
+                //_usertype(),
                 _getcattlesnum(),
                 _getland(),
                 SizedBox(height: 25),
@@ -318,19 +358,47 @@ class FormscreenState extends State<Formscreen> {
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                   onPressed: () {
-                    if (!_formkey.currentState.validate()) {
-                      return;
+                    if (_formkey.currentState.validate()) {
+                      print("submit pressed") ;
+                    }
+                    else{
+                      print("invalid things in form") ;
                     }
 
                     _formkey.currentState.save();
                     print("\n\n\n");
                     print(_fname);
+                    print(_regn);
+                    print(_stt);
                     print(_lname);
                     print(_user);
                     print(_ugender);
                     print(_adhar);
                     print(_mob);
                     print(_password);
+
+                    // database entry
+                    print('updation');
+                    _firestore.collection('$_stt/$_regn/Users').add({'adhar':_adhar,
+
+
+                    'first name':_fname,
+
+                    //'gender':_ugender,
+
+                    'initial cattles':_cattls,
+
+                    'land':_land,
+
+                    'last name':_lname,
+
+                    'mobile':_mob,
+
+                    //'region':_regn,
+
+                    //'user type':_user
+                    });
+
                     showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
@@ -342,7 +410,7 @@ class FormscreenState extends State<Formscreen> {
                                 child: RaisedButton(
                                     child: Text("OK"),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/');
+                                      Navigator.pushNamed(context, '/login');
                                     }),
                               )
                             ],
