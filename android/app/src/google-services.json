@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "357478581181",
+    "firebase_url": "https://kamadhenu-486ec.firebaseio.com",
+    "project_id": "kamadhenu-486ec",
+    "storage_bucket": "kamadhenu-486ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357478581181:android:2cc470f2459a65581cc8d4",
+        "android_client_info": {
+          "package_name": "com.example.Kamadhenu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "357478581181-kdv86h69utvgkuel8tktr7mr0cfnc7e2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQY4DvUvoRyiuTtJDxbA2YnOb6J5NzAuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357478581181-kdv86h69utvgkuel8tktr7mr0cfnc7e2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

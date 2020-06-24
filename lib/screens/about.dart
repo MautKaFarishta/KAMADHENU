@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class About extends StatefulWidget {
-  @override
+  
   _AboutState createState() => _AboutState();
 }
 
 class _AboutState extends State<About> {
-  @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -33,6 +33,10 @@ class _AboutState extends State<About> {
                       ),
                       Text(
                         'Livestock Ownership Database Controlled and Managed by Team Kamadhenu',
+                        style: TextStyle(fontSize: 16, color: Colors.black38),
+                      ),
+                      Text(
+                        'For any queries contact us at -kamadhenu.helpdesk@gmail.com',
                         style: TextStyle(fontSize: 16, color: Colors.black38),
                       ),
                       SizedBox(height: 8),

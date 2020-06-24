@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import './create.dart';
 
 class LoginPage extends StatefulWidget {
-  @override
+  
   State<StatefulWidget> createState() => new _LoginPageState(); //Define State
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _mob; //Declaration of variables
+  String _email; //Declaration of variables
   String _password;
 
-  @override
+  
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(

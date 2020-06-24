@@ -5,7 +5,7 @@ import './profile.dart';
 import 'home.dart';
 
 class MainDrawer extends StatelessWidget {
-  @override
+  
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -17,7 +17,7 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(color: Colors.white, fontSize: 25),
             ),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Colors.blue.shade500,
             ),
           ),
           ListTile(
