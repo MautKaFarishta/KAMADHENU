@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum Species { cow, buffalo, goat, sheep, pig }
@@ -23,19 +24,21 @@ enum BreedBuffalo {
 enum Gender { male, female }
 
 class AddAnimal extends StatefulWidget {
-  
   State<StatefulWidget> createState() {
     return AddAnimalForm();
   }
 }
 
 class AddAnimalForm extends State<AddAnimal> {
-  
-  Species _species;
-  String _breedCow = "Select Breed";
-  String _breedBuffalo = "Select Breed";
+  String _species;
+  String _breedCow;
+  String _breedBuffalo;
   Gender _ugender;
-  String _date;
+  String _cgender;
+  String _calvings;
+  bool isPregnent = false;
+  var _lastcalf = new DateTime.now();
+  var _birthdate = new DateTime.now();
   String _regdate;
   bool _c = false;
 
@@ -45,38 +48,37 @@ class AddAnimalForm extends State<AddAnimal> {
     return Container(
       child: Row(
         children: <Widget>[
-          SizedBox(width: 10),
           const Text(
             "Species    ",
             style: TextStyle(fontSize: 16),
           ),
-          SizedBox(width: 10),
           DropdownButton(
-              items: const <DropdownMenuItem<Species>>[
-                DropdownMenuItem<Species>(
+              value: _species,
+              items: const <DropdownMenuItem<String>>[
+                DropdownMenuItem<String>(
                   child: Text("Cow"),
-                  value: Species.cow,
+                  value: "Cow",
                 ),
-                DropdownMenuItem<Species>(
+                DropdownMenuItem<String>(
                   child: Text("Buffalo"),
-                  value: Species.buffalo,
+                  value: 'Buffalo',
                 ),
-                DropdownMenuItem<Species>(
+                DropdownMenuItem<String>(
                   child: Text("Goat"),
-                  value: Species.goat,
+                  value: 'Goat',
                 ),
-                DropdownMenuItem<Species>(
+                DropdownMenuItem<String>(
                   child: Text("Sheep"),
-                  value: Species.sheep,
+                  value: "Sheep",
                 ),
-                DropdownMenuItem<Species>(
+                DropdownMenuItem<String>(
                   child: Text("Pig"),
-                  value: Species.pig,
+                  value: "Pig",
                 )
               ],
-              onChanged: (Species value) {
+              onChanged: (value) {
                 _species = value;
-                print(_species);
+                //print(_species);
                 setState(() {
                   _species = value;
                 });
@@ -86,14 +88,17 @@ class AddAnimalForm extends State<AddAnimal> {
     );
   }
 
-  Widget _next(Species _sp) {
-    switch (_sp) {
-      case Species.buffalo:
+  Widget _next(String _species) {
+    switch (_species) {
+      case "Buffalo":
         print("Buffalo");
         return Container(
-          padding: EdgeInsets.all(10),
           child: Row(
             children: <Widget>[
+              Text(
+                "Breed   ",
+                style: TextStyle(fontSize: 16),
+              ),
               DropdownButton(
                 items: const <DropdownMenuItem<String>>[
                   DropdownMenuItem<String>(
@@ -127,17 +132,21 @@ class AddAnimalForm extends State<AddAnimal> {
                     _breedBuffalo = value;
                   });
                 },
-                hint: Text(_breedBuffalo),
+                hint: Text(_breedBuffalo ?? 'Select'),
               )
             ],
           ),
         );
         break;
-      case Species.cow:
+      case "Cow":
         print("Cow");
         return Container(
           child: Row(
             children: <Widget>[
+              Text(
+                "Breed   ",
+                style: TextStyle(fontSize: 16),
+              ),
               DropdownButton(
                 items: const <DropdownMenuItem<String>>[
                   DropdownMenuItem<String>(
@@ -183,7 +192,7 @@ class AddAnimalForm extends State<AddAnimal> {
                     _breedCow = value;
                   });
                 },
-                hint: Text(_breedCow),
+                hint: Text(_breedCow ?? 'Select'),
               )
             ],
           ),
@@ -209,6 +218,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
+                  _cgender = "M";
                 });
               }),
           const Text("Male"),
@@ -220,6 +230,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
+                  _cgender = "F";
                 });
               }),
           const Text("Female"),
@@ -229,34 +240,81 @@ class AddAnimalForm extends State<AddAnimal> {
   }
 
   Widget _buildDOB() {
+    return Column(
+      children: <Widget>[
+        Text(
+          "Birth Date",
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 10),
+        Container(
+          height: 50,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: DateTime(2000, 1, 1),
+            onDateTimeChanged: (DateTime newDateTime) {
+              _birthdate = newDateTime;
+              print(_birthdate);
+              // Do something
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _lastcalfBOB() {
+    return Column(
+      children: <Widget>[
+        Text(
+          "Last Calving date ",
+          style: TextStyle(fontSize: 16),
+        ),
+        SizedBox(height: 10),
+        Container(
+          height: 50,
+          child: CupertinoDatePicker(
+            mode: CupertinoDatePickerMode.date,
+            initialDateTime: DateTime(2000, 1, 1),
+            onDateTimeChanged: (DateTime newDateTime) {
+              _lastcalf = newDateTime;
+              print(_lastcalf);
+              // Do something
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _calving() {
     return TextFormField(
-      decoration:
-          InputDecoration(labelText: "Date of Birth ", hintText: "DD/MM/YYYY"),
-      keyboardType: TextInputType.datetime,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return "This is required field";
+      decoration: InputDecoration(labelText: "Number of Calvings"),
+      keyboardType: TextInputType.phone,
+      validator: (value) {
+        if (value.length < 3) {
+          return "Please Enter Valid Information";
         }
       },
       onSaved: (String value) {
-        _date = value;
+        _calvings = value;
       },
     );
   }
 
-  Widget _buildRegDate() {
-    return TextFormField(
-      decoration: InputDecoration(
-          labelText: "Date of Registration ", hintText: "DD/MM/YYYY"),
-      keyboardType: TextInputType.datetime,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return "Please enter this field";
-        }
-      },
-      onSaved: (String value) {
-        _regdate = value;
-      },
+  Widget _checkMilch() {
+    return Container(
+      margin: EdgeInsets.only(left: 50),
+      child: Row(children: <Widget>[
+        Text("Currently Pregnent  "),
+        Switch(
+            value: isPregnent,
+            onChanged: (s) {
+              setState(() {
+                isPregnent = s;
+              });
+            })
+      ]),
     );
   }
 
@@ -303,46 +361,103 @@ class AddAnimalForm extends State<AddAnimal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue.shade900,
         title: Text("Add Cattle"),
       ),
       body: Container(
+          margin: EdgeInsets.all(16),
           child: SingleChildScrollView(
-        child: Form(
-          key: _addAnimalkey,
-          child: Column(
-            children: <Widget>[
-              _buildSpecies(),
-              _next(_species),
-              _buildGender(),
-              _buildDOB(),
-              _buildRegDate(),
-              _parentdetailsCB(),
-              _parentdetails(),
-              SizedBox(
-                height: 100,
-              ),
-              RaisedButton(
-                  child: Text("SUBMIT"),
-                  onPressed: () {
-                    if (!_addAnimalkey.currentState.validate()) {
-                      return;
-                    }
+            child: Form(
+              key: _addAnimalkey,
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(children: <Widget>[
+                      Text(
+                        '----CATTLE INFORMATION----',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w900),
+                      ),
+                      _buildGender(),
+                      _buildSpecies(),
+                      SizedBox(height: 10),
+                      _next(_species),
+                      SizedBox(height: 10),
+                      _buildDOB(),
+                      SizedBox(height: 15),
+                    ]),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.blue[50],
+                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: Column(
+                        children: <Widget>[
+                          Text(
+                            '----PREGNENCY DETAILS----',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w900),
+                          ),
+                          _calving(),
+                          SizedBox(height: 15),
+                          _checkMilch(),
+                          SizedBox(height: 15),
+                          _lastcalfBOB(),
+                          SizedBox(height: 10),
+                        ],
+                      )),
+                  SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(children: <Widget>[
+                      Text(
+                        '----PARENTS DETAILS----',
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w900),
+                      ),
+                      _parentdetailsCB(),
+                      SizedBox(height: 10),
+                      _parentdetails(),
+                      SizedBox(
+                        height: 30,
+                      ),
+                    ]),
+                  ),
+                  SizedBox(height:20),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.blue[400],
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: FlatButton(
+                        child: Text("SUBMIT"),
+                        onPressed: () {
+                          if (!_addAnimalkey.currentState.validate()) {
+                            return;
+                          }
 
-                    _addAnimalkey.currentState.save();
-                    print(_species);
-                    print(_breedCow);
-                    print(_breedBuffalo);
-                    print(_ugender);
-                    print(_date);
-                    print(_regdate);
-                  })
-              // _next(),
-            ],
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-          ),
-        ),
-      )),
+                          _addAnimalkey.currentState.save();
+                          print(_species);
+                          print(_breedCow);
+                          print(_breedBuffalo);
+                          print(_ugender);
+                          print(_birthdate);
+                          print(_regdate);
+                        }),
+                  )
+                  // _next(),
+                ],
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+              ),
+            ),
+          )),
     );
   }
 }
