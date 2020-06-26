@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum Species { cow, buffalo, goat, sheep, pig }
 enum BreedCow {
@@ -30,14 +31,16 @@ class AddAnimal extends StatefulWidget {
 }
 
 class AddAnimalForm extends State<AddAnimal> {
+
+  final _firestore = Firestore.instance; 
+
   String _species;
-  String _breedCow;
-  String _breedBuffalo;
+  String _breed;
   Gender _ugender;
   String _cgender;
   String _calvings;
   bool isPregnent = false;
-  var _lastcalf = new DateTime.now();
+  var _lastcalf ;
   var _birthdate = new DateTime.now();
   String _regdate;
   bool _c = false;
@@ -127,12 +130,12 @@ class AddAnimalForm extends State<AddAnimal> {
                   ),
                 ],
                 onChanged: (String value) {
-                  _breedBuffalo = value;
+                  _breed = value;
                   setState(() {
-                    _breedBuffalo = value;
+                    _breed = value;
                   });
                 },
-                hint: Text(_breedBuffalo ?? 'Select'),
+                hint: Text(_breed ?? 'Select'),
               )
             ],
           ),
@@ -187,12 +190,12 @@ class AddAnimalForm extends State<AddAnimal> {
                   ),
                 ],
                 onChanged: (String value) {
-                  _breedCow = value;
+                  _breed = value;
                   setState(() {
-                    _breedCow = value;
+                    _breed = value;
                   });
                 },
-                hint: Text(_breedCow ?? 'Select'),
+                hint: Text(_breed ?? 'Select'),
               )
             ],
           ),
@@ -292,7 +295,7 @@ class AddAnimalForm extends State<AddAnimal> {
       decoration: InputDecoration(labelText: "Number of Calvings"),
       keyboardType: TextInputType.phone,
       validator: (value) {
-        if (value.length < 3) {
+        if (value.length > 3) {
           return "Please Enter Valid Information";
         }
       },
@@ -444,11 +447,28 @@ class AddAnimalForm extends State<AddAnimal> {
 
                           _addAnimalkey.currentState.save();
                           print(_species);
-                          print(_breedCow);
-                          print(_breedBuffalo);
+                          print(_breed);
+                          print(_breed);
                           print(_ugender);
                           print(_birthdate);
+                          print(_lastcalf);
                           print(_regdate);
+
+                          print("Updating");
+                          _firestore.collection('cattles').add({
+                            'Species':_species,
+                            'Breed':_breed,
+                            'Gender':_cgender,
+                            'DOB':_birthdate,
+                            'Calvings':_calvings,  
+                            'Calving_Dates':_lastcalf,//Later to be converted to Array
+                            'Pregnent':isPregnent
+                            //Parents Details Remaining
+
+
+                          }
+                          );
+
                         }),
                   )
                   // _next(),
