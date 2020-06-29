@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './about.dart';
 import './profile.dart';
 import 'home.dart';
+import 'package:Kamadhenu/authservice.dart';
 
 class MainDrawer extends StatelessWidget {
   
@@ -63,7 +64,8 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('LogOut'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {AuthService().signOut(),
+              Navigator.of(context).pop()},
           ),
         ],
       ),

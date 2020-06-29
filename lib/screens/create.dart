@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 enum UserType { individual,organisation }
 enum Region { pune , jalgaon , gondia}
@@ -19,8 +20,9 @@ class Formscreen extends StatefulWidget {
 
 class FormscreenState extends State<Formscreen> {
 
-  final _firestore = Firestore.instance; 
-  
+  final _firestore = Firestore.instance;
+  final firebaseauth = FirebaseAuth.instance;
+    
   String _fname;
   String _address;
   String _usern;
