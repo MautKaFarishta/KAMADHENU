@@ -1,10 +1,10 @@
 import 'package:Kamadhenu/authservice.dart';
 import 'package:Kamadhenu/Forms/create.dart';
-import 'package:Kamadhenu/Forms.dart/create.dart';
+import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
-import 'Forms.dart/login.dart';
+import 'Forms/login.dart';
 
 void main() {  //Main Function
   runApp( MyApp());
