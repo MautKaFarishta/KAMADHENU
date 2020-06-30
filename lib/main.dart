@@ -1,3 +1,5 @@
+import 'package:Kamadhenu/authservice.dart';
+import 'package:Kamadhenu/screens/create.dart';
 import 'package:Kamadhenu/Forms.dart/create.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
@@ -18,11 +20,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        routes: {
-           '/': (context) => Formscreen(),
-           '/login': (context) => LoginPage(),
-           '/home': (context) => HomePage(),
-         },        
+        home:AuthService().handleAuth(),     
       );
     }
 

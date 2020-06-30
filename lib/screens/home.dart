@@ -14,9 +14,10 @@ class _HomePageState extends State<HomePage> {
     return new Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[800],
+        
       ),
       drawer: MainDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
+            floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           Navigator.push(
             context,
