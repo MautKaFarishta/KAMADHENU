@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/screens/home.dart';
-import 'package:Kamadhenu/screens/login.dart';
+import 'package:Kamadhenu/Forms/login.dart';
 
 class AuthService {
   //Handles Auth
