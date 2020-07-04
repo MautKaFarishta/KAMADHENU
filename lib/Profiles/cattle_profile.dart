@@ -8,18 +8,18 @@ class CatPro extends StatelessWidget {
 
   readData(){
 
-  final cat =Firestore.instance.collection('cattles').document('catID');
+    final cat =Firestore.instance.collection('cattles').document('catID');
 
-  cat.get().then((datasnapshot){
-    print(datasnapshot.data["Species"]);
-  });
+    cat.get().then((datasnapshot){
+      print(datasnapshot.data["Species"]);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar:AppBar(
-        title:Text('Cattle Profile')
+          title:Text('Cattle Profile')
       ),
       body: Center(
         child:Column(

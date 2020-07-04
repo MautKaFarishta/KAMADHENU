@@ -54,7 +54,7 @@ class _ListPageState extends State<ListPage> {
 							default:
 								return new ListView(
 									children:
-											snapshot.data.documents.map((DocumentSnapshot document) {
+									snapshot.data.documents.map((DocumentSnapshot document) {
 										return FlatButton(
 											onPressed: () {
 												print("${document['Species']} Button Pressed");
@@ -66,7 +66,7 @@ class _ListPageState extends State<ListPage> {
 														color: Colors.blue.shade50,
 														border: Border(
 															top:
-																	BorderSide(width: 1.0, color: Colors.black38),
+															BorderSide(width: 1.0, color: Colors.black38),
 														),
 													),
 													child: Column(
