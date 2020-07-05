@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/methods/other.dart';
 import 'package:flutter/material.dart';
 import './create.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -94,6 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(children: <Widget>[
                         SizedBox(height: 20),
                         TextFormField(
+                          maxLength: 10,
+                          keyboardType: TextInputType.phone,
                           decoration:
                               new InputDecoration(labelText: "Phone Number"),
                           validator: (String mob) {
@@ -105,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (val) {
                             setState(() {
                               this.phoneNo = val;
-                              phoneNo="+91 "+ phoneNo.toString();
+                              phoneNo="+91"+ phoneNo.toString();
                             });
                           },
                         ),
@@ -133,38 +136,19 @@ class _LoginPageState extends State<LoginPage> {
                                         ? Text('Login')
                                         : Text('Verify')),
                                 onPressed: () {
-                                  codeSent
+                                  if (OtherMeth().CheckNum(phoneNo)==true) {
+                                    codeSent
                                       ? AuthService().signInWithOTP(
                                           smsCode, verificationId)
                                       : verifyPhone(phoneNo);
-                                //       Navigator.push(
-                                // context,
-                                // MaterialPageRoute(
-                                //     builder: (context) =>
-                                //         Formscreen()), //Route to Create Acc PAge
-                              //);
+                                  } else {
+
+                                  }
+                                  
+                                
                                 })),
                         SizedBox(height: 20),
-                        // Container(
-                        //   //Container For Login FlatButton To Add Effects under Decoration
-                        //   width: double.infinity,
-                        //   decoration: BoxDecoration(
-                        //       color: Colors.blue[400],
-                        //       borderRadius:
-                        //           BorderRadius.all(Radius.circular(10))),
-                        //   child: FlatButton(
-                        //     onPressed: () {
-                        //       if (_formKey.currentState.validate()) {
-                        //         Scaffold.of(context).showSnackBar(
-                        //             SnackBar(content: Text('Processing Data'),),);
-                        //       }
-                        //     },
-                        //     child: Text(
-                        //       'Submit',
-                        //       style: TextStyle(fontWeight: FontWeight.bold),
-                        //     ),
-                        //   ),
-                        // ),
+                        
                         SizedBox(
                           height: 10,
                         ),

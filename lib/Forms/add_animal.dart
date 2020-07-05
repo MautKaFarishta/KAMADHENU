@@ -1,6 +1,6 @@
+import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 enum Species { cow, buffalo, goat, sheep, pig }
@@ -32,7 +32,6 @@ class AddAnimal extends StatefulWidget {
 }
 
 class AddAnimalForm extends State<AddAnimal> {
-  final _firestore = Firestore.instance;
 
   String _species;
   String _breed;
@@ -254,11 +253,10 @@ class AddAnimalForm extends State<AddAnimal> {
             return SingleChildScrollView(
               child: child,
             );
-          }
-      );
-      if (_seldate!=null){
+          });
+      if (_seldate != null) {
         setState(() {
-          _birthdate=_seldate;
+          _birthdate = _seldate;
         });
       }
     }
@@ -295,11 +293,10 @@ class AddAnimalForm extends State<AddAnimal> {
             return SingleChildScrollView(
               child: child,
             );
-          }
-      );
-      if (_seldate!=null){
+          });
+      if (_seldate != null) {
         setState(() {
-          _lastcalf=_seldate;
+          _lastcalf = _seldate;
         });
       }
     }
@@ -342,9 +339,7 @@ class AddAnimalForm extends State<AddAnimal> {
   Widget _checkPre() {
     return Container(
       //margin: EdgeInsets.symmetric(vertical: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         Text("Currently Pregnent  "),
         Switch(
             value: isPregnent,
@@ -418,8 +413,9 @@ class AddAnimalForm extends State<AddAnimal> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                        color: Colors.blue[200],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                            color: Colors.blue[200],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                         child: Center(
                           child: Text(
                             'CATTLE INFORMATION',
@@ -445,18 +441,19 @@ class AddAnimalForm extends State<AddAnimal> {
                       child: Column(
                         children: <Widget>[
                           Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                        color: Colors.blue[200],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                        child: Center(
-                          child: Text(
-                            'PREGNENCY DETAILS',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w900),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Center(
+                              child: Text(
+                                'PREGNENCY DETAILS',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w900),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
                           _calving(),
                           SizedBox(height: 15),
                           _checkPre(),
@@ -474,8 +471,9 @@ class AddAnimalForm extends State<AddAnimal> {
                       Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                        color: Colors.blue[200],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                            color: Colors.blue[200],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                         child: Center(
                           child: Text(
                             'PARENT\'S DETAILS',
@@ -514,18 +512,14 @@ class AddAnimalForm extends State<AddAnimal> {
                           print(_lastcalf);
                           print(_regdate);
 
-                          print("Updating");
-                          _firestore.collection('cattles').add({
-                            'Species': _species,
-                            'Breed': _breed,
-                            'Gender': _cgender,
-                            'DOB': _birthdate,
-                            'Calvings': _calvings,
-                            'Calving_Dates':
-                                _lastcalf, //Later to be converted to Array
-                            'Pregnent': isPregnent
-                            //Parents Details Remaining
-                          });
+                          DataBaseService().UpdateCattle(
+                              _species,
+                              _breed,
+                              _cgender,
+                              _birthdate,
+                              _lastcalf,
+                              _calvings,
+                              isPregnent);
                         }),
                   )
                   // _next(),

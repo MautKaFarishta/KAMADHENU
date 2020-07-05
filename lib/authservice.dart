@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/methods/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/screens/home.dart';
@@ -30,6 +31,7 @@ class AuthService {
   signInWithOTP(smsCode, verId) {
     AuthCredential authCreds = PhoneAuthProvider.getCredential(
         verificationId: verId, smsCode: smsCode);
+        
     signIn(authCreds);
   }
 }

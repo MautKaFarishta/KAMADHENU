@@ -31,7 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
   void initState() {
     super.initState();
 
-    details().getDetails('MHPU29')
+    details().getDetails('MH')
         .then((QuerySnapshot docs) {
       if(docs.documents.isNotEmpty) {
         flag = true;

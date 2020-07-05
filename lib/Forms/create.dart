@@ -2,8 +2,8 @@
 import 'dart:ui';
 
 import 'package:Kamadhenu/Forms/login.dart';
+import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 enum Gender { male, female }
@@ -16,7 +16,6 @@ class Formscreen extends StatefulWidget {
 }
 
 class FormscreenState extends State<Formscreen> {
-  final _firestore = Firestore.instance;
   final firebaseauth = FirebaseAuth.instance;
 
   String fname;
@@ -403,17 +402,7 @@ class FormscreenState extends State<Formscreen> {
                     print(_password);
 
                     // database entry
-                    print('updation');
-                    _firestore.collection('Users').document(getUID()).setData({
-                      'name': fname + ' ' + lname,
-                      'mobile': mob,
-                      'adhar': adhar,
-                      'initial cattles': cattls,
-                      'land': land,
-                      'State': stt,
-                      'District': dis,
-                      'Region': regn,
-                    });
+                    DataBaseService().UpdateUser(fname + lname, adhar, mob, cattls, land, dis, stt, regn);
 
                     showDialog<void>(
                         context: context,
