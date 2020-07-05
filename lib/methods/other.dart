@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OtherMeth{
@@ -10,7 +11,9 @@ class OtherMeth{
         .where('mobile', isEqualTo:mob)
         .getDocuments().then((QuerySnapshot docs) {
       if(docs.documents.isNotEmpty) {
-        print('User Found!');
+        var doc=docs.documents[0].data;
+        KamdhenuUser(phoneNo:doc['mobile']);
+        print('User Found! ${doc['land']}');
         flag =true;
       }
       else{

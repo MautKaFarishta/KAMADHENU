@@ -1,4 +1,4 @@
-import 'package:Kamadhenu/authservice.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/screens/home.dart';
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home:LoginPage()//AuthService().handleAuth(),
+        home:AuthService().handleAuth(),
         //ProfilePage(),
         //HomePage(),
       );

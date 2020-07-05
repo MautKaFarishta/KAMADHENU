@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './about.dart';
 import './profile.dart';
 import 'home.dart';
-import 'package:Kamadhenu/authservice.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 
 class MainDrawer extends StatelessWidget {
   

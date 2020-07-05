@@ -2,7 +2,7 @@ import 'package:Kamadhenu/methods/other.dart';
 import 'package:flutter/material.dart';
 import './create.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:Kamadhenu/authservice.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 
 class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() =>  _LoginPageState(); //Define State

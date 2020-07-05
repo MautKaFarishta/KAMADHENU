@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Kamadhenu/models/user.dart';
 
 class DataBaseService {
   final uid;
@@ -7,7 +8,7 @@ class DataBaseService {
   final _firestore = Firestore.instance;
 
   UpdateUser(String name, String adhar, String mob, String cttls, String land,
-      String dis, String stt, String regn) {
+      String dis, String stt, String regn,String uid) {
     print('updation');
     _firestore.collection('Users').add({
       'name': name,
@@ -18,13 +19,12 @@ class DataBaseService {
       'State': stt,
       'District': dis,
       'Region': regn,
-      'uid': 'Demo',
+      'uid': uid,
     });
   }
 
   UpdateCattle(String species, String breed, String gender, var dob,
       var lastcalf, String calvings, bool pregn) {
-    print("Updating");
     if (breed == null) {
       breed = 'NA';
     }
