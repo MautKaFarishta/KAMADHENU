@@ -1,6 +1,10 @@
 class KamdhenuUser{
-  final String phoneNo;
+  String phoneNo;
 
   KamdhenuUser({this.phoneNo});
+
+  PrintVal(){
+    print(phoneNo);
+  }
   
 }

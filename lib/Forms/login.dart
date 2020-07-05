@@ -5,19 +5,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
 class LoginPage extends StatefulWidget {
-  State<StatefulWidget> createState() =>  _LoginPageState(); //Define State
+  State<StatefulWidget> createState() => _LoginPageState(); //Define State
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  
   String phoneNo, verificationId, smsCode;
   bool codeSent = false;
+  static bool f;
 
 //authentication
   Future<void> verifyPhone(phoneNo) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+
+    if(OtherMeth().CheckNum(phoneNo)==true){
+
+      final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult);
     };
 
@@ -44,6 +47,10 @@ class _LoginPageState extends State<LoginPage> {
         verificationFailed: verificationfailed,
         codeSent: smsSent,
         codeAutoRetrievalTimeout: autoTimeout);
+    }else{
+      print('User Not Found!--$phoneNo');
+    }
+    
   }
   //////////ui code from here////////////////
 
@@ -108,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (val) {
                             setState(() {
                               this.phoneNo = val;
-                              phoneNo="+91"+ phoneNo.toString();
+                              phoneNo = "+91" + phoneNo.toString();
                             });
                           },
                         ),
@@ -129,26 +136,18 @@ class _LoginPageState extends State<LoginPage> {
                             : Container(),
                         Padding(
                             padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                            
                             child: RaisedButton(
                                 child: Center(
                                     child: codeSent
                                         ? Text('Login')
                                         : Text('Verify')),
                                 onPressed: () {
-                                  if (OtherMeth().CheckNum(phoneNo)==true) {
-                                    codeSent
+                                  codeSent
                                       ? AuthService().signInWithOTP(
                                           smsCode, verificationId)
                                       : verifyPhone(phoneNo);
-                                  } else {
-
-                                  }
-                                  
-                                
                                 })),
                         SizedBox(height: 20),
-                        
                         SizedBox(
                           height: 10,
                         ),

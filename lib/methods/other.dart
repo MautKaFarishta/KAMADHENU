@@ -3,25 +3,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class OtherMeth{
 
-  bool flag;
+  static bool flag=false;
+
+  KamdhenuUser user = KamdhenuUser();
 
   bool CheckNum(String mob){
+    
     Firestore.instance
         .collection('Users')
         .where('mobile', isEqualTo:mob)
         .getDocuments().then((QuerySnapshot docs) {
       if(docs.documents.isNotEmpty) {
+        print('User Found! $mob');
         var doc=docs.documents[0].data;
-        KamdhenuUser(phoneNo:doc['mobile']);
-        print('User Found! ${doc['land']}');
+        user.phoneNo  = doc['mobile'];
+        user.PrintVal();
+        //print('User Found! ${doc['land']}');
         flag =true;
       }
       else{
-        print('User Not Found!');
-        print(mob);
+        print('User Not Found! $mob');
         flag= false;
       }
     });
+    print(flag);
     return flag;
   }
   
