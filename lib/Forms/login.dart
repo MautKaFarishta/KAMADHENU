@@ -1,18 +1,52 @@
+import 'package:Kamadhenu/methods/other.dart';
 import 'package:flutter/material.dart';
 import './create.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 
 class LoginPage extends StatefulWidget {
-  
-  State<StatefulWidget> createState() => new _LoginPageState(); //Define State
+  State<StatefulWidget> createState() =>  _LoginPageState(); //Define State
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  String _email; //Declaration of variables
-  String _password;
-
   
+  String phoneNo, verificationId, smsCode;
+  bool codeSent = false;
+
+//authentication
+  Future<void> verifyPhone(phoneNo) async {
+    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+      AuthService().signIn(authResult);
+    };
+
+    final PhoneVerificationFailed verificationfailed =
+        (AuthException authException) {
+      print('${authException.message}');
+    };
+
+    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+      this.verificationId = verId;
+      setState(() {
+        this.codeSent = true;
+      });
+    };
+
+    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+      this.verificationId = verId;
+    };
+
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNo,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verified,
+        verificationFailed: verificationfailed,
+        codeSent: smsSent,
+        codeAutoRetrievalTimeout: autoTimeout);
+  }
+  //////////ui code from here////////////////
+
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(
@@ -61,6 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(children: <Widget>[
                         SizedBox(height: 20),
                         TextFormField(
+                          maxLength: 10,
+                          keyboardType: TextInputType.phone,
                           decoration:
                               new InputDecoration(labelText: "Phone Number"),
                           validator: (String mob) {
@@ -69,38 +105,50 @@ class _LoginPageState extends State<LoginPage> {
                             }
                             return null;
                           },
-                        ),
-                        TextFormField(
-                          decoration:
-                              new InputDecoration(labelText: "Password"),
-                          validator: (String password) {
-                            if (password.isEmpty) {
-                              return 'Password can\'t be Empty';
-                            }
-                            return null;
+                          onChanged: (val) {
+                            setState(() {
+                              this.phoneNo = val;
+                              phoneNo="+91"+ phoneNo.toString();
+                            });
                           },
                         ),
+                        codeSent
+                            ? Padding(
+                                padding:
+                                    EdgeInsets.only(left: 25.0, right: 25.0),
+                                child: TextFormField(
+                                  keyboardType: TextInputType.phone,
+                                  decoration:
+                                      InputDecoration(hintText: 'Enter OTP'),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      this.smsCode = val;
+                                    });
+                                  },
+                                ))
+                            : Container(),
+                        Padding(
+                            padding: EdgeInsets.only(left: 25.0, right: 25.0),
+                            
+                            child: RaisedButton(
+                                child: Center(
+                                    child: codeSent
+                                        ? Text('Login')
+                                        : Text('Verify')),
+                                onPressed: () {
+                                  if (OtherMeth().CheckNum(phoneNo)==true) {
+                                    codeSent
+                                      ? AuthService().signInWithOTP(
+                                          smsCode, verificationId)
+                                      : verifyPhone(phoneNo);
+                                  } else {
+
+                                  }
+                                  
+                                
+                                })),
                         SizedBox(height: 20),
-                        Container(
-                          //Container For Login FlatButton To Add Effects under Decoration
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.blue[400],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                          child: FlatButton(
-                            onPressed: () {
-                              if (_formKey.currentState.validate()) {
-                                Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('Processing Data')));
-                              }
-                            },
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
+                        
                         SizedBox(
                           height: 10,
                         ),

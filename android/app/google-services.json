@@ -15,6 +15,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "357478581181-2tptltbc6gnpv4o4sa6c1c3hvk06d5h8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.Kamadhenu",
+            "certificate_hash": "78fc9ecf1b291995ca3dba8b3101113dc56212dc"
+          }
+        },
+        {
+          "client_id": "357478581181-kdv86h69utvgkuel8tktr7mr0cfnc7e2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQY4DvUvoRyiuTtJDxbA2YnOb6J5NzAuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357478581181-kdv86h69utvgkuel8tktr7mr0cfnc7e2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357478581181:android:4b10093a154420331cc8d4",
+        "android_client_info": {
+          "package_name": "com.example.Kamadhenu_admin"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "357478581181-kdv86h69utvgkuel8tktr7mr0cfnc7e2.apps.googleusercontent.com",
           "client_type": 3
         }

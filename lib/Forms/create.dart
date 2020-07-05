@@ -1,73 +1,40 @@
 //import 'dart:html';
 import 'dart:ui';
 
+import 'package:Kamadhenu/Forms/login.dart';
+import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-enum UserType { individual,organisation }
-enum Region { pune , jalgaon , gondia}
-enum state {maharashta ,andhra}
 enum Gender { male, female }
 enum Alert { wht, the }
 
 class Formscreen extends StatefulWidget {
-  
   State<StatefulWidget> createState() {
     return FormscreenState();
   }
 }
 
 class FormscreenState extends State<Formscreen> {
+  final firebaseauth = FirebaseAuth.instance;
 
-  final _firestore = Firestore.instance; 
-  
-  String _fname;
-  String _address;
-  String _usern;
-  String _lname;
+  String fname;
+  String addrs;
+  String usern;
+  String lname;
   String _password;
   double _value;
-  String _mob;
-  String _adhar;
-  String _land;
-  String _cattls;
-  state _stt;
-  Region _regn;
-  UserType _user = UserType.individual;
+  String mob;
+  String adhar;
+  String land;
+  String cattls;
+  String stt;
+  String dis;
+  String regn;
+  String UID;
   Gender _ugender = Gender.male;
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
-  Widget _usertype() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          Text("User Type  ", style: TextStyle(fontSize: 14)),
-          DropdownButton(
-            value: _user,
-            items: const <DropdownMenuItem<UserType>>[
-              DropdownMenuItem<UserType>(
-                child: Text("Individual"),
-                value: UserType.individual,
-              ),
-              DropdownMenuItem<UserType>(
-                child: Text("Organisation"),
-                value: UserType.organisation,
-              )
-            ],
-            onChanged: (UserType val) {
-              _user = val;
-              print(val);
-              setState(() {
-                _user = val;
-              });
-            },
-            hint: Text("Select"),
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _regnselect() {
     return Container(
@@ -75,26 +42,26 @@ class FormscreenState extends State<Formscreen> {
         children: <Widget>[
           Text("Region  ", style: TextStyle(fontSize: 14)),
           DropdownButton(
-            value: _regn,
-            items: const <DropdownMenuItem<Region>>[
-              DropdownMenuItem<Region>(
+            value: dis,
+            items: const <DropdownMenuItem<String>>[
+              DropdownMenuItem<String>(
                 child: Text("Pune"),
-                value: Region.pune,
+                value: 'Pune',
               ),
-              DropdownMenuItem<Region>(
+              DropdownMenuItem<String>(
                 child: Text("Jalgaon"),
-                value: Region.jalgaon,
+                value: 'Jalgaon',
               ),
-              DropdownMenuItem<Region>(
+              DropdownMenuItem<String>(
                 child: Text("Gondia"),
-                value: Region.gondia,
+                value: 'Gondia',
               )
             ],
-            onChanged: (Region val2) {
-              _regn = val2;
+            onChanged: (val2) {
+              dis = val2;
               print(val2);
               setState(() {
-                _regn = val2;
+                dis = val2;
               });
             },
             hint: Text("Select"),
@@ -110,22 +77,22 @@ class FormscreenState extends State<Formscreen> {
         children: <Widget>[
           Text("State  ", style: TextStyle(fontSize: 14)),
           DropdownButton(
-            value: _stt,
-            items: const <DropdownMenuItem<state>>[
-              DropdownMenuItem<state>(
+            value: stt,
+            items: const <DropdownMenuItem<String>>[
+              DropdownMenuItem<String>(
                 child: Text("Maharashtra"),
-                value: state.maharashta,
+                value: 'Maharashtra',
               ),
-              DropdownMenuItem<state>(
+              DropdownMenuItem<String>(
                 child: Text("Andhra Pradesh"),
-                value: state.andhra,
+                value: 'Andhra Pradesh',
               ),
             ],
-            onChanged: ( val2) {
-              _stt = val2;
+            onChanged: (val2) {
+              stt = val2;
               print(val2);
               setState(() {
-                _stt = val2;
+                stt = val2;
               });
             },
             hint: Text("Select"),
@@ -146,7 +113,7 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _adhar = value;
+        adhar = value;
       },
     );
   }
@@ -162,8 +129,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _land = value;
-        num.parse(_land).toInt();//to convert to int
+        land = value;
+        num.parse(land).toInt(); //to convert to int
       },
     );
   }
@@ -179,8 +146,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _cattls = value;
-        num.parse(_cattls).toInt();//to convert to int
+        cattls = value;
+        num.parse(cattls).toInt(); //to convert to int
       },
     );
   }
@@ -203,7 +170,7 @@ class FormscreenState extends State<Formscreen> {
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
-              onChanged: ( value) {
+              onChanged: (value) {
                 _ugender = value;
                 print(_ugender);
                 setState(() {
@@ -227,7 +194,23 @@ class FormscreenState extends State<Formscreen> {
           }
         },
         onSaved: (String value) {
-          _address = value;
+          addrs = value;
+        });
+  }
+
+  Widget _getreg() {
+    //Later to be converted to DROPDOWN
+    return TextFormField(
+        decoration: InputDecoration(
+          labelText: 'Region Name',
+        ),
+        validator: (String value) {
+          if (value.isEmpty) {
+            return 'Region is required';
+          }
+        },
+        onSaved: (String value) {
+          regn = value;
         });
   }
 
@@ -242,7 +225,7 @@ class FormscreenState extends State<Formscreen> {
           }
         },
         onSaved: (String value) {
-          _fname = value;
+          fname = value;
         });
   }
 
@@ -257,7 +240,7 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        _mob = value;
+        mob = value;
       },
     );
   }
@@ -273,7 +256,7 @@ class FormscreenState extends State<Formscreen> {
           }
         },
         onSaved: (String value) {
-          _lname = value;
+          lname = value;
         });
   }
 
@@ -286,19 +269,20 @@ class FormscreenState extends State<Formscreen> {
           validator: (value) {
             if (value.isEmpty) {
               return 'Password is required';
-            }return null;
+            }
+            return null;
           },
           onSaved: (String value) {
             _password = value;
             print(value);
-          }, 
+          },
         ),
         TextFormField(
           obscureText: false,
           decoration: InputDecoration(labelText: 'Confirm Password'),
           validator: (value2) {
             if (value2 != _password) {
-              print ("cnf pass"+value2);
+              print("cnf pass" + value2);
               return 'Password does not match';
             }
             return null;
@@ -308,6 +292,14 @@ class FormscreenState extends State<Formscreen> {
     );
   }
 
+  String getUID() {
+    return UID = stt.substring(0, 2) +
+        dis.substring(0, 2) +
+        regn.substring(0, 2) +
+        fname.substring(0, 3) +
+        lname.substring(0, 3);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -315,43 +307,77 @@ class FormscreenState extends State<Formscreen> {
           backgroundColor: Colors.blue.shade900,
         ),
         body: Container(
-          margin: EdgeInsets.all(24),
+          margin: EdgeInsets.all(16),
           child: SingleChildScrollView(
               child: Form(
             key: _formkey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  '----USER INFORMATION----',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
+                Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blue[50],
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.blue[200],
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: Center(
+                            child: Text(
+                              'USER INFORMATION',
+                              style: TextStyle(
+                                  fontSize: 17, fontWeight: FontWeight.w900),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        _buildfname(),
+                        _buildlname(),
+                        _gender(),
+                        _buildadhar(),
+                        _buildmob(),
+                        _getaddr(),
+                        SizedBox(height: 25),
+                      ],
+                    )),
+                SizedBox(height:20),
+                Container(
+                  decoration: BoxDecoration(
+                      color: Colors.blue[50],
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Text(
+                          'OTHER INFORMATION',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                      _sttselect(),
+                      _regnselect(),
+                      _getreg(),
+                      //_usertype(),
+                      _getcattlesnum(),
+                      _getland(),
+                      SizedBox(height: 25),
+                    ],
+                  ),
                 ),
-                SizedBox(height: 10),
-                _buildfname(),
-                _buildlname(),
-                _gender(),
-                _buildadhar(),
-                _buildmob(),
-                _getaddr(),
-                SizedBox(height: 25),
-                Text(
-                  '----OTHER INFORMATION----',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
-                ),
-                _sttselect(),
-                _regnselect(),
-                //_usertype(),
-                _getcattlesnum(),
-                _getland(),
-                SizedBox(height: 25),
-                Text(
-                  '----SET PASSWORD----',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
-                ),
-                _buildpass(),
-                SizedBox(
-                  height: 50,
-                ),
+                //Text(
+                //  '----SET PASSWORD----',
+                //  style: TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
+                //),
+                //_buildpass(),
                 RaisedButton(
                   child: Text(
                     "Submit",
@@ -359,45 +385,24 @@ class FormscreenState extends State<Formscreen> {
                   ),
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
-                      print("submit pressed") ;
-                    }
-                    else{
-                      print("invalid things in form") ;
+                      print("submit pressed");
+                    } else {
+                      print("invalid things in form");
                     }
 
                     _formkey.currentState.save();
                     print("\n\n\n");
-                    print(_fname);
-                    print(_regn);
-                    print(_stt);
-                    print(_lname);
-                    print(_user);
+                    print(fname);
+                    print(dis);
+                    print(stt);
+                    print(lname);
                     print(_ugender);
-                    print(_adhar);
-                    print(_mob);
+                    print(adhar);
+                    print(mob);
                     print(_password);
 
                     // database entry
-                    print('updation');
-                    _firestore.collection('$_stt/$_regn/Users').add({'adhar':_adhar,
-
-
-                    'first name':_fname,
-
-                    //'gender':_ugender,
-
-                    'initial cattles':_cattls,
-
-                    'land':_land,
-
-                    'last name':_lname,
-
-                    'mobile':_mob,
-
-                    //'region':_regn,
-
-                    //'user type':_user
-                    });
+                    DataBaseService().UpdateUser(fname + lname, adhar, mob, cattls, land, dis, stt, regn,getUID());
 
                     showDialog<void>(
                         context: context,
@@ -410,7 +415,12 @@ class FormscreenState extends State<Formscreen> {
                                 child: RaisedButton(
                                     child: Text("OK"),
                                     onPressed: () {
-                                      Navigator.pushNamed(context, '/login');
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                LoginPage()), //Route to Create Acc PAge
+                                      );
                                     }),
                               )
                             ],
