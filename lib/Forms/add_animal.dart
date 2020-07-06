@@ -1,7 +1,9 @@
 import 'package:Kamadhenu/methods/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 
 enum Species { cow, buffalo, goat, sheep, pig }
 enum BreedCow {
@@ -32,7 +34,6 @@ class AddAnimal extends StatefulWidget {
 }
 
 class AddAnimalForm extends State<AddAnimal> {
-
   String _species;
   String _breed;
   Gender _ugender;
@@ -41,6 +42,7 @@ class AddAnimalForm extends State<AddAnimal> {
   bool isPregnent = false;
   var _lastcalf = new DateTime.now();
   var _birthdate = new DateTime.now();
+  String UID;
   String _regdate;
   bool _c = false;
 
@@ -304,7 +306,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Row(
       children: <Widget>[
         Text(
-          "Birth Date : ",
+          "Last Calving Date : ",
           style: TextStyle(fontSize: 16),
         ),
         Text(
@@ -521,7 +523,7 @@ class AddAnimalForm extends State<AddAnimal> {
                               _calvings,
                               isPregnent);
                         }),
-                  )
+                  ),
                   // _next(),
                 ],
                 mainAxisAlignment: MainAxisAlignment.start,

@@ -5,6 +5,9 @@ import 'package:Kamadhenu/screens/home.dart';
 import 'package:Kamadhenu/Forms/login.dart';
 
 class AuthService {
+
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
   //Handles Auth
   handleAuth() {
     return StreamBuilder(
@@ -16,6 +19,13 @@ class AuthService {
             return LoginPage();
           }
         });
+  }
+
+  //Get UID
+  Future<String> getCurrentUID() async{
+    final FirebaseUser user = await _auth.currentUser();
+    final String uid = user.uid.toString();
+    return uid;
   }
 
   //Sign out

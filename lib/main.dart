@@ -2,7 +2,6 @@ import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/screens/home.dart';
-import 'package:Kamadhenu/screens/profile.dart';
 import 'package:flutter/material.dart';
 import 'screens/home.dart';
 import 'Forms/login.dart';

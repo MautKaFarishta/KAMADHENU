@@ -1,11 +1,11 @@
 import 'package:Kamadhenu/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class OtherMeth{
 
   static bool flag=false;
 
-  KamdhenuUser user = KamdhenuUser();
 
   bool CheckNum(String mob){
     
@@ -16,8 +16,7 @@ class OtherMeth{
       if(docs.documents.isNotEmpty) {
         print('User Found! $mob');
         var doc=docs.documents[0].data;
-        user.phoneNo  = doc['mobile'];
-        user.PrintVal();
+        //user.phoneNo  = doc['mobile'];
         //print('User Found! ${doc['land']}');
         flag =true;
       }

@@ -1,16 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Kamadhenu/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 
 class DataBaseService {
   final uid;
   DataBaseService({this.uid});
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final _firestore = Firestore.instance;
 
   UpdateUser(String name, String adhar, String mob, String cttls, String land,
-      String dis, String stt, String regn,String uid) {
+      String dis, String stt, String regn) {
     print('updation');
-    _firestore.collection('Users').add({
+    _firestore.collection('Users').document(mob).setData({
       'name': name,
       'mobile': mob,
       'adhar': adhar,
@@ -19,16 +23,20 @@ class DataBaseService {
       'State': stt,
       'District': dis,
       'Region': regn,
-      'uid': uid,
     });
   }
 
   UpdateCattle(String species, String breed, String gender, var dob,
-      var lastcalf, String calvings, bool pregn) {
+      var lastcalf, String calvings, bool pregn) async{
+
+    final FirebaseUser user = await _auth.currentUser();
+    final String uid = user.phoneNumber.toString();
+    print(uid);
+
     if (breed == null) {
       breed = 'NA';
     }
-    _firestore.collection('cattles').add({
+    _firestore.collection('cattles').document(dob.toString()).setData({
       'Species': species,
       'Breed': breed,
       'Gender': gender,
@@ -36,8 +44,12 @@ class DataBaseService {
       'Calvings': calvings,
       'Calving_Dates': lastcalf, //Later to be converted to Array
       'Pregnent': pregn,
-      'uid': 'Demo',
-      //Parents Details Remaining
+    });
+    _firestore.collection('Users').document(uid).collection('cattles').document(dob.toString()).setData({
+      'Species': species,
+      'Breed': breed,
+      'Gender': gender,
+      'DOB': dob,
     });
   }
 }

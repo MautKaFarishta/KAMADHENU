@@ -1,5 +1,7 @@
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
+import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/methods/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,19 +41,34 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+
+  String userID ;
+
+  
+
 	@override
 	Widget build(BuildContext context) {
-		return Center(
+
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    @override
+    Future<String> getID() async{
+      
+        return userID = await AuthService().getCurrentUID();
+     
+    }
+
+    return Center(
 			child: Container(
 				padding: const EdgeInsets.all(10.0),
-				child: StreamBuilder<QuerySnapshot>(
-					stream: Firestore.instance.collection('cattles').snapshots(),
+				child: StreamBuilder<QuerySnapshot>( //Error To SOlve HEre!
+					stream: Firestore.instance.collection('Users').document('+918806465757').collection('cattles').snapshots(),
 					builder:
 							(BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
 						if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
 						switch (snapshot.connectionState) {
 							case ConnectionState.waiting:
-								return new Text('Loading...');
+								return CircularProgressIndicator();
 							default:
 								return new ListView(
 									children:
