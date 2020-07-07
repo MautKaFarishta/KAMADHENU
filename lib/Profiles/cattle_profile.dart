@@ -5,7 +5,7 @@ class CatPro extends StatelessWidget {
   final String catID;
   CatPro({this.catID});
 
-  @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Cattle Profile')),

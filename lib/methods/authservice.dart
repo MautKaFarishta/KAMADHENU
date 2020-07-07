@@ -24,7 +24,7 @@ class AuthService {
   //Get UID
   Future<String> getCurrentUID() async{
     final FirebaseUser user = await _auth.currentUser();
-    final String uid = user.uid.toString();
+    final String uid = user.phoneNumber;
     return uid;
   }
 
