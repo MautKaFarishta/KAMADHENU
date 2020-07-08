@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import './about.dart';
 import './profile.dart';
 import 'home.dart';
+<<<<<<< HEAD
 import 'buySell.dart';
+=======
+import 'package:Kamadhenu/methods/authservice.dart';
+>>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055
 
 class MainDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -66,7 +70,8 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('LogOut'),
-            onTap: () => {Navigator.of(context).pop()},
+            onTap: () => {AuthService().signOut(),
+              Navigator.of(context).pop()},
           ),
         ],
       ),

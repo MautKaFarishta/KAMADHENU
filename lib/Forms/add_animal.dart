@@ -1,6 +1,7 @@
+import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 enum Species { cow, buffalo, goat, sheep, pig }
 enum BreedCow {
@@ -32,15 +33,13 @@ class AddAnimal extends StatefulWidget {
 
 class AddAnimalForm extends State<AddAnimal> {
 
-  final _firestore = Firestore.instance; 
-
   String _species;
   String _breed;
   Gender _ugender;
   String _cgender;
   String _calvings;
   bool isPregnent = false;
-  var _lastcalf ;
+  var _lastcalf = new DateTime.now();
   var _birthdate = new DateTime.now();
   String _regdate;
   bool _c = false;
@@ -243,48 +242,80 @@ class AddAnimalForm extends State<AddAnimal> {
   }
 
   Widget _buildDOB() {
-    return Column(
+    String _fbirthdate = new DateFormat().add_yMMMd().format(_birthdate);
+    Future<Null> _selectDate(BuildContext context) async {
+      final DateTime _seldate = await showDatePicker(
+          context: context,
+          initialDate: _birthdate,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2030),
+          builder: (context, child) {
+            return SingleChildScrollView(
+              child: child,
+            );
+          });
+      if (_seldate != null) {
+        setState(() {
+          _birthdate = _seldate;
+        });
+      }
+    }
+
+    return Row(
       children: <Widget>[
         Text(
-          "Birth Date",
+          "Birth Date : ",
           style: TextStyle(fontSize: 16),
         ),
-        SizedBox(height: 10),
-        Container(
-          height: 50,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime(2000, 1, 1),
-            onDateTimeChanged: (DateTime newDateTime) {
-              _birthdate = newDateTime;
-              print(_birthdate);
-              // Do something
-            },
-          ),
+        Text(
+          "$_fbirthdate",
+          style: TextStyle(fontSize: 16),
+        ),
+        IconButton(
+          icon: Icon(Icons.calendar_today),
+          onPressed: () {
+            _selectDate(context);
+          },
         ),
       ],
     );
   }
 
   Widget _lastcalfBOB() {
-    return Column(
+    String _flast = new DateFormat().add_yMMMd().format(_lastcalf);
+    Future<Null> _selectDate(BuildContext context) async {
+      final DateTime _seldate = await showDatePicker(
+          context: context,
+          initialDate: _lastcalf,
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2030),
+          builder: (context, child) {
+            return SingleChildScrollView(
+              child: child,
+            );
+          });
+      if (_seldate != null) {
+        setState(() {
+          _lastcalf = _seldate;
+        });
+      }
+    }
+
+    return Row(
       children: <Widget>[
         Text(
-          "Last Calving date ",
+          "Birth Date : ",
           style: TextStyle(fontSize: 16),
         ),
-        SizedBox(height: 10),
-        Container(
-          height: 50,
-          child: CupertinoDatePicker(
-            mode: CupertinoDatePickerMode.date,
-            initialDateTime: DateTime(2000, 1, 1),
-            onDateTimeChanged: (DateTime newDateTime) {
-              _lastcalf = newDateTime;
-              print(_lastcalf);
-              // Do something
-            },
-          ),
+        Text(
+          "$_flast",
+          style: TextStyle(fontSize: 16),
+        ),
+        IconButton(
+          icon: Icon(Icons.calendar_today),
+          onPressed: () {
+            _selectDate(context);
+          },
         ),
       ],
     );
@@ -305,10 +336,10 @@ class AddAnimalForm extends State<AddAnimal> {
     );
   }
 
-  Widget _checkMilch() {
+  Widget _checkPre() {
     return Container(
-      margin: EdgeInsets.only(left: 50),
-      child: Row(children: <Widget>[
+      //margin: EdgeInsets.symmetric(vertical: 10),
+      child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
         Text("Currently Pregnent  "),
         Switch(
             value: isPregnent,
@@ -379,10 +410,19 @@ class AddAnimalForm extends State<AddAnimal> {
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Column(children: <Widget>[
-                      Text(
-                        '----CATTLE INFORMATION----',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w900),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Center(
+                          child: Text(
+                            'CATTLE INFORMATION',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w900),
+                          ),
+                        ),
                       ),
                       _buildGender(),
                       _buildSpecies(),
@@ -400,14 +440,23 @@ class AddAnimalForm extends State<AddAnimal> {
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: Column(
                         children: <Widget>[
-                          Text(
-                            '----PREGNENCY DETAILS----',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w900),
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10))),
+                            child: Center(
+                              child: Text(
+                                'PREGNENCY DETAILS',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w900),
+                              ),
+                            ),
                           ),
                           _calving(),
                           SizedBox(height: 15),
-                          _checkMilch(),
+                          _checkPre(),
                           SizedBox(height: 15),
                           _lastcalfBOB(),
                           SizedBox(height: 10),
@@ -419,10 +468,19 @@ class AddAnimalForm extends State<AddAnimal> {
                         color: Colors.blue[50],
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: Column(children: <Widget>[
-                      Text(
-                        '----PARENTS DETAILS----',
-                        style: TextStyle(
-                            fontSize: 17, fontWeight: FontWeight.w900),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                        child: Center(
+                          child: Text(
+                            'PARENT\'S DETAILS',
+                            style: TextStyle(
+                                fontSize: 17, fontWeight: FontWeight.w900),
+                          ),
+                        ),
                       ),
                       _parentdetailsCB(),
                       SizedBox(height: 10),
@@ -432,7 +490,7 @@ class AddAnimalForm extends State<AddAnimal> {
                       ),
                     ]),
                   ),
-                  SizedBox(height:20),
+                  SizedBox(height: 20),
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
@@ -454,21 +512,14 @@ class AddAnimalForm extends State<AddAnimal> {
                           print(_lastcalf);
                           print(_regdate);
 
-                          print("Updating");
-                          _firestore.collection('cattles').add({
-                            'Species':_species,
-                            'Breed':_breed,
-                            'Gender':_cgender,
-                            'DOB':_birthdate,
-                            'Calvings':_calvings,  
-                            'Calving_Dates':_lastcalf,//Later to be converted to Array
-                            'Pregnent':isPregnent
-                            //Parents Details Remaining
-
-
-                          }
-                          );
-
+                          DataBaseService().UpdateCattle(
+                              _species,
+                              _breed,
+                              _cgender,
+                              _birthdate,
+                              _lastcalf,
+                              _calvings,
+                              isPregnent);
                         }),
                   )
                   // _next(),
