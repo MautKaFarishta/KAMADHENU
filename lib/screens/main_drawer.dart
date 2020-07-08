@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import './about.dart';
 import './profile.dart';
 import 'home.dart';
+import 'buySell.dart';
 
 class MainDrawer extends StatelessWidget {
-  
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -30,12 +30,13 @@ class MainDrawer extends StatelessWidget {
                 MaterialPageRoute(
                     builder: (context) =>
                         HomePage()), //Route to Create Acc PAge
-              ),},
+              ),
+            },
           ),
           ListTile(
             leading: Icon(Icons.explore),
             title: Text('Buy/Sell Animal'),
-            onTap: () => {},
+            onTap: () => {Navigator.pushNamed(context, '/Buysell')},
           ),
           ListTile(
             leading: Icon(Icons.person),
@@ -45,20 +46,22 @@ class MainDrawer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        ProfilePage()), //Route to Create Acc PAge
-              ),},
+                  builder: (context) => Buysell(), //Route to Create Acc PAge
+                ),
+              )
+            },
           ),
           ListTile(
             leading: Icon(Icons.info),
             title: Text('About Us'),
-            onTap: () => {Navigator.of(context).pop(),
+            onTap: () => {
+              Navigator.of(context).pop(),
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        About()), //Route to Create Acc PAge
-              ),},
+                    builder: (context) => About()), //Route to Create Acc PAge
+              ),
+            },
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),

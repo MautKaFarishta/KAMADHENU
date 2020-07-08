@@ -4,23 +4,21 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-enum UserType { individual,organisation }
-enum Region { pune , jalgaon , gondia}
-enum state {maharashta ,andhra}
+enum UserType { individual, organisation }
+enum Region { pune, jalgaon, gondia }
+enum state { maharashta, andhra }
 enum Gender { male, female }
 enum Alert { wht, the }
 
 class Formscreen extends StatefulWidget {
-  
   State<StatefulWidget> createState() {
     return FormscreenState();
   }
 }
 
 class FormscreenState extends State<Formscreen> {
+  final _firestore = Firestore.instance;
 
-  final _firestore = Firestore.instance; 
-  
   String _fname;
   String _address;
   String _usern;
@@ -121,7 +119,7 @@ class FormscreenState extends State<Formscreen> {
                 value: state.andhra,
               ),
             ],
-            onChanged: ( val2) {
+            onChanged: (val2) {
               _stt = val2;
               print(val2);
               setState(() {
@@ -163,7 +161,7 @@ class FormscreenState extends State<Formscreen> {
       },
       onSaved: (String value) {
         _land = value;
-        num.parse(_land).toInt();//to convert to int
+        num.parse(_land).toInt(); //to convert to int
       },
     );
   }
@@ -180,7 +178,7 @@ class FormscreenState extends State<Formscreen> {
       },
       onSaved: (String value) {
         _cattls = value;
-        num.parse(_cattls).toInt();//to convert to int
+        num.parse(_cattls).toInt(); //to convert to int
       },
     );
   }
@@ -203,7 +201,7 @@ class FormscreenState extends State<Formscreen> {
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
-              onChanged: ( value) {
+              onChanged: (value) {
                 _ugender = value;
                 print(_ugender);
                 setState(() {
@@ -286,19 +284,20 @@ class FormscreenState extends State<Formscreen> {
           validator: (value) {
             if (value.isEmpty) {
               return 'Password is required';
-            }return null;
+            }
+            return null;
           },
           onSaved: (String value) {
             _password = value;
             print(value);
-          }, 
+          },
         ),
         TextFormField(
           obscureText: false,
           decoration: InputDecoration(labelText: 'Confirm Password'),
           validator: (value2) {
             if (value2 != _password) {
-              print ("cnf pass"+value2);
+              print("cnf pass" + value2);
               return 'Password does not match';
             }
             return null;
@@ -359,10 +358,9 @@ class FormscreenState extends State<Formscreen> {
                   ),
                   onPressed: () {
                     if (_formkey.currentState.validate()) {
-                      print("submit pressed") ;
-                    }
-                    else{
-                      print("invalid things in form") ;
+                      print("submit pressed");
+                    } else {
+                      print("invalid things in form");
                     }
 
                     _formkey.currentState.save();
@@ -379,24 +377,24 @@ class FormscreenState extends State<Formscreen> {
 
                     // database entry
                     print('updation');
-                    _firestore.collection('$_stt/$_regn/Users').add({'adhar':_adhar,
+                    _firestore.collection('$_stt/$_regn/Users').add({
+                      'adhar': _adhar,
 
+                      'first name': _fname,
 
-                    'first name':_fname,
+                      //'gender':_ugender,
 
-                    //'gender':_ugender,
+                      'initial cattles': _cattls,
 
-                    'initial cattles':_cattls,
+                      'land': _land,
 
-                    'land':_land,
+                      'last name': _lname,
 
-                    'last name':_lname,
+                      'mobile': _mob,
 
-                    'mobile':_mob,
+                      //'region':_regn,
 
-                    //'region':_regn,
-
-                    //'user type':_user
+                      //'user type':_user
                     });
 
                     showDialog<void>(
