@@ -1,6 +1,6 @@
 // import 'dart:html';
-import 'package:Kamadhenu/Forms.dart/add_animal.dart';
-import 'package:Kamadhenu/Forms.dart/create.dart';
+import 'package:Kamadhenu/Forms/add_animal.dart';
+import 'package:Kamadhenu/Forms/create.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
