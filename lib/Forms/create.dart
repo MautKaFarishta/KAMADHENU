@@ -6,12 +6,9 @@ import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-<<<<<<< HEAD:lib/Forms.dart/create.dart
 enum UserType { individual, organisation }
 enum Region { pune, jalgaon, gondia }
 enum state { maharashta, andhra }
-=======
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
 enum Gender { male, female }
 enum Alert { wht, the }
 
@@ -22,21 +19,12 @@ class Formscreen extends StatefulWidget {
 }
 
 class FormscreenState extends State<Formscreen> {
-<<<<<<< HEAD:lib/Forms.dart/create.dart
-  final _firestore = Firestore.instance;
-
-  String _fname;
-  String _address;
-  String _usern;
-  String _lname;
-=======
   final firebaseauth = FirebaseAuth.instance;
 
   String fname;
   String addrs;
   String usern;
   String lname;
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
   String _password;
   double _value;
   String mob;
@@ -104,11 +92,7 @@ class FormscreenState extends State<Formscreen> {
               ),
             ],
             onChanged: (val2) {
-<<<<<<< HEAD:lib/Forms.dart/create.dart
-              _stt = val2;
-=======
               stt = val2;
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
               print(val2);
               setState(() {
                 stt = val2;
@@ -148,13 +132,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-<<<<<<< HEAD:lib/Forms.dart/create.dart
-        _land = value;
-        num.parse(_land).toInt(); //to convert to int
-=======
         land = value;
         num.parse(land).toInt(); //to convert to int
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
       },
     );
   }
@@ -170,13 +149,8 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-<<<<<<< HEAD:lib/Forms.dart/create.dart
-        _cattls = value;
-        num.parse(_cattls).toInt(); //to convert to int
-=======
         cattls = value;
         num.parse(cattls).toInt(); //to convert to int
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
       },
     );
   }
@@ -373,7 +347,7 @@ class FormscreenState extends State<Formscreen> {
                         SizedBox(height: 25),
                       ],
                     )),
-                SizedBox(height:20),
+                SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.blue[50],
@@ -431,30 +405,8 @@ class FormscreenState extends State<Formscreen> {
                     print(_password);
 
                     // database entry
-<<<<<<< HEAD:lib/Forms.dart/create.dart
-                    print('updation');
-                    _firestore.collection('$_stt/$_regn/Users').add({
-                      'adhar': _adhar,
-
-                      'first name': _fname,
-
-                      //'gender':_ugender,
-
-                      'initial cattles': _cattls,
-
-                      'land': _land,
-
-                      'last name': _lname,
-
-                      'mobile': _mob,
-
-                      //'region':_regn,
-
-                      //'user type':_user
-                    });
-=======
-                    DataBaseService().UpdateUser(fname + lname, adhar, mob, cattls, land, dis, stt, regn,getUID());
->>>>>>> af3e7ff11ac13a5a74e2f4ecd70812f772818055:lib/Forms/create.dart
+                    DataBaseService().UpdateUser(fname + lname, adhar, mob,
+                        cattls, land, dis, stt, regn, getUID());
 
                     showDialog<void>(
                         context: context,
