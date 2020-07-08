@@ -16,8 +16,6 @@ class OtherMeth{
       if(docs.documents.isNotEmpty) {
         print('User Found! $mob');
         var doc=docs.documents[0].data;
-        //user.phoneNo  = doc['mobile'];
-        //print('User Found! ${doc['land']}');
         flag =true;
       }
       else{

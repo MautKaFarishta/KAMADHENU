@@ -183,11 +183,11 @@ class AddAnimalForm extends State<AddAnimal> {
                   ),
                   DropdownMenuItem<String>(
                     child: Text("Red Khandhari"),
-                    value: "red_khandhari",
+                    value: "Red Khandhari",
                   ),
                   DropdownMenuItem<String>(
                     child: Text("Non Descriptant (Gavthi)"),
-                    value: "non_descript",
+                    value: "Gavathi",
                   ),
                 ],
                 onChanged: (String value) {
@@ -398,7 +398,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
-        title: Text("Add Cattle"),
+        title: Text("Register"),
       ),
       body: Container(
           margin: EdgeInsets.all(16),
@@ -410,7 +410,11 @@ class AddAnimalForm extends State<AddAnimal> {
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.blue[50],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                          width: 1.0, color: Colors.blue.shade300,
+                        ),    
+                    ),
                     child: Column(children: <Widget>[
                       Container(
                         width: double.infinity,
@@ -420,7 +424,7 @@ class AddAnimalForm extends State<AddAnimal> {
                                 BorderRadius.all(Radius.circular(10))),
                         child: Center(
                           child: Text(
-                            'CATTLE INFORMATION',
+                            'ANIMAL INFORMATION',
                             style: TextStyle(
                                 fontSize: 17, fontWeight: FontWeight.w900),
                           ),
@@ -439,7 +443,11 @@ class AddAnimalForm extends State<AddAnimal> {
                   Container(
                       decoration: BoxDecoration(
                           color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          border: Border.all(
+                          width: 1.0, color: Colors.blue.shade300,
+                        ),    
+                      ),
                       child: Column(
                         children: <Widget>[
                           Container(
@@ -468,7 +476,11 @@ class AddAnimalForm extends State<AddAnimal> {
                   Container(
                     decoration: BoxDecoration(
                         color: Colors.blue[50],
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        border: Border.all(
+                          width: 1.0, color: Colors.blue.shade300,
+                        ),    
+                    ),
                     child: Column(children: <Widget>[
                       Container(
                         width: double.infinity,
@@ -514,7 +526,7 @@ class AddAnimalForm extends State<AddAnimal> {
                           print(_lastcalf);
                           print(_regdate);
 
-                          DataBaseService().UpdateCattle(
+                          DataBaseService().updateCattle(
                               _species,
                               _breed,
                               _cgender,

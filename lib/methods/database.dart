@@ -11,7 +11,7 @@ class DataBaseService {
 
   final _firestore = Firestore.instance;
 
-  UpdateUser(String name, String adhar, String mob, String cttls, String land,
+  updateUser(String name, String adhar, String mob, String cttls, String land,
       String dis, String stt, String regn) {
     print('updation');
     _firestore.collection('Users').document(mob).setData({
@@ -26,17 +26,26 @@ class DataBaseService {
     });
   }
 
-  UpdateCattle(String species, String breed, String gender, var dob,
+  updateCattle(String species, String breed, String gender, var dob,
       var lastcalf, String calvings, bool pregn) async{
 
     final FirebaseUser user = await _auth.currentUser();
     final String uid = user.phoneNumber.toString();
     print(uid);
 
+    Firestore.instance
+        .collection('Users')
+        .where('mobile', isEqualTo:uid)
+        .getDocuments().then((QuerySnapshot docs) {
+        var doc=docs.documents[0].data;
+      
+    });
+
     if (breed == null) {
       breed = 'NA';
     }
     _firestore.collection('cattles').document(dob.toString()).setData({
+      'RFID':'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
@@ -46,6 +55,7 @@ class DataBaseService {
       'Pregnent': pregn,
     });
     _firestore.collection('Users').document(uid).collection('cattles').document(dob.toString()).setData({
+      'RFID':'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,

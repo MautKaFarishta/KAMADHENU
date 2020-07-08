@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/methods/database.dart';
@@ -12,26 +14,107 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String userID;
+
   Widget build(BuildContext context) {
-    return new Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blue[800],
+    void getid(String foo) {
+      userID = foo;
+    }
+
+    AuthService().getCurrentUID().then((value) => getid(value));
+
+    return Scaffold(
+      drawer: MainDrawer(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => AddAnimal()), //Route to Create Acc PAge
+          );
+        },
+        //icon:Icon(Icons.add),
+        label: Text('REGISTER'),
+        backgroundColor: Colors.green,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverAppBar(
+              backgroundColor: Colors.blue.shade900,
+              titleSpacing: 70,
+              title: Text('Kamadhenu'),
+              expandedHeight: 170.0,
+              floating: false,
+              pinned: true,
+              snap: false,
+              flexibleSpace: FlexibleSpaceBar(
+                background: StreamBuilder<DocumentSnapshot>(
+                  stream: Firestore.instance
+                      .collection('Users')
+                      .document(userID)
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.hasError)
+                      return new Text('Error: ${snapshot.error}');
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return CircularProgressIndicator();
+                      default:
+                        var userData = snapshot.data;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(height: 30),
+                            Text(
+                              '${userData['name']}',
+                              style: TextStyle(
+                                fontSize: 19,
+                                color: Colors.white54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${userData['mobile']}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${userData['State']}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              '${userData['District']}',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white54,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        );
+                    }
+                  },
+                ),
+              ),
+            ),
+          ];
+        },
+        body: Center(
+          child: ListPage(),
         ),
-        drawer: MainDrawer(),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => AddAnimal()), //Route to Create Acc PAge
-            );
-          },
-          //icon:Icon(Icons.add),
-          label: Text('REGISTER'),
-          backgroundColor: Colors.green,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: ListPage());
+      ),
+    );
   }
 }
 
@@ -40,12 +123,12 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  
   String userID;
   Widget build(BuildContext context) {
     void getid(String foo) {
       userID = foo;
     }
+
     AuthService().getCurrentUID().then((value) => getid(value));
 
     return Center(
@@ -75,33 +158,39 @@ class _ListPageState extends State<ListPage> {
                             builder: (context) =>
                                 CatPro(catID: document.documentID)));
                       },
-                      child: new Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.shade50,
-                            border: Border(
-                              top:
-                                  BorderSide(width: 1.0, color: Colors.black38),
-                            ),
-                          ),
-                          child: Column(
-                            children: <Widget>[
-                              Text(
-                                'ID:${document.documentID}',
-                                style: TextStyle(fontSize: 20),
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 7),
+                          new Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    width: 1.0, color: Colors.black38),
                               ),
-                              Text(
-                                document['Species'],
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Text(
-                                document['Breed'],
-                              ),
-                              Text(
-                                  'Birth :${document['DOB'].toDate().toString()}'),
-                              SizedBox(height: 20),
-                            ],
-                          )),
+                              child: Column(
+                                children: <Widget>[
+                                  
+                                  Text(
+                                    'ID:${document.documentID}',
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    document['Species'],
+                                    style: TextStyle(fontSize: 20),
+                                  ),
+                                  Text(
+                                    document['Breed'],
+                                  ),
+                                  Text(
+                                      'Birth :${document['DOB'].toDate().toString()}'),
+                                  SizedBox(height: 10),
+                                ],
+                              )),
+                        ],
+                      ),
                     );
                   }).toList(),
                 );

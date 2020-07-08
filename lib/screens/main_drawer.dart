@@ -24,13 +24,7 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(Icons.input),
             title: Text('My Animals'),
             onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage()), //Route to Create Acc PAge
-              ),},
+              Navigator.of(context).pop(),},
           ),
           ListTile(
             leading: Icon(Icons.explore),

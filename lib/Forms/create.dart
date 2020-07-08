@@ -402,7 +402,7 @@ class FormscreenState extends State<Formscreen> {
                     print(_password);
 
                     // database entry
-                    DataBaseService().UpdateUser(fname + lname, adhar, mob, cattls, land, dis, stt, regn);
+                    DataBaseService().updateUser(fname + lname, adhar, mob, cattls, land, dis, stt, regn);
 
                     showDialog<void>(
                         context: context,
