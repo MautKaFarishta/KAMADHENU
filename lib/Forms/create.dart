@@ -6,6 +6,9 @@ import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+enum UserType { individual, organisation }
+enum Region { pune, jalgaon, gondia }
+enum state { maharashta, andhra }
 enum Gender { male, female }
 enum Alert { wht, the }
 
@@ -344,7 +347,7 @@ class FormscreenState extends State<Formscreen> {
                         SizedBox(height: 25),
                       ],
                     )),
-                SizedBox(height:20),
+                SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                       color: Colors.blue[50],
