@@ -16,6 +16,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String userID;
 
+  
+
   Widget build(BuildContext context) {
     void getid(String foo) {
       userID = foo;
@@ -43,8 +45,8 @@ class _HomePageState extends State<HomePage> {
           return <Widget>[
             SliverAppBar(
               backgroundColor: Colors.blue.shade900,
-              titleSpacing: 70,
-              title: Text('Kamadhenu'),
+              titleSpacing: 50,
+              title: Text('Kamadhenu',style: TextStyle(fontSize:30),),
               expandedHeight: 170.0,
               floating: false,
               pinned: true,
@@ -72,7 +74,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               '${userData['name']}',
                               style: TextStyle(
-                                fontSize: 19,
+                                fontSize: 22,
                                 color: Colors.white54,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               '${userData['mobile']}',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 19,
                                 color: Colors.white54,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -88,7 +90,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               '${userData['State']}',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 19,
                                 color: Colors.white54,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -96,7 +98,7 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               '${userData['District']}',
                               style: TextStyle(
-                                fontSize: 15,
+                                fontSize: 19,
                                 color: Colors.white54,
                                 fontWeight: FontWeight.bold,
                               ),

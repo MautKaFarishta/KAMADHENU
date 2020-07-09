@@ -33,14 +33,6 @@ class DataBaseService {
     final String uid = user.phoneNumber.toString();
     print(uid);
 
-    Firestore.instance
-        .collection('Users')
-        .where('mobile', isEqualTo:uid)
-        .getDocuments().then((QuerySnapshot docs) {
-        var doc=docs.documents[0].data;
-      
-    });
-
     if (breed == null) {
       breed = 'NA';
     }
@@ -62,4 +54,15 @@ class DataBaseService {
       'DOB': dob,
     });
   }
+
+  updateEvent(String document,String detailType,String specificDetail,var detailDate,String note){
+
+    _firestore.collection('cattles').document(document).collection(detailType).document().setData({
+      'DetailType':detailType,
+      'Detail':specificDetail,
+      'Date':detailDate,
+      'Note':note,
+    });
+  }
+
 }

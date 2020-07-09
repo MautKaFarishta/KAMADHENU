@@ -12,12 +12,9 @@ class MainDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              ' Hello UserNameHere',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
+            child: Container(),
             decoration: BoxDecoration(
-              color: Colors.blue.shade500,
+              color: Colors.blue.shade900,
             ),
           ),
           ListTile(
@@ -29,20 +26,8 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.explore),
             title: Text('Buy/Sell Animal'),
-            onTap: () => {Navigator.pushNamed(context, '/Buysell')},
-          ),
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
-            onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Buysell(), //Route to Create Acc PAge
-                ),
-              )
-            },
+            onTap: () => {Navigator.of(context).pop(),
+            Navigator.pushNamed(context, '/Buysell')},
           ),
           ListTile(
             leading: Icon(Icons.info),

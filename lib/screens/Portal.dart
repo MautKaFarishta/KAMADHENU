@@ -26,7 +26,8 @@ class PortalDisp extends State<Portal> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Portal"),
+          title: Text("Animals For Sell"),
+          backgroundColor: Colors.blue.shade900,
         ),
         body: StreamBuilder(
           stream: Firestore.instance //Stream will fetch the documents
