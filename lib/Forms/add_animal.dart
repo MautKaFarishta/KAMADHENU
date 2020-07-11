@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/methods/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,26 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
-enum Species { cow, buffalo, goat, sheep, pig }
-enum BreedCow {
-  khilar,
-  dangi,
-  kankrej,
-  jarsi,
-  hoisten,
-  ongole,
-  khandhari,
-  red_khandhari,
-  non_descript
-}
-enum BreedBuffalo {
-  surh,
-  murgah,
-  pandharpuri,
-  nagpuri,
-  jaffarbadi,
-  non_descript
-}
 enum Gender { male, female }
 
 class AddAnimal extends StatefulWidget {
@@ -408,28 +389,9 @@ class AddAnimalForm extends State<AddAnimal> {
               child: Column(
                 children: <Widget>[
                   Container(
-                    decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          width: 1.0, color: Colors.blue.shade300,
-                        ),    
-                    ),
+                    decoration: Deco().decoBox(Colors.blue.shade50),
                     child: Column(children: <Widget>[
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Center(
-                          child: Text(
-                            'ANIMAL INFORMATION',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w900),
-                          ),
-                        ),
-                      ),
+                      Deco().titleCon('ANIMAL INFORMATION'),
                       _buildGender(),
                       _buildSpecies(),
                       SizedBox(height: 10),
@@ -441,61 +403,25 @@ class AddAnimalForm extends State<AddAnimal> {
                   ),
                   SizedBox(height: 20),
                   Container(
-                      decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                          width: 1.0, color: Colors.blue.shade300,
-                        ),    
-                      ),
+                      decoration: Deco().decoBox(Colors.blue.shade50),
                       child: Column(
                         children: <Widget>[
-                          Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10))),
-                            child: Center(
-                              child: Text(
-                                'PREGNENCY DETAILS',
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w900),
-                              ),
-                            ),
-                          ),
+                          Deco().titleCon('PREGNENCY DETAILS'),
                           _calving(),
                           SizedBox(height: 15),
-                          _checkPre(),
+                          _cgender == 'F'?
+                          _checkPre():
                           SizedBox(height: 15),
+                          SizedBox(height:1),
                           _lastcalfBOB(),
                           SizedBox(height: 10),
                         ],
                       )),
                   SizedBox(height: 20),
                   Container(
-                    decoration: BoxDecoration(
-                        color: Colors.blue[50],
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        border: Border.all(
-                          width: 1.0, color: Colors.blue.shade300,
-                        ),    
-                    ),
+                    decoration: Deco().decoBox(Colors.blue.shade50),
                     child: Column(children: <Widget>[
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10))),
-                        child: Center(
-                          child: Text(
-                            'PARENT\'S DETAILS',
-                            style: TextStyle(
-                                fontSize: 17, fontWeight: FontWeight.w900),
-                          ),
-                        ),
-                      ),
+                      Deco().titleCon('PARENT\'S DETAILS'),
                       _parentdetailsCB(),
                       SizedBox(height: 10),
                       _parentdetails(),
@@ -518,13 +444,6 @@ class AddAnimalForm extends State<AddAnimal> {
                           }
 
                           _addAnimalkey.currentState.save();
-                          print(_species);
-                          print(_breed);
-                          print(_breed);
-                          print(_ugender);
-                          print(_birthdate);
-                          print(_lastcalf);
-                          print(_regdate);
 
                           DataBaseService().updateCattle(
                               _species,

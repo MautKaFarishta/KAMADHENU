@@ -36,6 +36,9 @@ class DataBaseService {
     if (breed == null) {
       breed = 'NA';
     }
+    if (gender == 'M') {
+      pregn = false;
+    }
     _firestore.collection('cattles').document(dob.toString()).setData({
       'RFID':'NA',
       'Species': species,
@@ -43,7 +46,7 @@ class DataBaseService {
       'Gender': gender,
       'DOB': dob,
       'Calvings': calvings,
-      'Calving_Dates': lastcalf, //Later to be converted to Array
+      'Calving_Dates': lastcalf, 
       'Pregnent': pregn,
     });
     _firestore.collection('Users').document(uid).collection('cattles').document(dob.toString()).setData({

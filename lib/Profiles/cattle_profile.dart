@@ -1,4 +1,5 @@
 
+import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -43,11 +44,6 @@ class CatPro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: FlatButton(
-          onPressed: (){
-            Navigator.push (context,MaterialPageRoute(builder: (context) => HomePage()),);
-          },
-          child: Icon(Icons.arrow_back,color: Colors.white70)),
         title: Text('Cattle Profile'),
         backgroundColor: Colors.blue.shade900,  
       ),
@@ -74,13 +70,7 @@ class CatPro extends StatelessWidget {
                       catDoc['RFID']==null ?
                       Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:Colors.red.shade100,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                            width: 1.0, color: Colors.red.shade900,
-                          ),
-                        ),
+                        decoration: Deco().decoBox(Colors.red.shade200),
                         child: Column(
                           children: <Widget>[
                             SizedBox(height:5),
@@ -92,10 +82,7 @@ class CatPro extends StatelessWidget {
                       ):
                       Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          color:Colors.blue.shade200,
-                          borderRadius: BorderRadius.all(Radius.circular(10))
-                        ),
+                        decoration:Deco().decoBox(Colors.blue.shade50),
                         child:Center(
                           child: Text('RFID : ${catDoc['RFID']}',
                             style: TextStyle(
@@ -106,29 +93,10 @@ class CatPro extends StatelessWidget {
                       ),
                       SizedBox(height:10),
                       Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                            width: 1.0, color: Colors.blue.shade300,
-                          ),  
-                        ),
+                        decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                child: Text(
-                                  'ANIMAL INFORMATION',
-                                  style: TextStyle(
-                                    fontSize: 21, fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                            ),
+                            Deco().titleCon('ANIMAL INFORMATION'),
                             SizedBox(height:10),
                             Text('Animal Type : ${catDoc['Species']}',
                               style: TextStyle(
@@ -152,29 +120,10 @@ class CatPro extends StatelessWidget {
                       ),
                       SizedBox(height:20),
                       Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                            width: 1.0, color: Colors.blue.shade300,
-                          ),  
-                        ),
+                        decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                child: Text(
-                                  'PREGNENCY DETAILS',
-                                  style: TextStyle(
-                                    fontSize: 21, fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                            ),
+                            Deco().titleCon('PREGNENCY DETAILS'),
                             SizedBox(height:10),
                             Text('Last Calving Date',
                               style: TextStyle(
@@ -198,29 +147,10 @@ class CatPro extends StatelessWidget {
                       ),
                       SizedBox(height:20),
                       Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                            width: 1.0, color: Colors.blue.shade300,
-                          ),  
-                        ),
+                        decoration:Deco().decoBox(Colors.blue.shade50),
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                child: Text(
-                                  'VACCINE DETAILS',
-                                  style: TextStyle(
-                                    fontSize: 21, fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                            ),
+                            Deco().titleCon('VACCINE DETAILS'),
                             StreamBuilder(
                               stream:Firestore.instance
                                 .collection('cattles')
@@ -241,29 +171,10 @@ class CatPro extends StatelessWidget {
                       ),
                       SizedBox(height:20),
                       Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.all(
-                            width: 1.0, color: Colors.blue.shade300,
-                          ),  
-                        ),
+                        decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(
                           children: <Widget>[
-                            Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue[200],
-                                borderRadius:
-                                  BorderRadius.all(Radius.circular(10))),
-                              child: Center(
-                                child: Text(
-                                  'PREGNENCY HISTORY',
-                                  style: TextStyle(
-                                    fontSize: 21, fontWeight: FontWeight.w900),
-                                ),
-                              ),
-                            ),
+                            Deco().titleCon('PREGNENCY HISTORY'),
                             StreamBuilder(
                               stream:Firestore.instance
                                 .collection('cattles')
