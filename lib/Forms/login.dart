@@ -120,9 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                         codeSent
-                            ? Padding(
-                                padding:
-                                    EdgeInsets.only(left: 25.0, right: 25.0),
+                            ? Container(
                                 child: TextFormField(
                                   keyboardType: TextInputType.phone,
                                   decoration:
@@ -134,19 +132,26 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 ))
                             : Container(),
+                        SizedBox(height:10),
                         Padding(
                             padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                            child: RaisedButton(
-                                child: Center(
-                                    child: codeSent
-                                        ? Text('Login')
-                                        : Text('Verify')),
-                                onPressed: () {
-                                  codeSent
-                                      ? AuthService().signInWithOTP(
-                                          smsCode, verificationId)
-                                      : verifyPhone(phoneNo);
-                                })),
+                            child: Container(
+                               width: double.infinity,
+                               decoration: BoxDecoration(
+                                 color: Colors.blue[400],
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child: FlatButton(
+                                  child: Center(
+                                      child: codeSent
+                                          ? Text('Login')
+                                          : Text('Verify')),
+                                  onPressed: () {
+                                    codeSent
+                                        ? AuthService().signInWithOTP(
+                                            smsCode, verificationId)
+                                        : verifyPhone(phoneNo);
+                                  }),
+                            )),
                         SizedBox(height: 20),
                         SizedBox(
                           height: 10,
