@@ -1,5 +1,6 @@
 import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/methods/database.dart';
+import 'package:Kamadhenu/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -375,6 +376,31 @@ class AddAnimalForm extends State<AddAnimal> {
     }
   }
 
+  void _showDialog() {
+    // flutter defined function
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Cattle Data Submitted"),
+          content: new Text("Contact AHD office near you for RFID registration"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Close"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push (context,MaterialPageRoute(builder: (context) => HomePage(),));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -439,9 +465,8 @@ class AddAnimalForm extends State<AddAnimal> {
                     child: FlatButton(
                         child: Text("SUBMIT"),
                         onPressed: () {
-                          if (!_addAnimalkey.currentState.validate()) {
-                            return;
-                          }
+                            _showDialog();
+                          
 
                           _addAnimalkey.currentState.save();
 

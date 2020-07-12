@@ -67,7 +67,7 @@ class CatPro extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   child: Column(
                     children: <Widget>[
-                      catDoc['RFID']==null ?
+                      catDoc['RFID']=='NA' ?
                       Container(
                         width: double.infinity,
                         decoration: Deco().decoBox(Colors.red.shade200),

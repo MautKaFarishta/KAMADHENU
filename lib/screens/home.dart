@@ -176,7 +176,7 @@ class _ListPageState extends State<ListPage> {
                                 children: <Widget>[
                                   
                                   Text(
-                                    'ID:${document.documentID}',
+                                    'RFID:${document['RFID']}',
                                     style: TextStyle(fontSize: 20),
                                   ),
                                   Text(

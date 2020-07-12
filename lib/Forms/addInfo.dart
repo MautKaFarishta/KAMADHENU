@@ -209,13 +209,7 @@ class _MoreInfoState extends State<MoreInfo> {
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
-                DataBaseService().updateEvent(
-                              catID,
-                              detailType,
-                              specificDetail,
-                              detailDate,
-                              note,
-                              );
+                
                 Navigator.of(context).pop();
                 Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID)),);
               },
@@ -274,6 +268,13 @@ class _MoreInfoState extends State<MoreInfo> {
                   ),
                 ),
                 onPressed: (){
+                  DataBaseService().updateEvent(
+                              catID,
+                              detailType,
+                              specificDetail,
+                              detailDate,
+                              note,
+                              );
                   _showDialog();
                 },             
               ),

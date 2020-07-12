@@ -26,13 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      routes: {
-        '/': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
-        // '/home': (context) => HomePage(),
-        '/Buysell': (BuildContext ctx) => Buysell(),
-        '/portal': (BuildContext ctx) => Portal(),
-      },
+      home: AuthService().handleAuth(),
     );
   }
 }
