@@ -7,10 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
+String regn;
 enum Gender { male, female }
 
 class AddAnimal extends StatefulWidget {
+  String regn;
+  AddAnimal({this.regn});
   State<StatefulWidget> createState() {
+    
     return AddAnimalForm();
   }
 }
@@ -478,6 +482,7 @@ class AddAnimalForm extends State<AddAnimal> {
                               _lastcalf,
                               _calvings,
                               isPregnent,
+                              regn,
                               );
                         }),
                   ),

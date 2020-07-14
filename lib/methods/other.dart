@@ -15,7 +15,6 @@ class OtherMeth{
         .getDocuments().then((QuerySnapshot docs) {
       if(docs.documents.isNotEmpty) {
         print('User Found! $mob');
-        var doc=docs.documents[0].data;
         flag =true;
       }
       else{

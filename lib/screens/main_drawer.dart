@@ -1,8 +1,7 @@
+import 'package:Kamadhenu/screens/help.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './about.dart';
-import 'home.dart';
-import 'buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -28,6 +27,18 @@ class MainDrawer extends StatelessWidget {
             title: Text('Buy/Sell Animal'),
             onTap: () => {Navigator.of(context).pop(),
             Navigator.pushNamed(context, '/Buysell')},
+          ),
+          ListTile(
+            leading: Icon(Icons.info),
+            title: Text('Help'),
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Help()), //Route to Create Acc PAge
+              ),
+            },
           ),
           ListTile(
             leading: Icon(Icons.info),

@@ -1,34 +1,77 @@
 import 'dart:async';
 
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
+import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/methods/database.dart';
+import 'package:Kamadhenu/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:Kamadhenu/Forms/add_animal.dart' as A;
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main_drawer.dart';
+
+final userRef =Firestore.instance.collection('Users');
+KamadhenuUser currentUser = new KamadhenuUser();
+String userID;
 
 class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _HomePageState(); //Define State
 }
 
 class _HomePageState extends State<HomePage> {
-  String userID;
+  
+ 
+  
 
+  StreamSubscription _subscription;
+
+  KamadhenuUser getid(String foo){
+    userID = foo;
+    setState(() {
+      userID=foo;
+    });
+    print(userID);
+    currentUser = getUser(userID);
+      
+  }
+
+KamadhenuUser getUser(String userID){
+
+   userRef.document(userID).get().then((DocumentSnapshot doc ) {
+
+      setState(() {
+        currentUser = new KamadhenuUser(adhar: doc['adhar'],phoneNo: doc['mobile']);
+        currentUser.name=doc['name'];
+        print(currentUser.name);
+        currentUser.district=doc['District'];  
+      
+      }); 
+
+      return currentUser;
+
+    });
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    String userID;
+    AuthService().getCurrentUID().then((value) => getid(value));
+  }
   
 
   Widget build(BuildContext context) {
-    void getid(String foo) {
-      userID = foo;
-    }
 
-    AuthService().getCurrentUID().then((value) => getid(value));
+    //currentUser = getUser(userID);
 
     return Scaffold(
       drawer: MainDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          A.regn=currentUser.district;
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -52,27 +95,17 @@ class _HomePageState extends State<HomePage> {
               pinned: true,
               snap: false,
               flexibleSpace: FlexibleSpaceBar(
-                background: StreamBuilder<DocumentSnapshot>(
-                  stream: Firestore.instance
-                      .collection('Users')
-                      .document(userID)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<DocumentSnapshot> snapshot) {
-                    if (snapshot.hasError)
-                      return new Text('Error: ${snapshot.error}');
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return CircularProgressIndicator();
-                      default:
-                        var userData = snapshot.data;
-                        return Column(
+                background: currentUser.name==null?
+
+                          CircularProgressIndicator():
+                
+                          Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SizedBox(height: 30),
                             Text(
-                              '${userData['name']}',
+                              '${currentUser.name}',
                               style: TextStyle(
                                 fontSize: 22,
                                 color: Colors.white54,
@@ -80,7 +113,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              '${userData['mobile']}',
+                              '${currentUser.phoneNo}',
                               style: TextStyle(
                                 fontSize: 19,
                                 color: Colors.white54,
@@ -88,15 +121,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Text(
-                              '${userData['State']}',
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.white54,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            Text(
-                              '${userData['District']}',
+                              '${currentUser.district}',
                               style: TextStyle(
                                 fontSize: 19,
                                 color: Colors.white54,
@@ -104,16 +129,18 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ],
-                        );
-                    }
-                  },
-                ),
+                        ),
               ),
             ),
           ];
         },
-        body: Center(
-          child: ListPage(),
+        body: Column(
+          children: <Widget>[
+            Deco().titleCon('Your Cattles'),
+            Center(
+              child: ListPage(userID: userID,),
+            ),
+          ],
         ),
       ),
     );
@@ -121,23 +148,19 @@ class _HomePageState extends State<HomePage> {
 }
 
 class ListPage extends StatefulWidget {
+  String userID;
+  ListPage({this.userID});
   _ListPageState createState() => _ListPageState();
 }
 
 class _ListPageState extends State<ListPage> {
-  String userID;
+  
   Widget build(BuildContext context) {
-    void getid(String foo) {
-      userID = foo;
-    }
-
-    AuthService().getCurrentUID().then((value) => getid(value));
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.only(left:10.0,right: 10,bottom: 10),
         child: StreamBuilder<QuerySnapshot>(
-          //Error  SOlved HEre!
           stream: Firestore.instance
               .collection('Users')
               .document(userID)
@@ -151,6 +174,7 @@ class _ListPageState extends State<ListPage> {
                 return CircularProgressIndicator();
               default:
                 return new ListView(
+                  shrinkWrap: true,
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return FlatButton(

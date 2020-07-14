@@ -1,16 +1,5 @@
-import 'package:Kamadhenu/Forms/create.dart';
-import 'package:Kamadhenu/screens/Portal.dart';
-import 'package:Kamadhenu/screens/buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
-import 'package:Kamadhenu/Forms/create.dart';
-import 'package:Kamadhenu/Forms/create.dart';
-import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
-import 'screens/Portal.dart';
-import 'screens/home.dart';
-import 'Forms/login.dart';
-import 'screens/buySell.dart';
-import 'Forms/login.dart';
 
 
 void main() {

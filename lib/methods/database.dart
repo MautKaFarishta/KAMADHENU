@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Kamadhenu/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,7 +28,7 @@ class DataBaseService {
   }
 
   updateCattle(String species, String breed, String gender, var dob,
-      var lastcalf, String calvings, bool pregn) async{
+      var lastcalf, String calvings, bool pregn,String region) async{
 
     final FirebaseUser user = await _auth.currentUser();
     final String uid = user.phoneNumber.toString();
@@ -50,6 +51,13 @@ class DataBaseService {
       'Pregnent': pregn,
     });
     _firestore.collection('Users').document(uid).collection('cattles').document(dob.toString()).setData({
+      'RFID':'NA',
+      'Species': species,
+      'Breed': breed,
+      'Gender': gender,
+      'DOB': dob,
+    });
+    _firestore.collection('Admin').document(regn).collection('cattles').document(dob.toString()).setData({
       'RFID':'NA',
       'Species': species,
       'Breed': breed,
