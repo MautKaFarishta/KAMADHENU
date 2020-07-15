@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 String catID;
+String region;
 
 class MoreInfo extends StatefulWidget {
   @override
@@ -211,7 +212,7 @@ class _MoreInfoState extends State<MoreInfo> {
               onPressed: () {
                 
                 Navigator.of(context).pop();
-                Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID)),);
+                Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID,regn: region,)),);
               },
             ),
           ],
@@ -269,6 +270,7 @@ class _MoreInfoState extends State<MoreInfo> {
                 ),
                 onPressed: (){
                   DataBaseService().updateEvent(
+                              region,
                               catID,
                               detailType,
                               specificDetail,

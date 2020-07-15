@@ -8,12 +8,15 @@ import '../Forms/addInfo.dart' as A;
 
 class CatPro extends StatelessWidget {
   final String catID;
-  CatPro({this.catID});
+  final String regn;
+  CatPro({this.catID,this.regn});
 
   Widget getList(BuildContext context, DocumentSnapshot document){
 
     DateTime dOB = (document['Date']).toDate();
     var ldOB=DateFormat.yMMMd().format(dOB);
+
+    print('Getting info for ${document['CattleID']} with  ${document['Note']}');
 
     return Container(
       child: ListTile(
@@ -42,6 +45,7 @@ class CatPro extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
+    print('cattle profile of $catID in region $regn');
     return Scaffold(
       appBar: AppBar(
         title: Text('Cattle Profile'),
@@ -153,9 +157,10 @@ class CatPro extends StatelessWidget {
                             Deco().titleCon('VACCINE DETAILS'),
                             StreamBuilder(
                               stream:Firestore.instance
-                                .collection('cattles')
-                                .document(catID)
+                                .collection('Admin')
+                                .document(regn)
                                 .collection('vaccine_details')
+                                .where('CattleID',isEqualTo:catID)
                                 .snapshots(),
                               builder: (context, snapshot) {
                                 if (!snapshot.hasData) return const Text("Loading...");
@@ -177,9 +182,10 @@ class CatPro extends StatelessWidget {
                             Deco().titleCon('PREGNENCY HISTORY'),
                             StreamBuilder(
                               stream:Firestore.instance
-                                .collection('cattles')
-                                .document(catID)
+                                .collection('Admin')
+                                .document(regn)
                                 .collection('pregnency_details')
+                                .where('CattleID',isEqualTo:catID)
                                 .snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.data==null) return
@@ -211,6 +217,8 @@ class CatPro extends StatelessWidget {
                           ),
                           onPressed: (){
                             A.catID = catID.toString(); 
+                            A.region=regn;
+                            print('Adding info for ${A.catID} in Region ${A.region}');
                             Navigator.push (
                                context,
                                MaterialPageRoute(builder: (context) => A.MoreInfo()),

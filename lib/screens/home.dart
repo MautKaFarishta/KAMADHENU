@@ -15,6 +15,7 @@ import 'main_drawer.dart';
 final userRef =Firestore.instance.collection('Users');
 KamadhenuUser currentUser = new KamadhenuUser();
 String userID;
+String regn;
 
 class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() => new _HomePageState(); //Define State
@@ -46,6 +47,8 @@ KamadhenuUser getUser(String userID){
         currentUser.name=doc['name'];
         print(currentUser.name);
         currentUser.district=doc['District'];  
+        regn=doc['District'];
+        print(regn);
       
       }); 
 
@@ -58,7 +61,6 @@ KamadhenuUser getUser(String userID){
   @override
   void initState() {
     super.initState();
-    String userID;
     AuthService().getCurrentUID().then((value) => getid(value));
   }
   
@@ -138,7 +140,7 @@ KamadhenuUser getUser(String userID){
           children: <Widget>[
             Deco().titleCon('Your Cattles'),
             Center(
-              child: ListPage(userID: userID,),
+              child: ListPage(userID: userID,regn: regn,),
             ),
           ],
         ),
@@ -149,7 +151,8 @@ KamadhenuUser getUser(String userID){
 
 class ListPage extends StatefulWidget {
   String userID;
-  ListPage({this.userID});
+  String regn;
+  ListPage({this.userID,this.regn});
   _ListPageState createState() => _ListPageState();
 }
 
@@ -159,71 +162,71 @@ class _ListPageState extends State<ListPage> {
 
     return Center(
       child: Container(
-        padding: const EdgeInsets.only(left:10.0,right: 10,bottom: 10),
-        child: StreamBuilder<QuerySnapshot>(
-          stream: Firestore.instance
-              .collection('Users')
-              .document(userID)
-              .collection('cattles')
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return CircularProgressIndicator();
-              default:
-                return new ListView(
-                  shrinkWrap: true,
-                  children:
-                      snapshot.data.documents.map((DocumentSnapshot document) {
-                    return FlatButton(
-                      onPressed: () {
-                        print("${document['Species']} Button Pressed");
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) =>
-                                CatPro(catID: document.documentID)));
-                      },
-                      child: Column(
-                        children: <Widget>[
-                          SizedBox(height: 7),
-                          new Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                border: Border.all(
-                                    width: 1.0, color: Colors.black38),
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  
-                                  Text(
-                                    'RFID:${document['RFID']}',
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    document['Species'],
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    document['Breed'],
-                                  ),
-                                  Text(
-                                      'Birth :${document['DOB'].toDate().toString()}'),
-                                  SizedBox(height: 10),
-                                ],
-                              )),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                );
-            }
-          },
+          padding: const EdgeInsets.only(left:10.0,right: 10,bottom: 10),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: Firestore.instance
+        .collection('Users')
+        .document(userID)
+        .collection('cattles')
+        .snapshots(),
+            builder:
+        (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+      if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+      switch (snapshot.connectionState) {
+        case ConnectionState.waiting:
+          return CircularProgressIndicator();
+        default:
+          return new ListView(
+            shrinkWrap: true,
+            children:
+                snapshot.data.documents.map((DocumentSnapshot document) {
+              return FlatButton(
+                onPressed: () {
+                  print("${document['Species']} Button Pressed for Region $regn");
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                          CatPro(catID: document.documentID.toString(),regn: regn,)));
+                },
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 7),
+                    new Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.blue.shade50,
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(5)),
+                          border: Border.all(
+                              width: 1.0, color: Colors.black38),
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            
+                            Text(
+                              'RFID:${document['RFID']}',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              document['Species'],
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              document['Breed'],
+                            ),
+                            Text(
+                                'Birth :${document['DOB'].toDate().toString()}'),
+                            SizedBox(height: 10),
+                          ],
+                        )),
+                  ],
+                ),
+              );
+            }).toList(),
+          );
+      }
+            },
+          ),
         ),
-      ),
     );
   }
 }

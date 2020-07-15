@@ -1,8 +1,8 @@
+import 'package:Kamadhenu/Forms/addInfo.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Kamadhenu/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:Kamadhenu/methods/authservice.dart';
+import 'package:uuid/uuid.dart';
 
 class DataBaseService {
   final uid;
@@ -34,13 +34,18 @@ class DataBaseService {
     final String uid = user.phoneNumber.toString();
     print(uid);
 
+    var uuid = Uuid();
+
+    catID = uuid.v1();
+    print(catID);
+
     if (breed == null) {
       breed = 'NA';
     }
     if (gender == 'M') {
       pregn = false;
     }
-    _firestore.collection('cattles').document(dob.toString()).setData({
+    _firestore.collection('cattles').document(catID).setData({
       'RFID':'NA',
       'Species': species,
       'Breed': breed,
@@ -49,15 +54,16 @@ class DataBaseService {
       'Calvings': calvings,
       'Calving_Dates': lastcalf, 
       'Pregnent': pregn,
+      'Region':regn,
     });
-    _firestore.collection('Users').document(uid).collection('cattles').document(dob.toString()).setData({
+    _firestore.collection('Users').document(uid).collection('cattles').document(catID).setData({
       'RFID':'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
       'DOB': dob,
     });
-    _firestore.collection('Admin').document(regn).collection('cattles').document(dob.toString()).setData({
+    _firestore.collection('Admin').document(regn).collection('cattles').document(catID).setData({
       'RFID':'NA',
       'Species': species,
       'Breed': breed,
@@ -66,14 +72,15 @@ class DataBaseService {
     });
   }
 
-  updateEvent(String document,String detailType,String specificDetail,var detailDate,String note){
+  updateEvent(String region,String catID,String detailType,String specificDetail,var detailDate,String note){
 
-    _firestore.collection('cattles').document(document).collection(detailType).document().setData({
+    _firestore.collection('Admin').document(region).collection(detailType).document().setData({
+      'CattleID':catID.toString(),
       'DetailType':detailType,
       'Detail':specificDetail,
       'Date':detailDate,
       'Note':note,
     });
+    print('Data SUbmitted for Region $region cattle $catID');
   }
-
 }

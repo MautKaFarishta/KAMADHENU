@@ -96,8 +96,8 @@ class AddAnimalForm extends State<AddAnimal> {
                     value: "Surh",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Murgah"),
-                    value: "Murgah",
+                    child: Text("Murrah"),
+                    value: "Murrah",
                   ),
                   DropdownMenuItem<String>(
                     child: Text("Pandharpuri"),
