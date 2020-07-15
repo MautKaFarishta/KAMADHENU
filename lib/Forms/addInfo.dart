@@ -67,6 +67,10 @@ class _MoreInfoState extends State<MoreInfo> {
                     value: "AI",
                   ),
                   DropdownMenuItem<String>(
+                    child: Text("Performed PD"),
+                    value: "PD",
+                  ),
+                  DropdownMenuItem<String>(
                     child: Text("Newborn"),
                     value: "newBorn",
                   ),

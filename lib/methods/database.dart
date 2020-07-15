@@ -74,6 +74,12 @@ class DataBaseService {
 
   updateEvent(String region,String catID,String detailType,String specificDetail,var detailDate,String note){
 
+    String totalCount;
+
+    if(note==null){
+      note = 'No Details Added';
+    }
+
     _firestore.collection('Admin').document(region).collection(detailType).document().setData({
       'CattleID':catID.toString(),
       'DetailType':detailType,
@@ -81,6 +87,21 @@ class DataBaseService {
       'Date':detailDate,
       'Note':note,
     });
-    print('Data SUbmitted for Region $region cattle $catID');
+
+    if(detailType=='vaccine_details'){
+      totalCount='TotalVaccines';
+    }else{
+      if (specificDetail=='newBorn') {
+        totalCount='PregnencyCount';
+      }else if(specificDetail=='AI' || specificDetail=='PD') {
+        totalCount='PregnencyDiagnosis';
+      }
+    }
+
+    _firestore.collection('Admin').document(region).updateData({
+      totalCount: FieldValue.increment(1),
+      specificDetail: FieldValue.increment(1),
+    });
+
   }
 }
