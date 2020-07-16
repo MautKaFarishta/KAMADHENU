@@ -1,4 +1,6 @@
 import 'package:Kamadhenu/Forms/create.dart';
+import 'package:Kamadhenu/screens/AnimalInfo.dart';
+import 'package:Kamadhenu/screens/ImagePicker.dart';
 import 'package:Kamadhenu/screens/Portal.dart';
 import 'package:Kamadhenu/screens/buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
@@ -12,7 +14,6 @@ import 'screens/home.dart';
 import 'Forms/login.dart';
 import 'screens/buySell.dart';
 import 'Forms/login.dart';
-
 
 void main() {
   //Main Function
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
         // '/home': (context) => HomePage(),
         '/Buysell': (BuildContext ctx) => Buysell(),
         '/portal': (BuildContext ctx) => Portal(),
+        '/AnimalInfo': (BuildContext ctx) => AnimalInfo(),
+        '/ImagePicker': (BuildContext ctx) => ImagePicker(),
       },
     );
   }

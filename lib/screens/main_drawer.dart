@@ -37,7 +37,7 @@ class MainDrawer extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.explore),
             title: Text('Buy/Sell Animal'),
-            onTap: () => {Navigator.pushNamed(context, '/Buysell')},
+            onTap: () => {Navigator.pushNamed(context, '/portal')},
           ),
           ListTile(
             leading: Icon(Icons.person),
