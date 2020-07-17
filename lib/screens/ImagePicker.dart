@@ -187,7 +187,6 @@ class _ImagePicker extends State<ImagePicker> {
                   .child("images/${AI.animal_id}")
                   .putFile(AI.imageFile)
                   .onComplete;
-              CircularProgressIndicator();
 
               if (snapshot.error == null) {
                 final String downloadUrl = await snapshot.ref.getDownloadURL();
