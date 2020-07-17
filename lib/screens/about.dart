@@ -9,6 +9,10 @@ class _AboutState extends State<About> {
   
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title:Text("About Kamadhenu"),
+        backgroundColor:Colors.blue.shade900,
+      ),
       body: Column(
         children: <Widget>[
           SizedBox(height: 100,),

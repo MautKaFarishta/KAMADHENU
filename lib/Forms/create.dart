@@ -243,7 +243,7 @@ class FormscreenState extends State<Formscreen> {
         }
       },
       onSaved: (String value) {
-        mob = value;
+        mob = '+91'+value;
       },
     );
   }
@@ -405,8 +405,7 @@ class FormscreenState extends State<Formscreen> {
                     print(_password);
 
                     // database entry
-                    DataBaseService().UpdateUser(fname + lname, adhar, mob,
-                        cattls, land, dis, stt, regn, getUID());
+                    DataBaseService().updateUser(fname+ ' '+ lname, adhar, mob, cattls, land, dis, stt, regn);
 
                     showDialog<void>(
                         context: context,

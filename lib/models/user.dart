@@ -1,6 +1,11 @@
-class KamdhenuUser{
-  final String phoneNo;
+class KamadhenuUser{
+  String phoneNo;
+  String district;
+  String region;
+  String adhar;
+  String land;
+  String name;
 
-  KamdhenuUser({this.phoneNo});
+  KamadhenuUser({this.phoneNo,this.adhar,this.district,this.land,this.name,this.region});
   
 }

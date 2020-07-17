@@ -5,19 +5,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
 class LoginPage extends StatefulWidget {
-  State<StatefulWidget> createState() =>  _LoginPageState(); //Define State
+  State<StatefulWidget> createState() => _LoginPageState(); //Define State
 }
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
-  
   String phoneNo, verificationId, smsCode;
   bool codeSent = false;
+  static bool f;
 
 //authentication
   Future<void> verifyPhone(phoneNo) async {
-    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+
+    if(OtherMeth().CheckNum(phoneNo)==true){
+
+      final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       AuthService().signIn(authResult);
     };
 
@@ -44,6 +47,10 @@ class _LoginPageState extends State<LoginPage> {
         verificationFailed: verificationfailed,
         codeSent: smsSent,
         codeAutoRetrievalTimeout: autoTimeout);
+    }else{
+      print('User Not Found!--$phoneNo FROM LOGINPAGE');
+    }
+    
   }
   //////////ui code from here////////////////
 
@@ -108,14 +115,12 @@ class _LoginPageState extends State<LoginPage> {
                           onChanged: (val) {
                             setState(() {
                               this.phoneNo = val;
-                              phoneNo="+91"+ phoneNo.toString();
+                              phoneNo = "+91" + phoneNo.toString();
                             });
                           },
                         ),
                         codeSent
-                            ? Padding(
-                                padding:
-                                    EdgeInsets.only(left: 25.0, right: 25.0),
+                            ? Container(
                                 child: TextFormField(
                                   keyboardType: TextInputType.phone,
                                   decoration:
@@ -127,28 +132,27 @@ class _LoginPageState extends State<LoginPage> {
                                   },
                                 ))
                             : Container(),
+                        SizedBox(height:10),
                         Padding(
                             padding: EdgeInsets.only(left: 25.0, right: 25.0),
-                            
-                            child: RaisedButton(
-                                child: Center(
-                                    child: codeSent
-                                        ? Text('Login')
-                                        : Text('Verify')),
-                                onPressed: () {
-                                  if (OtherMeth().CheckNum(phoneNo)==true) {
+                            child: Container(
+                               width: double.infinity,
+                               decoration: BoxDecoration(
+                                 color: Colors.blue[400],
+                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                              child: FlatButton(
+                                  child: Center(
+                                      child: codeSent
+                                          ? Text('Login')
+                                          : Text('Verify')),
+                                  onPressed: () {
                                     codeSent
-                                      ? AuthService().signInWithOTP(
-                                          smsCode, verificationId)
-                                      : verifyPhone(phoneNo);
-                                  } else {
-
-                                  }
-                                  
-                                
-                                })),
+                                        ? AuthService().signInWithOTP(
+                                            smsCode, verificationId)
+                                        : verifyPhone(phoneNo);
+                                  }),
+                            )),
                         SizedBox(height: 20),
-                        
                         SizedBox(
                           height: 10,
                         ),

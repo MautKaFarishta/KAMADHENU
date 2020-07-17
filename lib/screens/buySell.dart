@@ -14,7 +14,7 @@ class BuySellPortal extends State<Buysell> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Select Category"),
+          title: Text("Select Animal"),
           backgroundColor: Colors.blue.shade900,
         ),
         body: ListView(

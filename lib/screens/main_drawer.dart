@@ -1,9 +1,7 @@
+import 'package:Kamadhenu/screens/help.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './about.dart';
-import './profile.dart';
-import 'home.dart';
-import 'buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -13,26 +11,16 @@ class MainDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           DrawerHeader(
-            child: Text(
-              ' Hello UserNameHere',
-              style: TextStyle(color: Colors.white, fontSize: 25),
-            ),
+            child: Container(),
             decoration: BoxDecoration(
-              color: Colors.blue.shade500,
+              color: Colors.blue.shade900,
             ),
           ),
           ListTile(
             leading: Icon(Icons.input),
             title: Text('My Animals'),
             onTap: () => {
-              Navigator.of(context).pop(),
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        HomePage()), //Route to Create Acc PAge
-              ),
-            },
+              Navigator.of(context).pop(),},
           ),
           ListTile(
             leading: Icon(Icons.explore),
@@ -40,16 +28,15 @@ class MainDrawer extends StatelessWidget {
             onTap: () => {Navigator.pushNamed(context, '/portal')},
           ),
           ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Profile'),
+            leading: Icon(Icons.info),
+            title: Text('Help'),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => Buysell(), //Route to Create Acc PAge
-                ),
-              )
+                    builder: (context) => Help()), //Route to Create Acc PAge
+              ),
             },
           ),
           ListTile(
