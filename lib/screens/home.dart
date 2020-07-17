@@ -1,16 +1,14 @@
-import 'dart:async';
 
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
 import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
-import 'package:Kamadhenu/methods/database.dart';
 import 'package:Kamadhenu/models/user.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart' as A;
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main_drawer.dart';
+import 'notifications.dart';
 
 final userRef =Firestore.instance.collection('Users');
 KamadhenuUser currentUser = new KamadhenuUser();
@@ -23,10 +21,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   
- 
-  
-
-  StreamSubscription _subscription;
 
   KamadhenuUser getid(String foo){
     userID = foo;
@@ -38,21 +32,16 @@ class _HomePageState extends State<HomePage> {
       
   }
 
-KamadhenuUser getUser(String userID){
+ getUser(String userID){ 
 
    userRef.document(userID).get().then((DocumentSnapshot doc ) {
 
       setState(() {
-        currentUser = new KamadhenuUser(adhar: doc['adhar'],phoneNo: doc['mobile']);
-        currentUser.name=doc['name'];
-        print(currentUser.name);
-        currentUser.district=doc['District'];  
-        regn=doc['District'];
-        print(regn);
-      
+        currentUser = new KamadhenuUser(adhar: doc['adhar'],phoneNo: doc['mobile'],name:doc['name'] ,district: doc['District']);
+        
       }); 
 
-      return currentUser;
+      
 
     });
 
@@ -65,12 +54,14 @@ KamadhenuUser getUser(String userID){
   }
   
 
+
+  
+
+
   Widget build(BuildContext context) {
 
-    //currentUser = getUser(userID);
-
     return Scaffold(
-      drawer: MainDrawer(),
+      drawer: MainDrawer(),      
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           A.regn=currentUser.district;
@@ -89,6 +80,11 @@ KamadhenuUser getUser(String userID){
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
+              actions: <Widget>[IconButton(icon:Icon (Icons.notifications), onPressed: (){
+                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPanel(region:currentUser.district),),);
+                
+                              })],
               backgroundColor: Colors.blue.shade900,
               titleSpacing: 50,
               title: Text('Kamadhenu',style: TextStyle(fontSize:30),),

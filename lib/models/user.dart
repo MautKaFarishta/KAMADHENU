@@ -9,3 +9,9 @@ class KamadhenuUser{
   KamadhenuUser({this.phoneNo,this.adhar,this.district,this.land,this.name,this.region});
   
 }
+class Admin{
+  String name;
+  String address;
+
+}
+
