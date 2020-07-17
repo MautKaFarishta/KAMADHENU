@@ -9,6 +9,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart' as A;
 import 'package:Kamadhenu/Forms/add_animal.dart';
+import 'package:Kamadhenu/screens/AnimalInfo.dart' as AI;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main_drawer.dart';
 

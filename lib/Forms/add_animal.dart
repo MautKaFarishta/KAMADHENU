@@ -312,9 +312,9 @@ class AddAnimalForm extends State<AddAnimal> {
   Widget _calving() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Number of Calvings"),
-      keyboardType: TextInputType.phone,
+      keyboardType: TextInputType.number,
       validator: (value) {
-        if (value.length > 3) {
+        if (value.length > 8) {
           return "Please Enter Valid Information";
         }
       },
