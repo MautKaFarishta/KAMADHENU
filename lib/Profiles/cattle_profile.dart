@@ -11,6 +11,14 @@ class CatPro extends StatelessWidget {
   final String regn;
   CatPro({this.catID,this.regn});
 
+  getDate(date){
+
+    DateTime dOB = date.toDate();
+    var formattedDate=DateFormat.yMMMd().format(dOB);
+    return formattedDate;
+
+  }
+
   Widget getList(BuildContext context, DocumentSnapshot document){
 
     DateTime dOB = (document['Date']).toDate();
@@ -32,7 +40,7 @@ class CatPro extends StatelessWidget {
                 SizedBox(
                   width:10,
                 ),
-                Text(ldOB,style: TextStyle(fontSize:18,fontWeight: FontWeight.bold),),
+                Text(getDate(document['Date']),style: TextStyle(fontSize:18,fontWeight: FontWeight.bold),),
               ],
             ),
           ),
@@ -62,10 +70,6 @@ class CatPro extends StatelessWidget {
                 return new Text("Loading");
               }
               var catDoc = snapshot.data;
-              DateTime dOB = (catDoc['DOB']).toDate();
-              var ldOB=DateFormat.yMMMd().format(dOB);
-              DateTime dOC = (catDoc['DOB']).toDate();
-              var ldOC=DateFormat.yMMMd().format(dOC);
               return Center(
                 child: Container(
                   margin: EdgeInsets.all(10),
@@ -114,7 +118,7 @@ class CatPro extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height:10),
-                            Text('Birth : $ldOB',
+                            Text('Birth : ${getDate(catDoc['DOB'])}',
                               style: TextStyle(
                                 fontSize: 17,
                               ),
@@ -123,6 +127,7 @@ class CatPro extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height:20),
+                      catDoc['Gender']=='F'?
                       Container(
                         decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(
@@ -134,7 +139,7 @@ class CatPro extends StatelessWidget {
                                 fontSize: 17,
                               ),
                             ),
-                            Text('$ldOC',
+                            Text('${getDate(catDoc['Calving_Dates'])}',
                               style: TextStyle(
                                 fontSize: 17,
                               ),
@@ -148,7 +153,8 @@ class CatPro extends StatelessWidget {
                             SizedBox(height:10),
                           ]  
                         ),
-                      ),
+                      ):
+                      SizedBox(height:1),
                       SizedBox(height:20),
                       Container(
                         decoration:Deco().decoBox(Colors.blue.shade50),
@@ -188,8 +194,7 @@ class CatPro extends StatelessWidget {
                                 .where('CattleID',isEqualTo:catID)
                                 .snapshots(),
                               builder: (context, snapshot) {
-                                if (snapshot.data==null) return
-                                  Text("No Details are Added.",style: TextStyle(fontSize:20,fontWeight:FontWeight.bold),);
+                                if (snapshot.data==null) return const Text("Loading...");
                                   return ListView.builder(
                                     shrinkWrap: true,
                                     itemCount: snapshot.data.documents.length,
