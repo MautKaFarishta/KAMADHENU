@@ -71,10 +71,13 @@ KamadhenuUser getUser(String userID){
     //currentUser = getUser(userID);
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       drawer: MainDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           A.regn=currentUser.district;
+          A.ownerID=currentUser.phoneNo;
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -138,22 +141,19 @@ KamadhenuUser getUser(String userID){
           ];
         },
         body: Column(
-          children: <Widget>[
-            Deco().titleCon('Your Cattles'),
-            Center(
-              child: ListPage(userID: userID,regn: regn,),
+              children: <Widget>[
+                Deco().titleCon('Your Cattles'),
+                Center(
+        child: ListPage(),
+                ),
+              ],
             ),
-          ],
-        ),
       ),
     );
   }
 }
 
 class ListPage extends StatefulWidget {
-  String userID;
-  String regn;
-  ListPage({this.userID,this.regn});
   _ListPageState createState() => _ListPageState();
 }
 
@@ -178,52 +178,52 @@ class _ListPageState extends State<ListPage> {
           return CircularProgressIndicator();
         default:
           return new ListView(
-            shrinkWrap: true,
-            children:
-                snapshot.data.documents.map((DocumentSnapshot document) {
-              return FlatButton(
-                onPressed: () {
-                  print("${document['Species']} Button Pressed for Region $regn");
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                          CatPro(catID: document.documentID.toString(),regn: regn,)));
-                },
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 7),
-                    new Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.blue.shade50,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(5)),
-                          border: Border.all(
-                              width: 1.0, color: Colors.black38),
-                        ),
-                        child: Column(
-                          children: <Widget>[
-                            
-                            Text(
-                              'RFID:${document['RFID']}',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              document['Species'],
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              document['Breed'],
-                            ),
-                            Text(
-                                'Birth :${document['DOB'].toDate().toString()}'),
-                            SizedBox(height: 10),
-                          ],
-                        )),
-                  ],
-                ),
-              );
-            }).toList(),
-          );
+              shrinkWrap: true,
+              children:
+                  snapshot.data.documents.map((DocumentSnapshot document) {
+                return FlatButton(
+                  onPressed: () {
+                    print("${document['Species']} Button Pressed for Region $regn");
+                    Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+                CatPro(catID: document.documentID.toString(),regn: regn,)));
+                  },
+                  child: Column(
+                    children: <Widget>[
+          SizedBox(height: 7),
+          new Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade50,
+                    borderRadius:
+            BorderRadius.all(Radius.circular(5)),
+                    border: Border.all(
+            width: 1.0, color: Colors.black38),
+                  ),
+                  child: Column(
+                    children: <Widget>[
+          
+          Text(
+            'RFID:${document['RFID']}',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            '${document['Gender']}  ${document['Species']}',
+            style: TextStyle(fontSize: 20),
+          ),
+          Text(
+            document['Breed'],
+          ),
+          Text(
+              'Birth :${document['DOB'].toDate().toString()}'),
+          SizedBox(height: 10),
+                    ],
+                  )),
+                    ],
+                  ),
+                );
+              }).toList(),
+            );
       }
             },
           ),

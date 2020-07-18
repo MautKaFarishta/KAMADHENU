@@ -28,7 +28,7 @@ class DataBaseService {
   }
 
   updateCattle(String species, String breed, String gender, var dob,
-      var lastcalf, String calvings, bool pregn,String region) async{
+      var lastcalf, String calvings, bool pregn,String region,String ownerID,String note) async{
 
     final FirebaseUser user = await _auth.currentUser();
     final String uid = user.phoneNumber.toString();
@@ -44,6 +44,11 @@ class DataBaseService {
     }
     if (gender == 'M') {
       pregn = false;
+      calvings='Not Applicable';
+      lastcalf=null;
+    }
+    if (note==null){
+      note='No additional Information Added';
     }
     _firestore.collection('cattles').document(catID).setData({
       'RFID':'NA',
@@ -55,6 +60,8 @@ class DataBaseService {
       'Calving_Dates': lastcalf, 
       'Pregnent': pregn,
       'Region':regn,
+      'OwnerId':ownerID,
+      'more_details':note,
     });
     _firestore.collection('Users').document(uid).collection('cattles').document(catID).setData({
       'RFID':'NA',
@@ -63,12 +70,15 @@ class DataBaseService {
       'Gender': gender,
       'DOB': dob,
     });
-    _firestore.collection('Admin').document(regn).collection('cattles').document(catID).setData({
+    _firestore.collection('Admin').document(region).collection('cattles').document(catID).setData({
       'RFID':'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
       'DOB': dob,
+    });
+    _firestore.collection('Admin').document(region).updateData({
+      'ByApp_Reg': FieldValue.increment(1),
     });
   }
 

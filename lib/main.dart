@@ -20,6 +20,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: AuthService().handleAuth(),
+      routes: {
+         '/Buysell': (BuildContext ctx) => Buysell(),
+         '/portal': (BuildContext ctx) => Portal(),
+         '/AnimalInfo': (BuildContext ctx) => AnimalInfo(),
+         '/ImagePicker': (BuildContext ctx) => ImagePicker(),
+       },
     );
   }
 }
