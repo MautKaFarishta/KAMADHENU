@@ -1,9 +1,12 @@
+// import 'dart:js';
+
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/screens/AnimalInfo.dart';
 import 'package:Kamadhenu/screens/ImagePicker.dart';
 import 'package:Kamadhenu/screens/Portal.dart';
 import 'package:Kamadhenu/screens/buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
+import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,7 +22,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthService().handleAuth(),
+      home: HomePage(),
+      routes: {
+        '/portal': (BuildContext ctx) => Portal(),
+        '/ImagePicker': (BuildContext ctx) => ImagePicker(),
+      },
     );
   }
 }

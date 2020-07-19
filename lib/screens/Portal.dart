@@ -28,6 +28,7 @@ class PortalDisp extends State<Portal> {
   // }
 
   Widget build(BuildContext context) {
+    MediaQueryData device = MediaQuery.of(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("Animals For Sell"),
@@ -70,15 +71,12 @@ class PortalDisp extends State<Portal> {
                           borderOnForeground: true,
                           child: Column(
                             children: <Widget>[
-                              Container(
-                                  child: SingleChildScrollView(
+                              Expanded(
                                 child: Image.network(
                                   snapshot.data.documents[index].data["url"],
-                                  // fit: BoxFit.scaleDown,
-                                  height: 120,
-                                  width: 200,
+                                  fit: BoxFit.scaleDown,
                                 ),
-                              )),
+                              ),
                               Text(
                                 "Price:" +
                                     snapshot
