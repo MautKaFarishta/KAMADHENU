@@ -75,7 +75,7 @@ class PortalDisp extends State<Portal> {
                                 child: Image.network(
                                   snapshot.data.documents[index].data["url"],
                                   // fit: BoxFit.scaleDown,
-                                  height: 120,
+                                  height: 80,
                                   width: 200,
                                 ),
                               )),

@@ -1,4 +1,3 @@
-
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
 import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
@@ -6,12 +5,11 @@ import 'package:Kamadhenu/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart' as A;
 import 'package:Kamadhenu/Forms/add_animal.dart';
-import 'package:Kamadhenu/screens/AnimalInfo.dart' as AI;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'main_drawer.dart';
 import 'notifications.dart';
 
-final userRef =Firestore.instance.collection('Users');
+final userRef = Firestore.instance.collection('Users');
 KamadhenuUser currentUser = new KamadhenuUser();
 String userID;
 String regn;
@@ -21,31 +19,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  
-
-  KamadhenuUser getid(String foo){
+  KamadhenuUser getid(String foo) {
     userID = foo;
     setState(() {
-      userID=foo;
+      userID = foo;
     });
     print(userID);
     currentUser = getUser(userID);
-      
   }
 
- getUser(String userID){ 
-
-   userRef.document(userID).get().then((DocumentSnapshot doc ) {
-
+  getUser(String userID) {
+    userRef.document(userID).get().then((DocumentSnapshot doc) {
       setState(() {
-        currentUser = new KamadhenuUser(adhar: doc['adhar'],phoneNo: doc['mobile'],name:doc['name'] ,district: doc['District']);
-        
-      }); 
-
-      
-
+        currentUser = new KamadhenuUser(
+            adhar: doc['adhar'],
+            phoneNo: doc['mobile'],
+            name: doc['name'],
+            district: doc['District']);
+      });
     });
-
   }
 
   @override
@@ -53,22 +45,16 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     AuthService().getCurrentUID().then((value) => getid(value));
   }
-  
-
-
-  
-
 
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
       drawer: MainDrawer(),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          A.regn=currentUser.district;
-          A.ownerID=currentUser.phoneNo;
+          A.regn = currentUser.district;
+          A.ownerID = currentUser.phoneNo;
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -84,66 +70,75 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              actions: <Widget>[IconButton(icon:Icon (Icons.notifications), onPressed: (){
-                
-                Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPanel(region:currentUser.district),),);
-                
-                              })],
+              actions: <Widget>[
+                IconButton(
+                    icon: Icon(Icons.notifications),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              NotificationPanel(region: currentUser.district),
+                        ),
+                      );
+                    })
+              ],
               backgroundColor: Colors.blue.shade900,
               titleSpacing: 50,
-              title: Text('Kamadhenu',style: TextStyle(fontSize:30),),
+              title: Text(
+                'Kamadhenu',
+                style: TextStyle(fontSize: 30),
+              ),
               expandedHeight: 170.0,
               floating: false,
               pinned: true,
               snap: false,
               flexibleSpace: FlexibleSpaceBar(
-                background: currentUser.name==null?
-
-                          CircularProgressIndicator():
-                
-                          Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SizedBox(height: 30),
-                            Text(
-                              '${currentUser.name}',
-                              style: TextStyle(
-                                fontSize: 22,
-                                color: Colors.white54,
-                                fontWeight: FontWeight.bold,
-                              ),
+                background: currentUser.name == null
+                    ? CircularProgressIndicator()
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(height: 30),
+                          Text(
+                            '${currentUser.name}',
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.white54,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              '${currentUser.phoneNo}',
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.white54,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          Text(
+                            '${currentUser.phoneNo}',
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white54,
+                              fontWeight: FontWeight.bold,
                             ),
-                            Text(
-                              '${currentUser.district}',
-                              style: TextStyle(
-                                fontSize: 19,
-                                color: Colors.white54,
-                                fontWeight: FontWeight.bold,
-                              ),
+                          ),
+                          Text(
+                            '${currentUser.district}',
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white54,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
               ),
             ),
           ];
         },
         body: Column(
-              children: <Widget>[
-                Deco().titleCon('Your Cattles'),
-                Center(
-        child: ListPage(),
-                ),
-              ],
+          children: <Widget>[
+            Deco().titleCon('Your Cattles',),
+            Center(
+              child: ListPage(),
             ),
+          ],
+        ),
       ),
     );
   }
@@ -154,76 +149,89 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  
   Widget build(BuildContext context) {
-
     return Center(
       child: Container(
-          padding: const EdgeInsets.only(left:10.0,right: 10,bottom: 10),
-          child: StreamBuilder<QuerySnapshot>(
-            stream: Firestore.instance
-        .collection('Users')
-        .document(userID)
-        .collection('cattles')
-        .snapshots(),
-            builder:
-        (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-      if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
-      switch (snapshot.connectionState) {
-        case ConnectionState.waiting:
-          return CircularProgressIndicator();
-        default:
-          return new ListView(
-              shrinkWrap: true,
-              children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
-                return FlatButton(
-                  onPressed: () {
-                    print("${document['Species']} Button Pressed for Region $regn");
-                    Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-                CatPro(catID: document.documentID.toString(),regn: regn,)));
-                  },
-                  child: Column(
-                    children: <Widget>[
-          SizedBox(height: 7),
-          new Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius:
-            BorderRadius.all(Radius.circular(5)),
-                    border: Border.all(
-            width: 1.0, color: Colors.black38),
-                  ),
-                  child: Column(
-                    children: <Widget>[
-          
-          Text(
-            'RFID:${document['RFID']}',
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            '${document['Gender']}  ${document['Species']}',
-            style: TextStyle(fontSize: 20),
-          ),
-          Text(
-            document['Breed'],
-          ),
-          Text(
-              'Birth :${document['DOB'].toDate().toString()}'),
-          SizedBox(height: 10),
-                    ],
-                  )),
-                    ],
-                  ),
+        padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
+        child: StreamBuilder<QuerySnapshot>(
+          stream: Firestore.instance
+              .collection('Users')
+              .document(userID)
+              .collection('cattles')
+              .snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return CircularProgressIndicator();
+              default:
+                return new ListView(
+                  shrinkWrap: true,
+                  children:
+                      snapshot.data.documents.map((DocumentSnapshot document) {
+                    return FlatButton(
+                      onPressed: () {
+                        print(
+                            "${document['Species']} Button Pressed for Region $regn");
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => CatPro(
+                                  catID: document.documentID.toString(),
+                                  regn: regn,
+                                )));
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(height: 7),
+                          
+                          new Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.blue.shade50,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    width: 1.0, color: Colors.black38),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(width:5.0),
+                                  CircleAvatar(
+                                    backgroundImage:
+                                        AssetImage("assets/tileimages/${document['Species']}.jpg"),
+                                    radius: 30.0,
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'RFID:${document['RFID']}',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text(
+                                        '${document['Gender']}  ${document['Species']}',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text(
+                                        document['Breed'],
+                                      ),
+                                      Text(
+                                          'Birth :${document['DOB'].toDate().toString()}'),
+                                      SizedBox(height: 10),
+                                    ],
+                                  ),
+                                  SizedBox(width:30.0),
+                                  Icon(Icons.chevron_right,color:Colors.black38,size:40.0),
+                                ],
+                              )),
+                        ],
+                      ),
+                    );
+                  }).toList(),
                 );
-              }).toList(),
-            );
-      }
-            },
-          ),
+            }
+          },
         ),
+      ),
     );
   }
 }
