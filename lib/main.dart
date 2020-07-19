@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: AuthService().handleAuth(),
       routes: {
         '/portal': (BuildContext ctx) => Portal(),
         '/ImagePicker': (BuildContext ctx) => ImagePicker(),
