@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:Kamadhenu/UI/AnimalProfile.dart' as AP;
 
 String animal_id;
-bool sell = true;
 String price;
 String breed;
 File imageFile;
@@ -51,7 +51,7 @@ class Animal_Info extends State<AnimalInfo> {
               child: ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: Text("Galley"),
+                    child: Text("Gallery"),
                     onTap: () {
                       _openGallery(context);
                     },
@@ -72,22 +72,6 @@ class Animal_Info extends State<AnimalInfo> {
             ),
           );
         });
-  }
-
-  Widget _flatButton() {
-    return FlatButton(
-        highlightColor: Colors.green[300],
-        color: Colors.green[200],
-        child: Text(
-          "Sell",
-          textAlign: TextAlign.center,
-          style: TextStyle(fontStyle: FontStyle.italic),
-        ),
-        onPressed: () => {
-              setState(() {
-                sell = false;
-              })
-            });
   }
 
   Widget _priceForm() {
@@ -119,24 +103,13 @@ class Animal_Info extends State<AnimalInfo> {
   }
 
   Widget build(BuildContext context) {
-    if (sell == true) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Animal Information"),
-        ),
-        body: Center(
-          child: _flatButton(),
-        ),
-      );
-    } else {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Animal Information"),
-        ),
-        body: Container(
-          child: _priceForm(),
-        ),
-      );
-    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Animal Information"),
+      ),
+      body: Center(
+        child: _priceForm(),
+      ),
+    );
   }
 }

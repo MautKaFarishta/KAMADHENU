@@ -8,6 +8,7 @@ import 'package:Kamadhenu/screens/buySell.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:flutter/material.dart';
+import 'package:Kamadhenu/UI/AnimalProfile.dart';
 
 void main() {
   //Main Function
@@ -22,10 +23,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: AuthService().handleAuth(),
+      // home: AuthService().handleAuth(),
       routes: {
+        '/': (BuildContext ctx) => AuthService().handleAuth(),
         '/portal': (BuildContext ctx) => Portal(),
         '/ImagePicker': (BuildContext ctx) => ImagePicker(),
+        '/animalProfile': (BuildContext ctx) => AnimalProfile(),
+        '/animalInfo': (BuildContext ctx) => AnimalInfo(),
       },
     );
   }

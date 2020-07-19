@@ -4,6 +4,7 @@ import 'package:Kamadhenu/Forms/create.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Kamadhenu/UI/AnimalProfile.dart' as AP;
 
 String
     species_name; //Used from Buysell.dart to tell which animal is to be fetched
@@ -67,35 +68,44 @@ class PortalDisp extends State<Portal> {
                     itemBuilder: (BuildContext context, int index) {
                       return GridTile(
                         child: Card(
-                          color: Colors.blue[50],
-                          borderOnForeground: true,
-                          child: Column(
-                            children: <Widget>[
-                              Expanded(
-                                child: Image.network(
-                                  snapshot.data.documents[index].data["url"],
-                                  fit: BoxFit.scaleDown,
-                                ),
+                            color: Colors.blue[50],
+                            borderOnForeground: true,
+                            child: GestureDetector(
+                              child: Column(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Image.network(
+                                      snapshot
+                                          .data.documents[index].data["url"],
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Price:" +
+                                        snapshot.data.documents[index]
+                                            .data["price"],
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Text(
+                                    "Breed:" +
+                                        snapshot.data.documents[index]
+                                            .data["Breed"],
+                                    style:
+                                        TextStyle(fontStyle: FontStyle.italic),
+                                    textScaleFactor: 1.5,
+                                    textAlign: TextAlign.center,
+                                  )
+                                ],
                               ),
-                              Text(
-                                "Price:" +
-                                    snapshot
-                                        .data.documents[index].data["price"],
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                                textScaleFactor: 1.5,
-                                textAlign: TextAlign.center,
-                              ),
-                              Text(
-                                "Breed:" +
-                                    snapshot
-                                        .data.documents[index].data["Breed"],
-                                style: TextStyle(fontStyle: FontStyle.italic),
-                                textScaleFactor: 1.5,
-                                textAlign: TextAlign.center,
-                              )
-                            ],
-                          ),
-                        ),
+                              onTap: () {
+                                AP.animal = snapshot
+                                    .data.documents[index].data["Breed"];
+                                Navigator.pushNamed(context, '/animalProfile');
+                              },
+                            )),
                       );
                     });
               } else if (snapshot.connectionState == ConnectionState.none) {
