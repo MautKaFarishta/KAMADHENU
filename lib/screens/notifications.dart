@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 class NotificationPanel extends StatelessWidget {
@@ -12,6 +13,14 @@ class NotificationPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    getDate(date){
+
+    DateTime dOB = date.toDate();
+    var formattedDate=DateFormat.yMMMd().format(dOB);
+    return formattedDate;
+
+  }
     
     return Scaffold(
       appBar: AppBar(
@@ -21,7 +30,7 @@ class NotificationPanel extends StatelessWidget {
               print(today_date);
               Navigator.pop(context);
             }),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.blue.shade900,
         title: Text("All Notifications"),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -32,7 +41,6 @@ class NotificationPanel extends StatelessWidget {
             .where('Ending Date', isGreaterThan: today_date)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
@@ -42,7 +50,9 @@ class NotificationPanel extends StatelessWidget {
                 shrinkWrap: true,
                 children:
                     snapshot.data.documents.map((DocumentSnapshot document) {
-                   
+                    var endDate = document['Starting Date'].toDate();
+                    var diff =today_date.difference(endDate).inDays;
+
                   return FlatButton(
                     onPressed: () {
                       print("${document.documentID} Button Pressed");
@@ -54,7 +64,7 @@ class NotificationPanel extends StatelessWidget {
                         new Container(
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Colors.blue.shade50,
+                              color: Colors.blue.shade200,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),
                               border:
@@ -71,7 +81,8 @@ class NotificationPanel extends StatelessWidget {
                                   style: TextStyle(fontSize: 15),
                                 ),
                                 Text(
-                                    'End Date:${document['Ending Date'].toDate().toString()}'),
+                                    'End Date:${getDate(document['Ending Date'])}'),
+                                Text('$diff days ago',style: TextStyle(fontSize:12,fontStyle: FontStyle.italic),),
                                 SizedBox(height: 10),
                               ],
                             )),

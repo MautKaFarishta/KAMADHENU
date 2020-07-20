@@ -453,7 +453,7 @@ class AddAnimalForm extends State<AddAnimal> {
                           decoration: Deco().decoBox(Colors.blue.shade50),
                           child: Column(
                             children: <Widget>[
-                              Deco().titleCon('PREGNENCY DETAILS'),
+                              Deco().titleCon('REPRODUCTION DETAILS'),
                               _calving(),
                               SizedBox(height: 15),
                               _checkPre(),

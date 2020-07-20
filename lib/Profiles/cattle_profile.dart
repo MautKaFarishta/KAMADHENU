@@ -8,8 +8,7 @@ import '../Forms/addInfo.dart' as A;
 
 class CatPro extends StatelessWidget {
   final String catID;
-  final String regn;
-  CatPro({this.catID,this.regn});
+  CatPro({this.catID});
 
   getDate(date){
 
@@ -53,11 +52,15 @@ class CatPro extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
-    print('cattle profile of $catID in region $regn');
     return Scaffold(
       appBar: AppBar(
         title: Text('Cattle Profile'),
         backgroundColor: Colors.blue.shade900,  
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: SingleChildScrollView(
           child: StreamBuilder(
@@ -164,7 +167,7 @@ class CatPro extends StatelessWidget {
                             StreamBuilder(
                               stream:Firestore.instance
                                 .collection('Admin')
-                                .document(regn)
+                                .document(catDoc['Region'])
                                 .collection('vaccine_details')
                                 .where('CattleID',isEqualTo:catID)
                                 .snapshots(),
@@ -189,7 +192,7 @@ class CatPro extends StatelessWidget {
                             StreamBuilder(
                               stream:Firestore.instance
                                 .collection('Admin')
-                                .document(regn)
+                                .document(catDoc['Region'])
                                 .collection('pregnency_details')
                                 .where('CattleID',isEqualTo:catID)
                                 .snapshots(),
@@ -222,7 +225,7 @@ class CatPro extends StatelessWidget {
                           ),
                           onPressed: (){
                             A.catID = catID.toString(); 
-                            A.region=regn;
+                            A.region=catDoc['Region'];
                             print('Adding info for ${A.catID} in Region ${A.region}');
                             Navigator.push (
                                context,

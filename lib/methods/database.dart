@@ -50,6 +50,7 @@ class DataBaseService {
     if (note==null){
       note='No additional Information Added';
     }
+    print(ownerID);
     _firestore.collection('cattles').document(catID).setData({
       'RFID':'NA',
       'Species': species,

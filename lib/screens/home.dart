@@ -10,7 +10,7 @@ import 'main_drawer.dart';
 import 'notifications.dart';
 
 final userRef = Firestore.instance.collection('Users');
-KamadhenuUser currentUser = new KamadhenuUser();
+KamadhenuUser currentUser = new KamadhenuUser(name: 'NotYet');
 String userID;
 String regn;
 
@@ -42,8 +42,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    super.initState();
     AuthService().getCurrentUID().then((value) => getid(value));
+    super.initState();
+
   }
 
   Widget build(BuildContext context) {
@@ -85,16 +86,18 @@ class _HomePageState extends State<HomePage> {
               ],
               backgroundColor: Colors.blue.shade900,
               titleSpacing: 50,
-              title: Text(
-                'Kamadhenu',
-                style: TextStyle(fontSize: 30),
+              title: Center(
+                child: Text(
+                  'Kamadhenu',
+                  style: TextStyle(fontSize: 28),
+                ),
               ),
               expandedHeight: 170.0,
               floating: false,
               pinned: true,
               snap: false,
               flexibleSpace: FlexibleSpaceBar(
-                background: currentUser.name == null
+                background: currentUser.name == 'NotYet'
                     ? CircularProgressIndicator()
                     : Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -152,7 +155,7 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
+        //padding: const EdgeInsets.only(left: 10.0, right: 10, bottom: 10),
         child: StreamBuilder<QuerySnapshot>(
           stream: Firestore.instance
               .collection('Users')
@@ -164,7 +167,7 @@ class _ListPageState extends State<ListPage> {
             if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator());
               default:
                 return new ListView(
                   shrinkWrap: true,
@@ -172,12 +175,10 @@ class _ListPageState extends State<ListPage> {
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return FlatButton(
                       onPressed: () {
-                        print(
-                            "${document['Species']} Button Pressed for Region $regn");
+                        
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => CatPro(
                                   catID: document.documentID.toString(),
-                                  regn: regn,
                                 )));
                       },
                       child: Column(
@@ -185,44 +186,44 @@ class _ListPageState extends State<ListPage> {
                           SizedBox(height: 7),
                           
                           new Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)),
-                                border: Border.all(
-                                    width: 1.0, color: Colors.black38),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  SizedBox(width:5.0),
-                                  CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage("assets/tileimages/${document['Species']}.jpg"),
-                                    radius: 30.0,
-                                  ),
-                                  Column(
-                                    children: <Widget>[
-                                      Text(
-                                        'RFID:${document['RFID']}',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Text(
-                                        '${document['Gender']}  ${document['Species']}',
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      Text(
-                                        document['Breed'],
-                                      ),
-                                      Text(
-                                          'Birth :${document['DOB'].toDate().toString()}'),
-                                      SizedBox(height: 10),
-                                    ],
-                                  ),
-                                  SizedBox(width:30.0),
-                                  Icon(Icons.chevron_right,color:Colors.black38,size:40.0),
-                                ],
-                              )),
+                                //width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue.shade50,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5)),
+                                  border: Border.all(
+                                      width: 1.0, color: Colors.black38),
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    SizedBox(width:5.0),
+                                    CircleAvatar(
+                                      backgroundImage:
+                                          AssetImage("assets/tileimages/${document['Species']}.jpg"),
+                                      radius: 30.0,
+                                    ),
+                                    Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'RFID:${document['RFID']}',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Text(
+                                          '${document['Gender']}  ${document['Species']}',
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Text(
+                                          document['Breed'],
+                                        ),
+                                        Text(
+                                            'Birth :${document['DOB'].toDate().toString()}'),
+                                        SizedBox(height: 10),
+                                      ],
+                                    ),
+                                    SizedBox(width:20.0),
+                                    Icon(Icons.chevron_right,color:Colors.black38,size:40.0),
+                                  ],
+                                )),
                         ],
                       ),
                     );

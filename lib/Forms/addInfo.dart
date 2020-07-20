@@ -216,7 +216,7 @@ class _MoreInfoState extends State<MoreInfo> {
               onPressed: () {
                 
                 Navigator.of(context).pop();
-                Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID,regn: region,)),);
+                Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID)),);
               },
             ),
           ],
