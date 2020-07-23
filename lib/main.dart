@@ -23,9 +23,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: AuthService().handleAuth(),
+      home: AuthService().handleAuth(),
       routes: {
-        '/': (BuildContext ctx) => AuthService().handleAuth(),
+        // '/': (BuildContext ctx) => AuthService().handleAuth(),
+        '/home': (BuildContext ctx) => HomePage(),
         '/portal': (BuildContext ctx) => Portal(),
         '/ImagePicker': (BuildContext ctx) => ImagePicker(),
         '/animalProfile': (BuildContext ctx) => AnimalProfile(),

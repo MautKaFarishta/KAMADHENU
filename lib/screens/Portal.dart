@@ -8,7 +8,6 @@ import 'package:Kamadhenu/UI/AnimalProfile.dart' as AP;
 
 String
     species_name; //Used from Buysell.dart to tell which animal is to be fetched
-final String image = "cow/H2.jpg";
 
 class Portal extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -101,8 +100,12 @@ class PortalDisp extends State<Portal> {
                                 ],
                               ),
                               onTap: () {
-                                AP.animal = snapshot
-                                    .data.documents[index].data["Breed"];
+                                AP.userID = snapshot
+                                    .data.documents[index].data['SellerID'];
+                                AP.imageUrl =
+                                    snapshot.data.documents[index].data['url'];
+                                AP.cattlesID =
+                                    snapshot.data.documents[index].documentID;
                                 Navigator.pushNamed(context, '/animalProfile');
                               },
                             )),

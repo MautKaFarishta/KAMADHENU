@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:Kamadhenu/Forms/addInfo.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -28,8 +30,7 @@ class DataBaseService {
   }
 
   updateCattle(String species, String breed, String gender, var dob,
-      var lastcalf, String calvings, bool pregn,String region) async{
-
+      var lastcalf, String calvings, bool pregn, String region) async {
     final FirebaseUser user = await _auth.currentUser();
     final String uid = user.phoneNumber.toString();
     print(uid);
@@ -46,25 +47,36 @@ class DataBaseService {
       pregn = false;
     }
     _firestore.collection('cattles').document(catID).setData({
-      'RFID':'NA',
+      'RFID': 'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
       'DOB': dob,
       'Calvings': calvings,
-      'Calving_Dates': lastcalf, 
+      'Calving_Dates': lastcalf,
       'Pregnent': pregn,
-      'Region':regn,
+      'Region': regn,
+      'OnSale': false,
     });
-    _firestore.collection('Users').document(uid).collection('cattles').document(catID).setData({
-      'RFID':'NA',
+    _firestore
+        .collection('Users')
+        .document(uid)
+        .collection('cattles')
+        .document(catID)
+        .setData({
+      'RFID': 'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
       'DOB': dob,
     });
-    _firestore.collection('Admin').document(regn).collection('cattles').document(catID).setData({
-      'RFID':'NA',
+    _firestore
+        .collection('Admin')
+        .document(regn)
+        .collection('cattles')
+        .document(catID)
+        .setData({
+      'RFID': 'NA',
       'Species': species,
       'Breed': breed,
       'Gender': gender,
@@ -72,29 +84,34 @@ class DataBaseService {
     });
   }
 
-  updateEvent(String region,String catID,String detailType,String specificDetail,var detailDate,String note){
-
+  updateEvent(String region, String catID, String detailType,
+      String specificDetail, var detailDate, String note) {
     String totalCount;
 
-    if(note==null){
+    if (note == null) {
       note = 'No Details Added';
     }
 
-    _firestore.collection('Admin').document(region).collection(detailType).document().setData({
-      'CattleID':catID.toString(),
-      'DetailType':detailType,
-      'Detail':specificDetail,
-      'Date':detailDate,
-      'Note':note,
+    _firestore
+        .collection('Admin')
+        .document(region)
+        .collection(detailType)
+        .document()
+        .setData({
+      'CattleID': catID.toString(),
+      'DetailType': detailType,
+      'Detail': specificDetail,
+      'Date': detailDate,
+      'Note': note,
     });
 
-    if(detailType=='vaccine_details'){
-      totalCount='TotalVaccines';
-    }else{
-      if (specificDetail=='newBorn') {
-        totalCount='PregnencyCount';
-      }else if(specificDetail=='AI' || specificDetail=='PD') {
-        totalCount='PregnencyDiagnosis';
+    if (detailType == 'vaccine_details') {
+      totalCount = 'TotalVaccines';
+    } else {
+      if (specificDetail == 'newBorn') {
+        totalCount = 'PregnencyCount';
+      } else if (specificDetail == 'AI' || specificDetail == 'PD') {
+        totalCount = 'PregnencyDiagnosis';
       }
     }
 
@@ -102,6 +119,5 @@ class DataBaseService {
       totalCount: FieldValue.increment(1),
       specificDetail: FieldValue.increment(1),
     });
-
   }
 }

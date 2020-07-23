@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Forms/addInfo.dart' as A;
 import 'package:Kamadhenu/screens/AnimalInfo.dart' as AI;
+import 'package:Kamadhenu/screens/ImagePicker.dart' as IP;
 
 class CatPro extends StatelessWidget {
   final String catID;
@@ -46,6 +49,43 @@ class CatPro extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _buyInfo(DocumentSnapshot doc, BuildContext context) {
+    if (!doc['OnSale']) {
+      return RaisedButton(
+        highlightColor: Colors.blue[200],
+        color: Colors.green[200],
+        child: Text(
+          "Sell",
+          textScaleFactor: 1.2,
+        ),
+        onPressed: () {
+          IP.currID = Firestore.instance.collection('cattles').document(catID);
+          AI.breed = '${doc['Breed']}';
+          AI.animal_id = '${doc['Species']}';
+          Navigator.pushNamed(context, "/animalInfo");
+        },
+      );
+    } else {
+      return RaisedButton(
+          highlightColor: Colors.blue[200],
+          color: Colors.red[200],
+          child: Text(
+            "Remove from sale",
+            textScaleFactor: 1.2,
+          ),
+          onPressed: () {
+            Firestore.instance
+                .collection('cattlesForSale')
+                .document(catID)
+                .delete();
+            Firestore.instance
+                .collection('cattles')
+                .document(catID)
+                .setData({'OnSale': false}, merge: true);
+          });
+    }
   }
 
   Widget build(BuildContext context) {
@@ -245,19 +285,7 @@ class CatPro extends StatelessWidget {
                           },
                         ),
                       ),
-                      RaisedButton(
-                        highlightColor: Colors.blue[200],
-                        color: Colors.green[200],
-                        child: Text(
-                          "Sell",
-                          textScaleFactor: 1.2,
-                        ),
-                        onPressed: () {
-                          AI.breed = '${catDoc['Breed']}';
-                          AI.animal_id = '${catDoc['Species']}';
-                          Navigator.pushNamed(context, "/animalInfo");
-                        },
-                      ),
+                      _buyInfo(catDoc, context),
                     ],
                   ),
                 ),

@@ -5,6 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'AnimalInfo.dart' as AI;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Kamadhenu/Profiles/cattle_profile.dart' as CP;
+import 'package:Kamadhenu/screens/home.dart' as home;
+
+DocumentReference currID;
 
 class ImagePicker extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -27,7 +31,10 @@ class _ImagePicker extends State<ImagePicker> {
                   "Profile of your cattle in Buy/Sell Portal has been created"),
               RaisedButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  currID.setData({'OnSale': true}, merge: true);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                   Navigator.pushNamed(context, '/portal');
                 },
                 child: Text("OK"),
@@ -46,131 +53,6 @@ class _ImagePicker extends State<ImagePicker> {
       appBar: AppBar(
         title: Text("Set Image"),
       ),
-      // body: Column(
-      //   children: <Widget>[
-      //     GridView.builder(
-      //         shrinkWrap: true,
-      //         padding: const EdgeInsets.all(0),
-      //         itemCount: listOfImage.length,
-      //         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-      //           crossAxisCount: 3,
-      //           mainAxisSpacing: 2,
-      //           crossAxisSpacing: 2,
-      //         ),
-      //         itemBuilder: (BuildContext, int index) {
-      //           return GridTile(
-      //             child: Material(
-      //               child: GestureDetector(
-      //                 child: Stack(
-      //                   children: <Widget>[
-      //                     this.images == listOfImage[index].assetName ||
-      //                             listOfStr
-      //                                 .contains(listOfImage[index].assetName)
-      //                         ? Positioned.fill(
-      //                             child: Opacity(
-      //                             opacity: 0.7,
-      //                             child: Image.asset(
-      //                               listOfImage[index].assetName,
-      //                               fit: BoxFit.fill,
-      //                             ),
-      //                           ))
-      //                         : Positioned.fill(
-      //                             child: Opacity(
-      //                             opacity: 1.0,
-      //                             child: Image.asset(
-      //                               listOfImage[index].assetName,
-      //                               fit: BoxFit.fill,
-      //                             ),
-      //                           )),
-      //                     this.images == listOfImage[index].assetName ||
-      //                             listOfStr
-      //                                 .contains(listOfImage[index].assetName)
-      //                         ? Positioned(
-      //                             left: 0,
-      //                             bottom: 0,
-      //                             child: Icon(
-      //                               Icons.check_circle,
-      //                               color: Colors.green,
-      //                             ))
-      //                         : Visibility(
-      //                             visible: false,
-      //                             child: Icon(
-      //                               Icons.check_circle_outline,
-      //                               color: Colors.black,
-      //                             ),
-      //                           )
-      //                   ],
-      //                 ),
-      //                 onTap: () => {
-      //                   setState(() {
-      //                     if (listOfStr
-      //                         .contains(listOfImage[index].assetName)) {
-      //                       this.clicked = false;
-      //                       listOfStr.remove(listOfImage[index].assetName);
-      //                       this.images = null;
-      //                     } else {
-      //                       this.images = listOfImage[index].assetName;
-      //                       listOfStr.add(this.images);
-      //                       this.clicked = true;
-      //                     }
-      //                   })
-      //                 },
-      //               ),
-      //             ),
-      //           );
-      //         }),
-      //     Builder(builder: (context) {
-      //       return RaisedButton(
-      //         child: Text("Upload Images"),
-      //         onPressed: () => {
-      //           setState(() {
-      //             this.isLoading = true;
-      //           }),
-      //           listOfStr.forEach((img) async {
-      //             String imageName = img
-      //                 .substring(img.lastIndexOf('/'), img.lastIndexOf("."))
-      //                 .replaceAll('/', '');
-
-      //             final Directory systemTempDir = Directory.systemTemp;
-      //             final byteData = await rootBundle.load(img);
-
-      //             final file = File('${systemTempDir.path}/$imageName.jpeg');
-      //             await file.writeAsBytes(byteData.buffer.asUint8List(
-      //                 byteData.offsetInBytes, byteData.lengthInBytes));
-      //             StorageTaskSnapshot snapshot = await storage
-      //                 .ref()
-      //                 .child("images/$imageName")
-      //                 .putFile(AI.imageFile)
-      //                 .onComplete;
-      //             if (snapshot.error == null) {
-      //               final String downloadUrl =
-      //                   await snapshot.ref.getDownloadURL();
-      //               await Firestore.instance
-      //                   .collection("cattlesForSale")
-      //                   .document()
-      //                   .setData({
-      //                 "url": downloadUrl,
-      //                 "name": imageName,
-      //                 "price": AI.price,
-      //                 "ID": AI.animal_id,
-      //                 "Breed": AI.breed,
-      //               });
-
-      //               setState(() {
-      //                 isLoading = false;
-      //               });
-      //               final snackBar = SnackBar(content: Text("yay!! success"));
-      //               Scaffold.of(context).showSnackBar(snackBar);
-      //             } else {
-      //               print("error from image repo");
-      //               throw ('file is not an image');
-      //             }
-      //           })
-      //         },
-      //       );
-      //     })
-      //   ],
-      // ),
       body: Column(
         children: <Widget>[
           Padding(
@@ -192,12 +74,13 @@ class _ImagePicker extends State<ImagePicker> {
                 final String downloadUrl = await snapshot.ref.getDownloadURL();
                 await Firestore.instance
                     .collection("cattlesForSale")
-                    .document()
+                    .document("${currID.documentID}")
                     .setData({
                   "url": downloadUrl,
                   "price": AI.price,
                   "ID": AI.animal_id,
                   "Breed": AI.breed,
+                  "SellerID": home.userID,
                 });
                 setState(() {});
               }

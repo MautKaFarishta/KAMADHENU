@@ -45,9 +45,8 @@ class _HomePageState extends State<HomePage> {
         regn = doc['District'];
         print(regn);
       });
-
-      return currentUser;
     });
+    return currentUser;
   }
 
   @override

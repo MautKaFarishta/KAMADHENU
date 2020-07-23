@@ -23,7 +23,7 @@ class AnimalInfo extends StatefulWidget {
 class Animal_Info extends State<AnimalInfo> {
   _openGallery(BuildContext context) async {
     final picture = await ImagePicker()
-        .getImage(source: ImageSource.gallery, maxHeight: 200, maxWidth: 200);
+        .getImage(source: ImageSource.gallery, maxHeight: 400, maxWidth: 400);
     this.setState(() {
       imageFile = File(picture.path);
     });
@@ -33,7 +33,7 @@ class Animal_Info extends State<AnimalInfo> {
 
   _openCamera(BuildContext context) async {
     var picture = await ImagePicker()
-        .getImage(source: ImageSource.camera, maxHeight: 200, maxWidth: 200);
+        .getImage(source: ImageSource.camera, maxHeight: 400, maxWidth: 400);
     this.setState(() {
       imageFile = File(picture.path);
     });
