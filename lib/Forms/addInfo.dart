@@ -12,7 +12,6 @@ class MoreInfo extends StatefulWidget {
 }
 
 class _MoreInfoState extends State<MoreInfo> {
-
   String detailType;
   String specificDetail;
   var detailDate = new DateTime.now();
@@ -39,7 +38,7 @@ class _MoreInfoState extends State<MoreInfo> {
                 ),
               ],
               onChanged: (value) {
-                detailType= value;
+                detailType = value;
                 //print(_species);
                 setState(() {
                   detailType = value;
@@ -76,7 +75,7 @@ class _MoreInfoState extends State<MoreInfo> {
                   ),
                 ],
                 onChanged: (String value) {
-                 specificDetail = value;
+                  specificDetail = value;
                   setState(() {
                     specificDetail = value;
                   });
@@ -214,9 +213,11 @@ class _MoreInfoState extends State<MoreInfo> {
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
-                
                 Navigator.of(context).pop();
-                Navigator.push (context,MaterialPageRoute(builder: (context) => CatPro(catID: catID,regn: region,)),);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CatPro(catID: catID)),
+                );
               },
             ),
           ],
@@ -230,63 +231,64 @@ class _MoreInfoState extends State<MoreInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Details'),
-        backgroundColor:Colors.blue.shade900,
+        backgroundColor: Colors.blue.shade900,
       ),
       body: SingleChildScrollView(
-              child: Column(
-          children: <Widget>[
-            SizedBox(height:10),
-            Container(
+        child: Column(children: <Widget>[
+          SizedBox(height: 10),
+          Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 border: Border.all(
-                  width: 1.0, color: Colors.blue.shade300,
-                ),  
+                  width: 1.0,
+                  color: Colors.blue.shade300,
+                ),
               ),
-              child:Column(
+              child: Column(
                 children: <Widget>[
                   Text(catID),
                   getDetailType(),
-                  SizedBox(height:10),
+                  SizedBox(height: 10),
                   specifiedDetail(detailType),
-                  SizedBox(height:10),
+                  SizedBox(height: 10),
                   getDate(),
-                  SizedBox(height:10),
+                  SizedBox(height: 10),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal:10),
-                    child: moreDetails()),
-                  SizedBox(height:20),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      child: moreDetails()),
+                  SizedBox(height: 20),
                 ],
-              )
+              )),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.blue[200],
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.blue[200],
-                borderRadius:BorderRadius.all(Radius.circular(10)),
-              ),
-              child: FlatButton(
-                child: Container(
-                  child: Text(' Submit ',
-                    style:TextStyle(fontSize: 16, ),
+            child: FlatButton(
+              child: Container(
+                child: Text(
+                  ' Submit ',
+                  style: TextStyle(
+                    fontSize: 16,
                   ),
                 ),
-                onPressed: (){
-                  DataBaseService().updateEvent(
-                              region,
-                              catID,
-                              detailType,
-                              specificDetail,
-                              detailDate,
-                              note,
-                              );
-                  _showDialog();
-                },             
               ),
+              onPressed: () {
+                DataBaseService().updateEvent(
+                  region,
+                  catID,
+                  detailType,
+                  specificDetail,
+                  detailDate,
+                  note,
+                );
+                _showDialog();
+              },
             ),
-          ]
-        ),
+          ),
+        ]),
       ),
     );
   }

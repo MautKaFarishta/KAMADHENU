@@ -10,9 +10,14 @@ import 'package:Kamadhenu/screens/AnimalInfo.dart' as AI;
 import 'package:Kamadhenu/screens/ImagePicker.dart' as IP;
 
 class CatPro extends StatelessWidget {
-  final String catID;
-  final String regn;
-  CatPro({this.catID, this.regn});
+  final catID;
+  CatPro({this.catID});
+
+  getDate(date) {
+    DateTime dOB = date.toDate();
+    var formattedDate = DateFormat.yMMMd().format(dOB);
+    return formattedDate;
+  }
 
   Widget getList(BuildContext context, DocumentSnapshot document) {
     DateTime dOB = (document['Date']).toDate();
@@ -21,34 +26,29 @@ class CatPro extends StatelessWidget {
     print('Getting info for ${document['CattleID']} with  ${document['Note']}');
 
     return Container(
-      child: ListTile(
-        //title: Center(child: Text(document['Detail'],style: TextStyle(fontSize:17),)),
-        isThreeLine: true,
-        subtitle: Column(
+        child: ListTile(
+      //title: Center(child: Text(document['Detail'],style: TextStyle(fontSize:17),)),
+      isThreeLine: true,
+      subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    document['Detail'],
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    ldOB,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                ],
+                child: Row(children: <Widget>[
+              Text(
+                document['Detail'],
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-            ),
-            Text("Other Details : " + document['Note']),
-          ],
-        ),
-      ),
-    );
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                getDate(document['Date']),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              Text("Other Details : " + document['Note']),
+            ])),
+          ]),
+    ));
   }
 
   _buyInfo(DocumentSnapshot doc, BuildContext context) {
@@ -89,11 +89,15 @@ class CatPro extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    print('cattle profile of $catID in region $regn');
     return Scaffold(
       appBar: AppBar(
         title: Text('Cattle Profile'),
         backgroundColor: Colors.blue.shade900,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
       body: SingleChildScrollView(
         child: StreamBuilder(
@@ -106,10 +110,6 @@ class CatPro extends StatelessWidget {
                 return new Text("Loading");
               }
               var catDoc = snapshot.data;
-              DateTime dOB = (catDoc['DOB']).toDate();
-              var ldOB = DateFormat.yMMMd().format(dOB);
-              DateTime dOC = (catDoc['DOB']).toDate();
-              var ldOC = DateFormat.yMMMd().format(dOC);
               return Center(
                 child: Container(
                   margin: EdgeInsets.all(10),
@@ -163,7 +163,7 @@ class CatPro extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Birth : $ldOB',
+                            'Birth : ${getDate(catDoc['DOB'])}',
                             style: TextStyle(
                               fontSize: 17,
                             ),
@@ -171,33 +171,33 @@ class CatPro extends StatelessWidget {
                         ]),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        decoration: Deco().decoBox(Colors.blue.shade50),
-                        child: Column(children: <Widget>[
-                          Deco().titleCon('PREGNENCY DETAILS'),
-                          SizedBox(height: 10),
-                          Text(
-                            'Last Calving Date',
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                          ),
-                          Text(
-                            '$ldOC',
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            'Total Calvings : ${catDoc['Calvings']}',
-                            style: TextStyle(
-                              fontSize: 17,
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                        ]),
-                      ),
+                      catDoc['Gender'] == 'F'
+                          ? Container(
+                              decoration: Deco().decoBox(Colors.blue.shade50),
+                              child: Column(children: <Widget>[
+                                Deco().titleCon('PREGNENCY DETAILS'),
+                                SizedBox(height: 10),
+                                Text('Last Calving Date',
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                    )),
+                                Text(
+                                  '${getDate(catDoc['Calving_Dates'])}',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                Text(
+                                  'Total Calvings : ${catDoc['Calvings']}',
+                                  style: TextStyle(
+                                    fontSize: 17,
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                              ]),
+                            )
+                          : SizedBox(height: 1),
                       SizedBox(height: 20),
                       Container(
                         decoration: Deco().decoBox(Colors.blue.shade50),
@@ -206,7 +206,7 @@ class CatPro extends StatelessWidget {
                           StreamBuilder(
                             stream: Firestore.instance
                                 .collection('Admin')
-                                .document(regn)
+                                .document(catDoc['Region'])
                                 .collection('vaccine_details')
                                 .where('CattleID', isEqualTo: catID)
                                 .snapshots(),
@@ -233,18 +233,13 @@ class CatPro extends StatelessWidget {
                           StreamBuilder(
                             stream: Firestore.instance
                                 .collection('Admin')
-                                .document(regn)
+                                .document(catDoc['Region'])
                                 .collection('pregnency_details')
                                 .where('CattleID', isEqualTo: catID)
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.data == null)
-                                return Text(
-                                  "No Details are Added.",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                );
+                                return const Text("Loading...");
                               return ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.documents.length,
@@ -273,8 +268,8 @@ class CatPro extends StatelessWidget {
                             ),
                           ),
                           onPressed: () {
-                            A.catID = catID.toString();
-                            A.region = regn;
+                            A.catID = catID;
+                            A.region = catDoc['Region'];
                             print(
                                 'Adding info for ${A.catID} in Region ${A.region}');
                             Navigator.push(
@@ -295,3 +290,5 @@ class CatPro extends StatelessWidget {
     );
   }
 }
+
+mixin String {}

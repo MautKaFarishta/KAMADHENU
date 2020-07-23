@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
 String regn;
+String ownerID;
 enum Gender { male, female }
 
 class AddAnimal extends StatefulWidget {
@@ -30,6 +31,7 @@ class AddAnimalForm extends State<AddAnimal> {
   var _birthdate = new DateTime.now();
   String UID;
   String _regdate;
+  String note;
   bool _c = false;
 
   final GlobalKey<FormState> _addAnimalkey = GlobalKey<FormState>();
@@ -404,6 +406,18 @@ class AddAnimalForm extends State<AddAnimal> {
     );
   }
 
+  Widget moreDetails() {
+    return Container(
+      margin: EdgeInsets.all(5),
+      child: TextField(
+          decoration: InputDecoration(
+            labelText: 'More Details',
+          ),
+          onChanged: (String value) {
+            note = value;
+          }),
+    );
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -432,22 +446,38 @@ class AddAnimalForm extends State<AddAnimal> {
                     ]),
                   ),
                   SizedBox(height: 20),
+                  _cgender == 'F'?
+                  Column(
+                    children: <Widget>[
+                      Container(
+                          decoration: Deco().decoBox(Colors.blue.shade50),
+                          child: Column(
+                            children: <Widget>[
+                              Deco().titleCon('REPRODUCTION DETAILS'),
+                              _calving(),
+                              SizedBox(height: 15),
+                              _checkPre(),
+                              SizedBox(height:1),
+                              _lastcalfBOB(),
+                              SizedBox(height: 10),
+                            ],
+                          )),
+                      SizedBox(height:20),
+                    ],
+                  ):
+                  
+                  SizedBox(height: 0),
                   Container(
-                      decoration: Deco().decoBox(Colors.blue.shade50),
-                      child: Column(
-                        children: <Widget>[
-                          Deco().titleCon('PREGNENCY DETAILS'),
-                          _calving(),
-                          SizedBox(height: 15),
-                          _cgender == 'F'?
-                          _checkPre():
-                          SizedBox(height: 15),
-                          SizedBox(height:1),
-                          _lastcalfBOB(),
-                          SizedBox(height: 10),
-                        ],
-                      )),
-                  SizedBox(height: 20),
+                    decoration: Deco().decoBox(Colors.blue.shade50),
+                    child: Column(children: <Widget>[
+                        Deco().titleCon('ADDITIONAL INFORMATION'),
+                        Center(child: Text('You can add any information like birthmark'),),
+                        SizedBox(height:10),
+                        moreDetails(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height:10),
                   Container(
                     decoration: Deco().decoBox(Colors.blue.shade50),
                     child: Column(children: <Widget>[
@@ -483,6 +513,8 @@ class AddAnimalForm extends State<AddAnimal> {
                               _calvings,
                               isPregnent,
                               regn,
+                              ownerID,
+                              note,
                               );
                         }),
                   ),
