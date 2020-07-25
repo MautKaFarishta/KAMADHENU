@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    AuthService().getCurrentUID().then((value) => getid(value);
+    AuthService().getCurrentUID().then((value) => getid(value));
     super.initState();
 
   }
