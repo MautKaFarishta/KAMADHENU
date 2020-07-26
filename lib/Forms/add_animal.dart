@@ -14,7 +14,6 @@ class AddAnimal extends StatefulWidget {
   String regn;
   AddAnimal({this.regn});
   State<StatefulWidget> createState() {
-    
     return AddAnimalForm();
   }
 }
@@ -208,7 +207,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
-                  _cgender = "M";
+                  _cgender = "Male";
                 });
               }),
           const Text("Male"),
@@ -220,7 +219,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
-                  _cgender = "F";
+                  _cgender = "Female";
                 });
               }),
           const Text("Female"),
@@ -388,14 +387,19 @@ class AddAnimalForm extends State<AddAnimal> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text("Cattle Data Submitted"),
-          content: new Text("Contact AHD office near you for RFID registration"),
+          content:
+              new Text("Contact AHD office near you for RFID registration"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
               child: new Text("Close"),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push (context,MaterialPageRoute(builder: (context) => HomePage(),));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ));
               },
             ),
           ],
@@ -403,7 +407,6 @@ class AddAnimalForm extends State<AddAnimal> {
       },
     );
   }
-
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -439,10 +442,10 @@ class AddAnimalForm extends State<AddAnimal> {
                           Deco().titleCon('PREGNENCY DETAILS'),
                           _calving(),
                           SizedBox(height: 15),
-                          _cgender == 'F'?
-                          _checkPre():
-                          SizedBox(height: 15),
-                          SizedBox(height:1),
+                          _cgender == 'Female'
+                              ? _checkPre()
+                              : SizedBox(height: 15),
+                          SizedBox(height: 1),
                           _lastcalfBOB(),
                           SizedBox(height: 10),
                         ],
@@ -469,21 +472,20 @@ class AddAnimalForm extends State<AddAnimal> {
                     child: FlatButton(
                         child: Text("SUBMIT"),
                         onPressed: () {
-                            _showDialog();
-                          
+                          _showDialog();
 
                           _addAnimalkey.currentState.save();
 
                           DataBaseService().updateCattle(
-                              _species,
-                              _breed,
-                              _cgender,
-                              _birthdate,
-                              _lastcalf,
-                              _calvings,
-                              isPregnent,
-                              regn,
-                              );
+                            _species,
+                            _breed,
+                            _cgender,
+                            _birthdate,
+                            _lastcalf,
+                            _calvings,
+                            isPregnent,
+                            regn,
+                          );
                         }),
                   ),
                   // _next(),

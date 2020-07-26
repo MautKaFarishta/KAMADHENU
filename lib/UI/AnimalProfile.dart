@@ -14,9 +14,16 @@ class AnimalProfile extends StatefulWidget {
 class _AnimalProfile extends State<AnimalProfile> {
   final cattleData = Firestore.instance.collection("cattles");
   final userData = Firestore.instance.collection('Users');
-
+  _showBuyRequestDialogue() {}
   Widget build(context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            _showBuyRequestDialogue();
+          },
+          child: Icon(Icons.shopping_cart),
+          elevation: 5.5,
+        ),
         appBar: AppBar(
           title: Text("animal Profile"),
         ),
@@ -42,12 +49,11 @@ class _AnimalProfile extends State<AnimalProfile> {
                   children: <Widget>[
                     Text(
                       "Species: ",
-                      textScaleFactor: 1.5,
+                      textScaleFactor: 1.2,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       snapshot.data['Species'],
-                      textScaleFactor: 1.3,
                     ),
                   ],
                 ),
@@ -58,12 +64,11 @@ class _AnimalProfile extends State<AnimalProfile> {
                   children: <Widget>[
                     Text(
                       "Breed: ",
-                      textScaleFactor: 1.5,
+                      textScaleFactor: 1.2,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       snapshot.data['Breed'],
-                      textScaleFactor: 1.3,
                     ),
                   ],
                 ),
@@ -74,12 +79,11 @@ class _AnimalProfile extends State<AnimalProfile> {
                   children: <Widget>[
                     Text(
                       "Gender: ",
-                      textScaleFactor: 1.5,
+                      textScaleFactor: 1.2,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       snapshot.data['Gender'],
-                      textScaleFactor: 1.3,
                     ),
                   ],
                 ),
@@ -90,12 +94,11 @@ class _AnimalProfile extends State<AnimalProfile> {
                   children: <Widget>[
                     Text(
                       "Region: ",
-                      textScaleFactor: 1.5,
+                      textScaleFactor: 1.2,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       snapshot.data['Region'],
-                      textScaleFactor: 1.3,
                     ),
                   ],
                 ),
@@ -106,12 +109,11 @@ class _AnimalProfile extends State<AnimalProfile> {
                   children: <Widget>[
                     Text(
                       "Seller's Contact: ",
-                      textScaleFactor: 1.5,
+                      textScaleFactor: 1.2,
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       userID,
-                      textScaleFactor: 1.3,
                     ),
                   ],
                 ),
