@@ -17,6 +17,24 @@ class ImagePicker extends StatefulWidget {
 }
 
 class _ImagePicker extends State<ImagePicker> {
+  bool isUploading = false;
+
+  _upload() {
+    if (!isUploading) {
+      return Text("Submit");
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          CircularProgressIndicator(
+            strokeWidth: 1.5,
+          )
+        ],
+      );
+    }
+  }
+
   Future<void> _showUploadStatus(BuildContext context) {
     return showDialog(
       context: context,
@@ -64,6 +82,9 @@ class _ImagePicker extends State<ImagePicker> {
           Padding(padding: EdgeInsets.all(8)),
           RaisedButton(
             onPressed: () async {
+              setState(() {
+                isUploading = true;
+              });
               StorageTaskSnapshot snapshot = await storage
                   .ref()
                   .child("images/${AI.animal_id}")
@@ -82,11 +103,10 @@ class _ImagePicker extends State<ImagePicker> {
                   "Breed": AI.breed,
                   "SellerID": home.userID,
                 });
-                setState(() {});
               }
               _showUploadStatus(context);
             },
-            child: Text("Submit"),
+            child: _upload(),
           )
         ],
       ),
