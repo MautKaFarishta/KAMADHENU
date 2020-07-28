@@ -24,9 +24,20 @@ class _AnimalProfile extends State<AnimalProfile> {
       builder: (context) {
         return AlertDialog(
           backgroundColor: Colors.green[50],
-          title: Text(
-            "REQUEST SENT",
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.check_circle,
+                color: Colors.green[200],
+              ),
+              Text(
+                "REQUEST SENT",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              )
+            ],
           ),
         );
       },
@@ -59,9 +70,12 @@ class _AnimalProfile extends State<AnimalProfile> {
                         .document()
                         .setData({
                       'BuyerID': home.userID,
+                      'Name': home.currentUser.name,
                       'AnimalID': cattlesID,
+                      'Region': home.currentUser.district,
+                    }).whenComplete(() {
+                      _requestSent();
                     });
-                    _requestSent();
                   },
                   color: Colors.blue[100],
                   child: Text(

@@ -2,6 +2,7 @@
 
 import 'package:Kamadhenu/Forms/create.dart';
 import 'package:Kamadhenu/screens/AnimalInfo.dart';
+import 'package:Kamadhenu/screens/ChangeOwnership.dart';
 import 'package:Kamadhenu/screens/ImagePicker.dart';
 import 'package:Kamadhenu/screens/Portal.dart';
 import 'package:Kamadhenu/screens/buySell.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/ImagePicker': (BuildContext ctx) => ImagePicker(),
         '/animalProfile': (BuildContext ctx) => AnimalProfile(),
         '/animalInfo': (BuildContext ctx) => AnimalInfo(),
+        '/changeOwnership': (BuildContext ctx) => ChangeOwnership(),
       },
     );
   }

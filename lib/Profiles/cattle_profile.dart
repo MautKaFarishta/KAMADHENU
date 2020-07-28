@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+// import 'dart:js';
+
 import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +10,7 @@ import 'package:intl/intl.dart';
 import '../Forms/addInfo.dart' as A;
 import 'package:Kamadhenu/screens/AnimalInfo.dart' as AI;
 import 'package:Kamadhenu/screens/ImagePicker.dart' as IP;
+import 'package:Kamadhenu/screens/ChangeOwnership.dart' as ChaO;
 
 class CatPro extends StatelessWidget {
   final catID;
@@ -49,6 +52,33 @@ class CatPro extends StatelessWidget {
             ])),
           ]),
     ));
+  }
+
+  Future<void> _movement(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+            title: Text("Choose option"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Change Ownership"),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      Navigator.pushNamed(context, '/changeOwnership');
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(8.0)),
+                  GestureDetector(
+                    child: Text("Mark as Dead"),
+                  )
+                ],
+              ),
+            ));
+      },
+    );
   }
 
   _buyInfo(DocumentSnapshot doc, BuildContext context) {
@@ -280,6 +310,13 @@ class CatPro extends StatelessWidget {
                           },
                         ),
                       ),
+                      RaisedButton(
+                        onPressed: () {
+                          ChaO.cattleID = catID;
+                          _movement(context);
+                        },
+                        child: Text("Movement"),
+                      ),
                       _buyInfo(catDoc, context),
                     ],
                   ),
@@ -290,5 +327,3 @@ class CatPro extends StatelessWidget {
     );
   }
 }
-
-
