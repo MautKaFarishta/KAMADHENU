@@ -18,6 +18,33 @@ final _formkey = GlobalKey<FormState>();
 
 class ChangeOwner extends State<ChangeOwnership> {
   String newOwner;
+  bool _isLoading = false;
+  String newOwnerDist;
+
+  _showComplete(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text("Ownership has been changed"),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                child: Text("OK"),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   copyCollection(String fromD, String toD, String fromC, String toC) async {
     Future<DocumentSnapshot> doc = fb.collection(fromC).document(fromD).get();
@@ -27,6 +54,9 @@ class ChangeOwner extends State<ChangeOwnership> {
           key: value,
         }, merge: true);
       });
+    }).whenComplete(() {
+      fb.collection(fromC).document(fromD).delete();
+      _showComplete(context);
     });
   }
 
@@ -89,9 +119,17 @@ class ChangeOwner extends State<ChangeOwnership> {
                           cattleID,
                           "Users/${home.currentUser.phoneNo}/cattles",
                           'Users/$newOwner/cattles');
+                      if (home.currentUser.district != newOwnerDist) {
+                        copyCollection(
+                            cattleID,
+                            cattleID,
+                            "Admin/${home.currentUser.district}/cattles",
+                            "Admin/$newOwnerDist/cattles");
+                      }
+                      // copyCollection(cattleID, cattleID, "Admin/${home.currentUser.district}/cattles", "Admin/$")
                     },
                     child: Text("YES"),
-                  )
+                  ),
                 ],
               )
             ],
@@ -126,16 +164,23 @@ class ChangeOwner extends State<ChangeOwnership> {
             ),
             RaisedButton(
               onPressed: () async {
-                Stream<DocumentSnapshot> snap =
-                    fb.collection("Users").document(newOwner).snapshots();
-
-                // ignore: unrelated_type_equality_checks
-                if ( //codetofind if the user exsists or not
-
-                    null) {
-                  _showNull(context);
-                } else
-                  _showConfirmDialogue(context);
+                Firestore.instance
+                    .collection('Users')
+                    .where('mobile', isEqualTo: newOwner)
+                    .getDocuments()
+                    .then((QuerySnapshot docs) {
+                  if (docs.documents.isNotEmpty) {
+                    docs.documents.forEach((element) {
+                      newOwnerDist = element.data['District'];
+                    });
+                    print('User Found! $newOwner');
+                    print("user disrt $newOwnerDist");
+                    _showConfirmDialogue(context);
+                  } else {
+                    print('User Not Found! $newOwner');
+                    _showNull(context);
+                  }
+                });
               },
               child: Text("Submit"),
             )
