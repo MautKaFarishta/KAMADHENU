@@ -142,9 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                 borderRadius: BorderRadius.all(Radius.circular(10))),
                               child: FlatButton(
                                   child: Center(
-                                      child: codeSent
-                                          ? Text('Login')
-                                          : Text('Verify')),
+                                      child: Text('Login')),
                                   onPressed: () {
                                     codeSent
                                         ? AuthService().signInWithOTP(

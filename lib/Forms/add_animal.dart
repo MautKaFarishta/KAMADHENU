@@ -382,20 +382,26 @@ class AddAnimalForm extends State<AddAnimal> {
   }
 
   void _showDialog() {
+    
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
           title: new Text("Cattle Data Submitted"),
           content:
               new Text("Contact AHD office near you for RFID registration"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Text("Close"),
-              onPressed: () {
+            RaisedButton(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15.0),
+                                                ),
+                                                onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(
                     context,
@@ -403,7 +409,12 @@ class AddAnimalForm extends State<AddAnimal> {
                       builder: (context) => HomePage(),
                     ));
               },
-            ),
+                                                child: Text(
+                                                  "Yes",
+                                                  style: TextStyle(color: Colors.white),
+                                                ),
+                                                color: const Color(0xFF0D47A1),
+                                              )
           ],
         );
       },
@@ -450,7 +461,7 @@ class AddAnimalForm extends State<AddAnimal> {
                     ]),
                   ),
                   SizedBox(height: 20),
-                  _cgender == 'F'?
+                  _cgender == 'Female'?
                   Column(
                     children: <Widget>[
                       Container(
@@ -482,21 +493,7 @@ class AddAnimalForm extends State<AddAnimal> {
                     ),
                   ),
                   SizedBox(height:10),
-                  Container(
-                      decoration: Deco().decoBox(Colors.blue.shade50),
-                      child: Column(
-                        children: <Widget>[
-                          Deco().titleCon('PREGNENCY DETAILS'),
-                          _calving(),
-                          SizedBox(height: 15),
-                          _cgender == 'Female'
-                              ? _checkPre()
-                              : SizedBox(height: 15),
-                          SizedBox(height: 1),
-                          _lastcalfBOB(),
-                          SizedBox(height: 10),
-                        ],
-                      )),
+
                   SizedBox(height: 20),
                   Container(
                     decoration: Deco().decoBox(Colors.blue.shade50),

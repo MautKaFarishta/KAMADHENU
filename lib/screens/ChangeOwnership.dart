@@ -32,6 +32,10 @@ class ChangeOwner extends State<ChangeOwnership> {
             children: <Widget>[
               Text("Ownership has been changed"),
               RaisedButton(
+                color: const Color(0xFF0D47A1),
+                shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
@@ -65,6 +69,9 @@ class ChangeOwner extends State<ChangeOwnership> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
           title: Text("Error"),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -73,10 +80,14 @@ class ChangeOwner extends State<ChangeOwnership> {
               Text(
                   "This User does not exist, please enter correct registered mobile number of Buyer"),
               RaisedButton(
+                shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
+                color: const Color(0xFF0D47A1),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: Text("OK",style: TextStyle(color: Colors.white)),
               )
             ],
           ),
@@ -90,6 +101,9 @@ class ChangeOwner extends State<ChangeOwnership> {
       context: context,
       builder: (context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15.0),
+                                                ),
           title: Text("Confirmation"),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -102,10 +116,11 @@ class ChangeOwner extends State<ChangeOwnership> {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   RaisedButton(
+                    color: const Color(0xFF0D47A1),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("NO"),
+                    child: Text("NO",style: TextStyle(color: Colors.white),),
                   ),
                   Padding(padding: EdgeInsets.all(8.0)),
                   RaisedButton(

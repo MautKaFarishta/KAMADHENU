@@ -108,10 +108,10 @@ class FormscreenState extends State<Formscreen> {
   Widget _buildadhar() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Aadhar number"),
-      maxLength: 16,
+      maxLength: 12,
       keyboardType: TextInputType.number,
       validator: (String value) {
-        if (value.length != 16) {
+        if (value.length != 12) {
           return "please enter valid aadhar number";
         }
       },
@@ -411,12 +411,19 @@ class FormscreenState extends State<Formscreen> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
                             title: Text("Registration Succesful"),
                             content: Text("Please Log in again to continue"),
                             actions: <Widget>[
                               Center(
                                 child: RaisedButton(
                                     child: Text("OK"),
+                                    color: const Color(0xFF0D47A1),
+                                    shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15.0),
+                                                ),
                                     onPressed: () {
                                       Navigator.push(
                                         context,

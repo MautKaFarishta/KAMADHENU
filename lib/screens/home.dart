@@ -172,6 +172,7 @@ class _ListPageState extends State<ListPage> {
                 return Center(child: CircularProgressIndicator());
               default:
                 return new ListView(
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   children:
                       snapshot.data.documents.map((DocumentSnapshot document) {
@@ -190,7 +191,7 @@ class _ListPageState extends State<ListPage> {
                           new Container(
                                 //width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: Colors.blue.shade50,
+                                  color: Colors.lightBlue.shade200,
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(5)),
                                   border: Border.all(

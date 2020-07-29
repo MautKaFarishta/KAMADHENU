@@ -2,6 +2,7 @@
 
 import 'dart:io';
 
+import 'package:Kamadhenu/UI/decorations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/screens/home.dart';
@@ -78,25 +79,48 @@ class Animal_Info extends State<AnimalInfo> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        TextFormField(
-          decoration: InputDecoration(
-            labelText: "Enter Price",
+        SizedBox(height: 15),
+        Container(
+                              width: double.infinity,
+                              decoration: Deco().decoBox(Colors.lightBlue.shade200),
+                              child: Column(
+                                children: <Widget>[
+                                  SizedBox(height: 5),
+                                  Text(
+                                      'Enter Price you expect for this Animal'),
+                                  SizedBox(height: 5),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 15),
+        Container(
+          margin: EdgeInsets.all(8),
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: "Enter Price",
+            ),
+            keyboardType: TextInputType.number,
+            validator: (value) {
+              if (value.length > 8) {
+                return "please Enter approprite value";
+              }
+            },
+            onChanged: (value) => {
+              price = value,
+            },
           ),
-          keyboardType: TextInputType.number,
-          validator: (value) {
-            if (value.length > 8) {
-              return "please Enter approprite value";
-            }
-          },
-          onChanged: (value) => {
-            price = value,
-          },
         ),
-        FlatButton(
-          padding: EdgeInsets.all(6.0),
-          child: Text("Submit"),
-          color: Colors.blue[200],
-          onPressed: () => {_showChoiceDialogue(context)},
+        Container(
+          decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+          child: FlatButton(
+            padding: EdgeInsets.all(6.0),
+            child: Text("Submit"),
+            color: Colors.blue[200],
+            onPressed: () => {_showChoiceDialogue(context)},
+          ),
         )
       ],
     );
@@ -106,6 +130,7 @@ class Animal_Info extends State<AnimalInfo> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Animal Information"),
+        backgroundColor: Colors.blue.shade900,
       ),
       body: Center(
         child: _priceForm(),

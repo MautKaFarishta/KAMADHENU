@@ -36,7 +36,7 @@ class CatPro extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-                child: Row(children: <Widget>[
+              child: Row(children: <Widget>[
               Text(
                 document['Detail'],
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -48,8 +48,9 @@ class CatPro extends StatelessWidget {
                 getDate(document['Date']),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Text("Other Details : " + document['Note']),
+              
             ])),
+            Text("Other Details : " + document['Note']),
           ]),
     ));
   }
@@ -83,38 +84,52 @@ class CatPro extends StatelessWidget {
 
   _buyInfo(DocumentSnapshot doc, BuildContext context) {
     if (!doc['OnSale']) {
-      return RaisedButton(
-        highlightColor: Colors.blue[200],
-        color: Colors.green[200],
-        child: Text(
-          "Sell",
-          textScaleFactor: 1.2,
+      return Expanded(
+              child: Container(
+          decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+          child: FlatButton(
+            child: Text(
+              "Sell",
+              textScaleFactor: 1.2,
+            ),
+            onPressed: () {
+              IP.currID = Firestore.instance.collection('cattles').document(catID);
+              AI.breed = '${doc['Breed']}';
+              AI.animal_id = '${doc['Species']}';
+              Navigator.pushNamed(context, "/animalInfo");
+            },
+          ),
         ),
-        onPressed: () {
-          IP.currID = Firestore.instance.collection('cattles').document(catID);
-          AI.breed = '${doc['Breed']}';
-          AI.animal_id = '${doc['Species']}';
-          Navigator.pushNamed(context, "/animalInfo");
-        },
       );
     } else {
-      return RaisedButton(
-          highlightColor: Colors.blue[200],
-          color: Colors.red[200],
-          child: Text(
-            "Remove from sale",
-            textScaleFactor: 1.2,
-          ),
-          onPressed: () {
-            Firestore.instance
-                .collection('cattlesForSale')
-                .document(catID)
-                .delete();
-            Firestore.instance
-                .collection('cattles')
-                .document(catID)
-                .setData({'OnSale': false}, merge: true);
-          });
+      return Expanded(
+              child: Container(
+          decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+          child: FlatButton(
+              highlightColor: Colors.blue[200],
+              color: Colors.red[200],
+              child: Text(
+                "Remove from sale",
+                textScaleFactor: 1.2,
+              ),
+              onPressed: () {
+                Firestore.instance
+                    .collection('cattlesForSale')
+                    .document(catID)
+                    .delete();
+                Firestore.instance
+                    .collection('cattles')
+                    .document(catID)
+                    .setData({'OnSale': false}, merge: true);
+              }),
+        ),
+      );
     }
   }
 
@@ -186,6 +201,13 @@ class CatPro extends StatelessWidget {
                           ),
                           SizedBox(height: 10),
                           Text(
+                            'Gender : ${catDoc['Gender']}',
+                            style: TextStyle(
+                              fontSize: 17,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
                             'Animal Breed : ${catDoc['Breed']}',
                             style: TextStyle(
                               fontSize: 17,
@@ -201,7 +223,7 @@ class CatPro extends StatelessWidget {
                         ]),
                       ),
                       SizedBox(height: 20),
-                      catDoc['Gender'] == 'F'
+                      catDoc['Gender'] == 'Female'
                           ? Container(
                               decoration: Deco().decoBox(Colors.blue.shade50),
                               child: Column(children: <Widget>[
@@ -244,6 +266,7 @@ class CatPro extends StatelessWidget {
                               if (!snapshot.hasData)
                                 return const Text("Loading...");
                               return ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: snapshot.data.documents.length,
                                 itemBuilder: (context, index) => getList(
@@ -283,41 +306,56 @@ class CatPro extends StatelessWidget {
                         ]),
                       ),
                       SizedBox(height: 20),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.blue[200],
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: FlatButton(
-                          child: Container(
-                            child: Text(
-                              ' Add Info. ',
-                              style: TextStyle(
-                                fontSize: 16,
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                                                      child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: FlatButton(
+                                child: Container(
+                                  child: Text(
+                                    ' Add Info. ',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  A.catID = catID;
+                                  A.region = catDoc['Region'];
+                                  print(
+                                      'Adding info for ${A.catID} in Region ${A.region}');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => A.MoreInfo()),
+                                  );
+                                },
                               ),
                             ),
                           ),
-                          onPressed: () {
-                            A.catID = catID;
-                            A.region = catDoc['Region'];
-                            print(
-                                'Adding info for ${A.catID} in Region ${A.region}');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => A.MoreInfo()),
-                            );
-                          },
+                          Expanded(
+                                                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.blue[200],
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: FlatButton(
+                            onPressed: () {
+                              ChaO.cattleID = catID;
+                              _movement(context);
+                            },
+                            child: Text("Movement"),
                         ),
                       ),
-                      RaisedButton(
-                        onPressed: () {
-                          ChaO.cattleID = catID;
-                          _movement(context);
-                        },
-                        child: Text("Movement"),
-                      ),
+                          ),
                       _buyInfo(catDoc, context),
+                        ],
+                      ),
+                      
                     ],
                   ),
                 ),

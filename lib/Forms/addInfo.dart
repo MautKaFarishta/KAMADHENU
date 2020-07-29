@@ -202,22 +202,27 @@ class _MoreInfoState extends State<MoreInfo> {
   void _showDialog() {
     // flutter defined function
     showDialog(
+      
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(20.0)),
           title: new Text("Details Submitted"),
           //content: new Text("Alert Dialog body"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new Text("Close"),
+              color: const Color(0xFF0D47A1),
+              shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(15.0),
+                                                ),
+              child: new Text("Close",style: TextStyle(color: Colors.white),),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CatPro(catID: catID)),
-                );
+                Navigator.of(context).pop();
               },
             ),
           ],

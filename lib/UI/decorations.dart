@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Deco{
+  Color backCol =Colors.lightBlue.shade100;
 
   titleCon(String txt){
     return Container(
