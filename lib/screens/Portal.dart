@@ -31,7 +31,7 @@ class PortalDisp extends State<Portal> {
     MediaQueryData device = MediaQuery.of(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Animals For Sell"),
+          title: Text("Animals For Sale"),
           backgroundColor: Colors.blue.shade900,
         ),
         // body: StreamBuilder(
@@ -89,9 +89,7 @@ class PortalDisp extends State<Portal> {
                                     textAlign: TextAlign.center,
                                   ),
                                   Text(
-                                    "Breed:" +
-                                        snapshot.data.documents[index]
-                                            .data["Breed"],
+                                    snapshot.data.documents[index].data["ID"],
                                     style:
                                         TextStyle(fontStyle: FontStyle.italic),
                                     textScaleFactor: 1.5,
@@ -106,6 +104,8 @@ class PortalDisp extends State<Portal> {
                                     snapshot.data.documents[index].data['url'];
                                 AP.cattlesID =
                                     snapshot.data.documents[index].documentID;
+                                AP.rfid =
+                                    snapshot.data.documents[index].data['RFID'];
                                 Navigator.pushNamed(context, '/animalProfile');
                               },
                             )),

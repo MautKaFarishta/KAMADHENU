@@ -14,6 +14,7 @@ String animal_id;
 String price;
 String breed;
 File imageFile;
+String rfid;
 
 class AnimalInfo extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -81,18 +82,17 @@ class Animal_Info extends State<AnimalInfo> {
       children: <Widget>[
         SizedBox(height: 15),
         Container(
-                              width: double.infinity,
-                              decoration: Deco().decoBox(Colors.lightBlue.shade200),
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(height: 5),
-                                  Text(
-                                      'Enter Price you expect for this Animal'),
-                                  SizedBox(height: 5),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 15),
+          width: double.infinity,
+          decoration: Deco().decoBox(Colors.lightBlue.shade200),
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 5),
+              Text('Enter Price you expect for this Animal'),
+              SizedBox(height: 5),
+            ],
+          ),
+        ),
+        SizedBox(height: 15),
         Container(
           margin: EdgeInsets.all(8),
           child: TextFormField(
@@ -112,9 +112,9 @@ class Animal_Info extends State<AnimalInfo> {
         ),
         Container(
           decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
+            color: Colors.blue[200],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: FlatButton(
             padding: EdgeInsets.all(6.0),
             child: Text("Submit"),

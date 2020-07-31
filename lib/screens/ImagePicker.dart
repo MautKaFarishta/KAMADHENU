@@ -102,6 +102,7 @@ class _ImagePicker extends State<ImagePicker> {
                   "ID": AI.animal_id,
                   "Breed": AI.breed,
                   "SellerID": home.userID,
+                  "RFID": AI.rfid,
                 });
               }
               _showUploadStatus(context);

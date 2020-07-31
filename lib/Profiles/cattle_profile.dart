@@ -36,7 +36,7 @@ class CatPro extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: Row(children: <Widget>[
+                child: Row(children: <Widget>[
               Text(
                 document['Detail'],
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -48,7 +48,6 @@ class CatPro extends StatelessWidget {
                 getDate(document['Date']),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              
             ])),
             Text("Other Details : " + document['Note']),
           ]),
@@ -85,20 +84,22 @@ class CatPro extends StatelessWidget {
   _buyInfo(DocumentSnapshot doc, BuildContext context) {
     if (!doc['OnSale']) {
       return Expanded(
-              child: Container(
+        child: Container(
           decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
+            color: Colors.blue[200],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: FlatButton(
             child: Text(
               "Sell",
               textScaleFactor: 1.2,
             ),
             onPressed: () {
-              IP.currID = Firestore.instance.collection('cattles').document(catID);
+              IP.currID =
+                  Firestore.instance.collection('cattles').document(catID);
               AI.breed = '${doc['Breed']}';
               AI.animal_id = '${doc['Species']}';
+              AI.rfid = '${doc['RFID']}';
               Navigator.pushNamed(context, "/animalInfo");
             },
           ),
@@ -106,11 +107,11 @@ class CatPro extends StatelessWidget {
       );
     } else {
       return Expanded(
-              child: Container(
+        child: Container(
           decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
+            color: Colors.blue[200],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: FlatButton(
               highlightColor: Colors.blue[200],
               color: Colors.red[200],
@@ -309,10 +310,11 @@ class CatPro extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Expanded(
-                                                      child: Container(
+                            child: Container(
                               decoration: BoxDecoration(
                                 color: Colors.blue[200],
-                                borderRadius: BorderRadius.all(Radius.circular(10)),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
                               child: FlatButton(
                                 child: Container(
@@ -338,24 +340,24 @@ class CatPro extends StatelessWidget {
                             ),
                           ),
                           Expanded(
-                                                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.blue[200],
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: FlatButton(
-                            onPressed: () {
-                              ChaO.cattleID = catID;
-                              _movement(context);
-                            },
-                            child: Text("Movement"),
-                        ),
-                      ),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.blue[200],
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: FlatButton(
+                                onPressed: () {
+                                  ChaO.cattleID = catID;
+                                  _movement(context);
+                                },
+                                child: Text("Movement"),
+                              ),
+                            ),
                           ),
-                      _buyInfo(catDoc, context),
+                          _buyInfo(catDoc, context),
                         ],
                       ),
-                      
                     ],
                   ),
                 ),

@@ -46,7 +46,6 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     AuthService().getCurrentUID().then((value) => getid(value));
     super.initState();
-
   }
 
   Widget build(BuildContext context) {
@@ -138,7 +137,9 @@ class _HomePageState extends State<HomePage> {
         },
         body: Column(
           children: <Widget>[
-            Deco().titleCon('Your Cattles',),
+            Deco().titleCon(
+              'Your Cattles',
+            ),
             Center(
               child: ListPage(),
             ),
@@ -178,7 +179,6 @@ class _ListPageState extends State<ListPage> {
                       snapshot.data.documents.map((DocumentSnapshot document) {
                     return FlatButton(
                       onPressed: () {
-                        
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => CatPro(
                                   catID: document.documentID.toString(),
@@ -187,46 +187,46 @@ class _ListPageState extends State<ListPage> {
                       child: Column(
                         children: <Widget>[
                           SizedBox(height: 7),
-                          
                           new Container(
-                                //width: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: Colors.lightBlue.shade200,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
-                                  border: Border.all(
-                                      width: 1.0, color: Colors.black38),
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    SizedBox(width:5.0),
-                                    CircleAvatar(
-                                      backgroundImage:
-                                          AssetImage("assets/tileimages/${document['Species']}.jpg"),
-                                      radius: 30.0,
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        Text(
-                                          'RFID:${document['RFID']}',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        Text(
-                                          '${document['Gender']}  ${document['Species']}',
-                                          style: TextStyle(fontSize: 20),
-                                        ),
-                                        Text(
-                                          document['Breed'],
-                                        ),
-                                        Text(
-                                            'Birth :${document['DOB'].toDate().toString()}'),
-                                        SizedBox(height: 10),
-                                      ],
-                                    ),
-                                    SizedBox(width:20.0),
-                                    Icon(Icons.chevron_right,color:Colors.black38,size:40.0),
-                                  ],
-                                )),
+                              //width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.lightBlue.shade200,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(5)),
+                                border: Border.all(
+                                    width: 1.0, color: Colors.black38),
+                              ),
+                              child: Row(
+                                children: <Widget>[
+                                  SizedBox(width: 5.0),
+                                  CircleAvatar(
+                                    backgroundImage: AssetImage(
+                                        "assets/tileimages/${document['Species']}.jpg"),
+                                    radius: 30.0,
+                                  ),
+                                  Column(
+                                    children: <Widget>[
+                                      Text(
+                                        'RFID:${document['RFID']}',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text(
+                                        '${document['Gender']}  ${document['Species']}',
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      Text(
+                                        document['Breed'],
+                                      ),
+                                      Text(
+                                          'Birth :${document['DOB'].toDate().toString()}'),
+                                      SizedBox(height: 10),
+                                    ],
+                                  ),
+                                  SizedBox(width: 20.0),
+                                  Icon(Icons.chevron_right,
+                                      color: Colors.black38, size: 40.0),
+                                ],
+                              )),
                         ],
                       ),
                     );

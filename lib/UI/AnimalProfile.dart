@@ -7,6 +7,7 @@ import 'package:Kamadhenu/screens/home.dart' as home;
 String cattlesID;
 String imageUrl;
 String userID;
+String rfid;
 
 class AnimalProfile extends StatefulWidget {
   State<StatefulWidget> createState() {
@@ -18,88 +19,32 @@ class _AnimalProfile extends State<AnimalProfile> {
   final cattleData = Firestore.instance.collection("cattles");
   final userData = Firestore.instance.collection('Users');
 
-  Future<void> _requestSent() {
+  Future<void> _showContactDetails() {
     return showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.green[50],
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Icon(
-                Icons.check_circle,
-                color: Colors.green[200],
-              ),
-              Text(
-                "REQUEST SENT",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  Future<void> _showBuyRequestDialogue() {
-    return showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-            title: Row(children: <Widget>[
-              Icon(
-                Icons.info,
-                color: Colors.blue[300],
-              ),
-              Text(" Information")
-            ]),
-            content: Column(
+            title: Row(
               children: <Widget>[
-                Text(
-                    "A request will be sent to the owner of the cattle, you need to contact the owner for exchage of money and Livestock, \n\n\nPress OK to continue."),
-                RaisedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    Firestore.instance
-                        .collection('Users')
-                        .document(userID)
-                        .collection('BuyingRequest')
-                        .document()
-                        .setData({
-                      'BuyerID': home.userID,
-                      'Name': home.currentUser.name,
-                      'AnimalID': cattlesID,
-                      'Region': home.currentUser.district,
-                    }).whenComplete(() {
-                      _requestSent();
-                    });
-                  },
-                  color: Colors.blue[100],
-                  child: Text(
-                    "OK",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                )
+                Icon(
+                  Icons.contact_phone,
+                  color: Colors.green[200],
+                ),
+                Text(" Contact Details"),
               ],
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-            ));
+            ),
+            content: SingleChildScrollView(
+                child: ListBody(
+              children: <Widget>[
+                Text("Mobile: " + userID),
+              ],
+            )));
       },
     );
   }
 
   Widget build(context) {
     return Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            _showBuyRequestDialogue();
-          },
-          child: Icon(Icons.shopping_cart),
-          elevation: 5.5,
-        ),
         appBar: AppBar(
           title: Text("animal Profile"),
         ),
@@ -144,83 +89,43 @@ class _AnimalProfile extends State<AnimalProfile> {
                       fontSize: 17,
                     ),
                   ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Gender : ${snapshot.data['Gender']}',
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Region: ${snapshot.data['Region']}',
+                    style: TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
                 ]),
               ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Species: ",
-                      textScaleFactor: 1.2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      snapshot.data['Species'],
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Breed: ",
-                      textScaleFactor: 1.2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      snapshot.data['Breed'],
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Gender: ",
-                      textScaleFactor: 1.2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      snapshot.data['Gender'],
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Region: ",
-                      textScaleFactor: 1.2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      snapshot.data['Region'],
-                    ),
-                  ],
-                ),
-              ),
-              ListTile(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      "Seller's Contact: ",
-                      textScaleFactor: 1.2,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      userID,
-                    ),
-                  ],
-                ),
-              ),
+              RaisedButton(
+                onPressed: () {
+                  Firestore.instance
+                      .collection('Users')
+                      .document(userID)
+                      .collection('BuyingRequest')
+                      .document()
+                      .setData({
+                    'BuyerID': home.userID,
+                    'Name': home.currentUser.name,
+                    'AnimalID': cattlesID,
+                    'Region': home.currentUser.district,
+                    'RFID': rfid,
+                    'Starting Date': DateTime.now(),
+                    'Ending Date': DateTime.now().add(new Duration(days: 3))
+                  }).whenComplete(() {
+                    _showContactDetails();
+                  });
+                },
+                child: Text("View Contact Details"),
+              )
             ]));
           },
         ));
