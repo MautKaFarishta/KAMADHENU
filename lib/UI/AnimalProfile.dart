@@ -1,4 +1,5 @@
 import 'package:Kamadhenu/UI/decorations.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
@@ -30,7 +31,7 @@ class _AnimalProfile extends State<AnimalProfile> {
                   Icons.contact_phone,
                   color: Colors.green[200],
                 ),
-                Text(" Contact Details"),
+                Text(getTranslated(context, "Seller's Contact")),
               ],
             ),
             content: SingleChildScrollView(

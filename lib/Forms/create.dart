@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:Kamadhenu/Forms/login.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:Kamadhenu/methods/database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -43,20 +44,21 @@ class FormscreenState extends State<Formscreen> {
     return Container(
       child: Row(
         children: <Widget>[
-          Text("Region  ", style: TextStyle(fontSize: 14)),
+          Text(getTranslated(context, "region"),
+              style: TextStyle(fontSize: 14)),
           DropdownButton(
             value: dis,
-            items: const <DropdownMenuItem<String>>[
+            items: <DropdownMenuItem<String>>[
               DropdownMenuItem<String>(
-                child: Text("Pune"),
+                child: Text(getTranslated(context, "Pune")),
                 value: 'Pune',
               ),
               DropdownMenuItem<String>(
-                child: Text("Jalgaon"),
+                child: Text(getTranslated(context, "Jalgaon")),
                 value: 'Jalgaon',
               ),
               DropdownMenuItem<String>(
-                child: Text("Gondia"),
+                child: Text(getTranslated(context, "Gondia")),
                 value: 'Gondia',
               )
             ],
@@ -67,7 +69,7 @@ class FormscreenState extends State<Formscreen> {
                 dis = val2;
               });
             },
-            hint: Text("Select"),
+            hint: Text(getTranslated(context, "select")),
           )
         ],
       ),
@@ -78,16 +80,16 @@ class FormscreenState extends State<Formscreen> {
     return Container(
       child: Row(
         children: <Widget>[
-          Text("State  ", style: TextStyle(fontSize: 14)),
+          Text(getTranslated(context, "State"), style: TextStyle(fontSize: 14)),
           DropdownButton(
             value: stt,
-            items: const <DropdownMenuItem<String>>[
+            items: <DropdownMenuItem<String>>[
               DropdownMenuItem<String>(
-                child: Text("Maharashtra"),
+                child: Text(getTranslated(context, "Maha")),
                 value: 'Maharashtra',
               ),
               DropdownMenuItem<String>(
-                child: Text("Andhra Pradesh"),
+                child: Text(getTranslated(context, "ap")),
                 value: 'Andhra Pradesh',
               ),
             ],
@@ -98,7 +100,7 @@ class FormscreenState extends State<Formscreen> {
                 stt = val2;
               });
             },
-            hint: Text("Select"),
+            hint: Text(getTranslated(context, "select")),
           )
         ],
       ),
@@ -107,12 +109,13 @@ class FormscreenState extends State<Formscreen> {
 
   Widget _buildadhar() {
     return TextFormField(
-      decoration: InputDecoration(labelText: "Aadhar number"),
+      decoration:
+          InputDecoration(labelText: getTranslated(context, "adhar_no")),
       maxLength: 12,
       keyboardType: TextInputType.number,
       validator: (String value) {
         if (value.length != 12) {
-          return "please enter valid aadhar number";
+          return getTranslated(context, "adhar_validation");
         }
       },
       onSaved: (String value) {
@@ -123,12 +126,13 @@ class FormscreenState extends State<Formscreen> {
 
   Widget _getland() {
     return TextFormField(
-      decoration: InputDecoration(labelText: "Land Holdigs(In Acres)"),
+      decoration: InputDecoration(
+          labelText: getTranslated(context, "Land Holdigs(In Acres)")),
       maxLength: 2,
       keyboardType: TextInputType.number,
       validator: (String value) {
         if (value.length >= 3) {
-          return "Kindly enter correct information";
+          return getTranslated(context, "Kindly enter correct information");
         }
       },
       onSaved: (String value) {
@@ -140,12 +144,13 @@ class FormscreenState extends State<Formscreen> {
 
   Widget _getcattlesnum() {
     return TextFormField(
-      decoration: InputDecoration(labelText: "How many cattles do you own"),
+      decoration: InputDecoration(
+          labelText: getTranslated(context, "How many cattles do you own")),
       maxLength: 3,
       keyboardType: TextInputType.number,
       validator: (String value) {
         if (value.length == 0) {
-          return "Enter number of cattles";
+          return getTranslated(context, "Enter number of cattles");
         }
       },
       onSaved: (String value) {
@@ -169,7 +174,7 @@ class FormscreenState extends State<Formscreen> {
                   _ugender = val;
                 });
               }),
-          const Text("Male"),
+          Text(getTranslated(context, "Male")),
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
@@ -180,7 +185,7 @@ class FormscreenState extends State<Formscreen> {
                   _ugender = value;
                 });
               }),
-          const Text("Female"),
+          Text(getTranslated(context, "Female")),
         ],
       ),
     );
@@ -189,11 +194,11 @@ class FormscreenState extends State<Formscreen> {
   Widget _getaddr() {
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Adress',
+          labelText: getTranslated(context, 'Adress'),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'Name is required';
+            return getTranslated(context, 'Address is required');
           }
         },
         onSaved: (String value) {
@@ -205,11 +210,11 @@ class FormscreenState extends State<Formscreen> {
     //Later to be converted to DROPDOWN
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Region Name',
+          labelText: getTranslated(context, 'Region Name'),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'Region is required';
+            return getTranslated(context, 'Region is required');
           }
         },
         onSaved: (String value) {
@@ -220,11 +225,11 @@ class FormscreenState extends State<Formscreen> {
   Widget _buildfname() {
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'First Name',
+          labelText: getTranslated(context, 'First Name'),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'Name is required';
+            return getTranslated(context, 'Name is required');
           }
         },
         onSaved: (String value) {
@@ -239,11 +244,11 @@ class FormscreenState extends State<Formscreen> {
       maxLength: 10,
       validator: (String value) {
         if (value.length != 10) {
-          return "Please Enter Valid mobile number";
+          return getTranslated(context, "Please Enter Valid mobile number");
         }
       },
       onSaved: (String value) {
-        mob = '+91'+value;
+        mob = '+91' + value;
       },
     );
   }
@@ -251,11 +256,11 @@ class FormscreenState extends State<Formscreen> {
   Widget _buildlname() {
     return TextFormField(
         decoration: InputDecoration(
-          labelText: 'Last Name',
+          labelText: getTranslated(context, 'Last Name'),
         ),
         validator: (String value) {
           if (value.isEmpty) {
-            return 'Name is required';
+            return getTranslated(context, 'Name is required');
           }
         },
         onSaved: (String value) {
@@ -306,7 +311,7 @@ class FormscreenState extends State<Formscreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Create Account"),
+          title: Text(getTranslated(context, "create_acc")),
           backgroundColor: Colors.blue.shade900,
         ),
         body: Container(
@@ -331,7 +336,7 @@ class FormscreenState extends State<Formscreen> {
                                   BorderRadius.all(Radius.circular(10))),
                           child: Center(
                             child: Text(
-                              'USER INFORMATION',
+                              getTranslated(context, 'USER INFORMATION'),
                               style: TextStyle(
                                   fontSize: 17, fontWeight: FontWeight.w900),
                             ),
@@ -361,7 +366,7 @@ class FormscreenState extends State<Formscreen> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
                         child: Text(
-                          'OTHER INFORMATION',
+                          getTranslated(context, 'OTHER INFORMATION'),
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.w900),
                         ),
@@ -383,7 +388,7 @@ class FormscreenState extends State<Formscreen> {
                 //_buildpass(),
                 RaisedButton(
                   child: Text(
-                    "Submit",
+                    getTranslated(context, "Submit"),
                     style: TextStyle(color: Colors.blue, fontSize: 16),
                   ),
                   onPressed: () {
@@ -405,25 +410,27 @@ class FormscreenState extends State<Formscreen> {
                     print(_password);
 
                     // database entry
-                    DataBaseService().updateUser(fname+ ' '+ lname, adhar, mob, cattls, land, dis, stt, regn);
+                    DataBaseService().updateUser(fname + ' ' + lname, adhar,
+                        mob, cattls, land, dis, stt, regn);
 
                     showDialog<void>(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
-                            title: Text("Registration Succesful"),
-                            content: Text("Please Log in again to continue"),
+                                borderRadius: BorderRadius.circular(20.0)),
+                            title: Text(getTranslated(
+                                context, "Registration Succesful")),
+                            content: Text(getTranslated(
+                                context, "Please Log in again to continue")),
                             actions: <Widget>[
                               Center(
                                 child: RaisedButton(
-                                    child: Text("OK"),
+                                    child: Text(getTranslated(context, "OK")),
                                     color: const Color(0xFF0D47A1),
                                     shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                ),
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
                                     onPressed: () {
                                       Navigator.push(
                                         context,

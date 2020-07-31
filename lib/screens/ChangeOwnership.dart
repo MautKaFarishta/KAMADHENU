@@ -1,6 +1,7 @@
 import 'package:Kamadhenu/Forms/addInfo.dart';
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:Kamadhenu/UI/AnimalProfile.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:Kamadhenu/Profiles/cattle_profile.dart' as CatP;
@@ -30,18 +31,17 @@ class ChangeOwner extends State<ChangeOwnership> {
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text("Ownership has been changed"),
+              Text(getTranslated(context, "Ownership has been changed")),
               RaisedButton(
                 color: const Color(0xFF0D47A1),
                 shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(20.0)),
                 onPressed: () {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
-                child: Text("OK"),
+                child: Text(getTranslated(context, "OK")),
               )
             ],
           ),
@@ -69,25 +69,24 @@ class ChangeOwner extends State<ChangeOwnership> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
-          title: Text("Error"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: Text(getTranslated(context, "Error")),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                  "This User does not exist, please enter correct registered mobile number of Buyer"),
+              Text(getTranslated(context,
+                  "This User does not exist, please enter correct registered mobile number of Buyer")),
               RaisedButton(
                 shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
+                    borderRadius: BorderRadius.circular(20.0)),
                 color: const Color(0xFF0D47A1),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text("OK",style: TextStyle(color: Colors.white)),
+                child: Text(getTranslated(context, "OK"),
+                    style: TextStyle(color: Colors.white)),
               )
             ],
           ),
@@ -102,15 +101,15 @@ class ChangeOwner extends State<ChangeOwnership> {
       builder: (context) {
         return AlertDialog(
           shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                ),
-          title: Text("Confirmation"),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          title: Text(getTranslated(context, "Confirmation")),
           content: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text(
-                  "Are you sure that you want to change ownership of this cattle?"),
+              Text(getTranslated(context,
+                  "Are you sure that you want to change ownership of this cattle?")),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
@@ -120,7 +119,10 @@ class ChangeOwner extends State<ChangeOwnership> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("NO",style: TextStyle(color: Colors.white),),
+                    child: Text(
+                      getTranslated(context, "NO"),
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                   Padding(padding: EdgeInsets.all(8.0)),
                   RaisedButton(
@@ -143,7 +145,7 @@ class ChangeOwner extends State<ChangeOwnership> {
                       }
                       // copyCollection(cattleID, cattleID, "Admin/${home.currentUser.district}/cattles", "Admin/$")
                     },
-                    child: Text("YES"),
+                    child: Text(getTranslated(context, "YES")),
                   ),
                 ],
               )
@@ -157,7 +159,7 @@ class ChangeOwner extends State<ChangeOwnership> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Change Ownership"),
+          title: Text(getTranslated(context, "Change Ownership")),
         ),
         body: Column(
           children: <Widget>[
@@ -165,13 +167,15 @@ class ChangeOwner extends State<ChangeOwnership> {
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 icon: Icon(Icons.phone_android),
-                labelText: "Registered Mobile number of new Owner",
+                labelText: getTranslated(
+                    context, "Registered Mobile number of new Owner"),
               ),
               maxLength: 10,
               key: _formkey,
               validator: (value) {
                 if (value.length < 10)
-                  return 'Please enter valid mobile number';
+                  return getTranslated(
+                      context, 'Please Enter Valid mobile number');
               },
               onChanged: (value) {
                 newOwner = ("+91" + value);
@@ -197,7 +201,7 @@ class ChangeOwner extends State<ChangeOwnership> {
                   }
                 });
               },
-              child: Text("Submit"),
+              child: Text(getTranslated(context, "Submit")),
             )
           ],
         ));

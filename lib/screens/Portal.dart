@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'package:Kamadhenu/Forms/add_animal.dart';
 import 'package:Kamadhenu/Forms/create.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,26 +32,9 @@ class PortalDisp extends State<Portal> {
     MediaQueryData device = MediaQuery.of(context);
     return Scaffold(
         appBar: AppBar(
-          title: Text("Animals For Sale"),
+          title: Text(getTranslated(context, "Animals For Sell")),
           backgroundColor: Colors.blue.shade900,
         ),
-        // body: StreamBuilder(
-        //   stream: Firestore.instance //Stream will fetch the documents
-        //       .collection('cattles_Demo')
-        //       .where('Species', isEqualTo: species_name)
-        //       .snapshots(),
-        //   builder: (context, snapshot) {
-        //     //whenever there is an update in database, Snapshot will change here
-        //     if (!snapshot.hasData) return const Text("Loading...");
-        //     return ListView.builder(
-        //       itemCount: snapshot.data.documents.length,
-        //       itemBuilder: (context, index) => _buildListItem(
-        //           context,
-        //           snapshot.data
-        //               .documents[index]), //pass index of every fetched document
-        //     );
-        //   },
-        // )
         body: Container(
           padding: EdgeInsets.all(8),
           child: FutureBuilder(
@@ -80,7 +64,7 @@ class PortalDisp extends State<Portal> {
                                     ),
                                   ),
                                   Text(
-                                    "Price:" +
+                                    getTranslated(context, "Price:") +
                                         snapshot.data.documents[index]
                                             .data["price"],
                                     style:
@@ -112,7 +96,7 @@ class PortalDisp extends State<Portal> {
                       );
                     });
               } else if (snapshot.connectionState == ConnectionState.none) {
-                return Text("No data");
+                return Text(getTranslated(context, "No data"));
               }
               return CircularProgressIndicator();
             },

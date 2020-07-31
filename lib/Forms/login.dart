@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:Kamadhenu/methods/other.dart';
 import 'package:flutter/material.dart';
 import './create.dart';
@@ -17,40 +18,37 @@ class _LoginPageState extends State<LoginPage> {
 
 //authentication
   Future<void> verifyPhone(phoneNo) async {
-
-    if(OtherMeth().CheckNum(phoneNo)==true){
-
+    if (OtherMeth().CheckNum(phoneNo) == true) {
       final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-      AuthService().signIn(authResult);
-    };
+        AuthService().signIn(authResult);
+      };
 
-    final PhoneVerificationFailed verificationfailed =
-        (AuthException authException) {
-      print('${authException.message}');
-    };
+      final PhoneVerificationFailed verificationfailed =
+          (AuthException authException) {
+        print('${authException.message}');
+      };
 
-    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-      this.verificationId = verId;
-      setState(() {
-        this.codeSent = true;
-      });
-    };
+      final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+        this.verificationId = verId;
+        setState(() {
+          this.codeSent = true;
+        });
+      };
 
-    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-      this.verificationId = verId;
-    };
+      final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+        this.verificationId = verId;
+      };
 
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: phoneNo,
-        timeout: const Duration(seconds: 5),
-        verificationCompleted: verified,
-        verificationFailed: verificationfailed,
-        codeSent: smsSent,
-        codeAutoRetrievalTimeout: autoTimeout);
-    }else{
+      await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNo,
+          timeout: const Duration(seconds: 5),
+          verificationCompleted: verified,
+          verificationFailed: verificationfailed,
+          codeSent: smsSent,
+          codeAutoRetrievalTimeout: autoTimeout);
+    } else {
       print('User Not Found!--$phoneNo FROM LOGINPAGE');
     }
-    
   }
   //////////ui code from here////////////////
 
@@ -73,11 +71,11 @@ class _LoginPageState extends State<LoginPage> {
             //MAin Body Wrapped Under Widget
             SizedBox(height: 80), //Add Spacing
             Text(
-              "   Kamadhenu",
+              getTranslated(context, "app_Title"),
               style: TextStyle(color: Colors.white, fontSize: 40),
             ),
             Text(
-              "      Login",
+              getTranslated(context, "login"),
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             SizedBox(height: 40),
@@ -104,11 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                         TextFormField(
                           maxLength: 10,
                           keyboardType: TextInputType.phone,
-                          decoration:
-                              new InputDecoration(labelText: "Phone Number"),
+                          decoration: new InputDecoration(
+                            labelText: getTranslated(context, "phone"),
+                          ),
                           validator: (String mob) {
                             if (mob.isEmpty) {
-                              return 'Number can\'t be Empty';
+                              return getTranslated(
+                                  context, "number_validation");
                             }
                             return null;
                           },
@@ -122,27 +122,30 @@ class _LoginPageState extends State<LoginPage> {
                         codeSent
                             ? Container(
                                 child: TextFormField(
-                                  keyboardType: TextInputType.phone,
-                                  decoration:
-                                      InputDecoration(hintText: 'Enter OTP'),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      this.smsCode = val;
-                                    });
-                                  },
-                                ))
+                                keyboardType: TextInputType.phone,
+                                decoration: InputDecoration(
+                                    hintText:
+                                        getTranslated(context, "enter_otp")),
+                                onChanged: (val) {
+                                  setState(() {
+                                    this.smsCode = val;
+                                  });
+                                },
+                              ))
                             : Container(),
-                        SizedBox(height:10),
+                        SizedBox(height: 10),
                         Padding(
                             padding: EdgeInsets.only(left: 25.0, right: 25.0),
                             child: Container(
-                               width: double.infinity,
-                               decoration: BoxDecoration(
-                                 color: Colors.blue[400],
-                                borderRadius: BorderRadius.all(Radius.circular(10))),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  color: Colors.blue[400],
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10))),
                               child: FlatButton(
                                   child: Center(
-                                      child: Text('Login')),
+                                      child: Text(
+                                          getTranslated(context, "login"))),
                                   onPressed: () {
                                     codeSent
                                         ? AuthService().signInWithOTP(
@@ -157,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                         new FlatButton(
                             //Button TO NAvigate to create account Page
                             child: Text(
-                              "Create Account.",
+                              getTranslated(context, "create_acc"),
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {

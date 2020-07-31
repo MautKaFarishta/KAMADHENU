@@ -1,3 +1,4 @@
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -154,7 +155,7 @@ class NotificationPanel extends StatelessWidget {
                 Navigator.pop(context);
               }),
           backgroundColor: Colors.blue.shade900,
-          title: Text("All Notifications"),
+          title: Text(getTranslated(context, "All Notifications")),
         ),
         body: Column(
           children: <Widget>[

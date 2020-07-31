@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +22,7 @@ class _ImagePicker extends State<ImagePicker> {
 
   _upload() {
     if (!isUploading) {
-      return Text("Submit");
+      return Text(getTranslated(context, "Submit"));
     } else {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +56,7 @@ class _ImagePicker extends State<ImagePicker> {
                   Navigator.pop(context);
                   Navigator.pushNamed(context, '/portal');
                 },
-                child: Text("OK"),
+                child: Text(getTranslated(context, "OK")),
               )
             ],
           ),

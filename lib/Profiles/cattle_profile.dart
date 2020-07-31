@@ -3,6 +3,7 @@
 // import 'dart:js';
 
 import 'package:Kamadhenu/UI/decorations.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +50,7 @@ class CatPro extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ])),
-            Text("Other Details : " + document['Note']),
+            Text(getTranslated(context, "Other Details") + document['Note']),
           ]),
     ));
   }
@@ -59,12 +60,12 @@ class CatPro extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
-            title: Text("Choose option"),
+            title: Text(getTranslated(context, "Choose option")),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: Text("Change Ownership"),
+                    child: Text(getTranslated(context, "Change Ownership")),
                     onTap: () {
                       Navigator.of(context).pop();
                       Navigator.pushNamed(context, '/changeOwnership');
@@ -72,7 +73,7 @@ class CatPro extends StatelessWidget {
                   ),
                   Padding(padding: EdgeInsets.all(8.0)),
                   GestureDetector(
-                    child: Text("Mark as Dead"),
+                    child: Text(getTranslated(context, "Mark as Dead")),
                   )
                 ],
               ),
@@ -91,7 +92,7 @@ class CatPro extends StatelessWidget {
           ),
           child: FlatButton(
             child: Text(
-              "Sell",
+              getTranslated(context, "Sell"),
               textScaleFactor: 1.2,
             ),
             onPressed: () {
@@ -116,7 +117,7 @@ class CatPro extends StatelessWidget {
               highlightColor: Colors.blue[200],
               color: Colors.red[200],
               child: Text(
-                "Remove from sale",
+                getTranslated(context, "Remove from sale"),
                 textScaleFactor: 1.2,
               ),
               onPressed: () {
@@ -137,7 +138,7 @@ class CatPro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cattle Profile'),
+        title: Text(getTranslated(context, 'Cattle Profile')),
         backgroundColor: Colors.blue.shade900,
         leading: IconButton(
             icon: Icon(Icons.arrow_back),
@@ -153,7 +154,7 @@ class CatPro extends StatelessWidget {
                 .snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return new Text("Loading");
+                return new Text(getTranslated(context, "Loading"));
               }
               var catDoc = snapshot.data;
               return Center(
@@ -168,9 +169,10 @@ class CatPro extends StatelessWidget {
                               child: Column(
                                 children: <Widget>[
                                   SizedBox(height: 5),
-                                  Text(
-                                      'RFID Registration of your cattle is remaining'),
-                                  Text('Please Contact AHD office near you'),
+                                  Text(getTranslated(context,
+                                      'RFID Registration of your cattle is remaining')),
+                                  Text(getTranslated(context,
+                                      'Please Contact AHD office near you')),
                                   SizedBox(height: 5),
                                 ],
                               ),
@@ -192,31 +194,36 @@ class CatPro extends StatelessWidget {
                       Container(
                         decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(children: <Widget>[
-                          Deco().titleCon('ANIMAL INFORMATION'),
+                          Deco().titleCon(
+                              getTranslated(context, 'ANIMAL INFORMATION')),
                           SizedBox(height: 10),
                           Text(
-                            'Animal Type : ${catDoc['Species']}',
+                            getTranslated(context, 'Animal Type') +
+                                ' : ${catDoc['Species']}',
                             style: TextStyle(
                               fontSize: 17,
                             ),
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Gender : ${catDoc['Gender']}',
+                            getTranslated(context, 'Gender') +
+                                ' : ${catDoc['Gender']}',
                             style: TextStyle(
                               fontSize: 17,
                             ),
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Animal Breed : ${catDoc['Breed']}',
+                            getTranslated(context, 'Animal Breed') +
+                                ' : ${catDoc['Breed']}',
                             style: TextStyle(
                               fontSize: 17,
                             ),
                           ),
                           SizedBox(height: 10),
                           Text(
-                            'Birth : ${getDate(catDoc['DOB'])}',
+                            getTranslated(context, 'Birth Date') +
+                                ' : ${getDate(catDoc['DOB'])}',
                             style: TextStyle(
                               fontSize: 17,
                             ),
@@ -228,7 +235,8 @@ class CatPro extends StatelessWidget {
                           ? Container(
                               decoration: Deco().decoBox(Colors.blue.shade50),
                               child: Column(children: <Widget>[
-                                Deco().titleCon('PREGNENCY DETAILS'),
+                                Deco().titleCon(getTranslated(
+                                    context, 'PREGNENCY DETAILS')),
                                 SizedBox(height: 10),
                                 Text('Last Calving Date',
                                     style: TextStyle(
@@ -255,7 +263,8 @@ class CatPro extends StatelessWidget {
                       Container(
                         decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(children: <Widget>[
-                          Deco().titleCon('VACCINE DETAILS'),
+                          Deco().titleCon(
+                              getTranslated(context, 'VACCINE DETAILS')),
                           StreamBuilder(
                             stream: Firestore.instance
                                 .collection('Admin')
@@ -283,7 +292,8 @@ class CatPro extends StatelessWidget {
                       Container(
                         decoration: Deco().decoBox(Colors.blue.shade50),
                         child: Column(children: <Widget>[
-                          Deco().titleCon('PREGNENCY HISTORY'),
+                          Deco().titleCon(
+                              getTranslated(context, 'PREGNENCY HISTORY')),
                           StreamBuilder(
                             stream: Firestore.instance
                                 .collection('Admin')
@@ -319,7 +329,7 @@ class CatPro extends StatelessWidget {
                               child: FlatButton(
                                 child: Container(
                                   child: Text(
-                                    ' Add Info. ',
+                                    getTranslated(context, 'Add Info'),
                                     style: TextStyle(
                                       fontSize: 16,
                                     ),
@@ -351,7 +361,7 @@ class CatPro extends StatelessWidget {
                                   ChaO.cattleID = catID;
                                   _movement(context);
                                 },
-                                child: Text("Movement"),
+                                child: Text(getTranslated(context, "Movement")),
                               ),
                             ),
                           ),

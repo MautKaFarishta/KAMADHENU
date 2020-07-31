@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:Kamadhenu/UI/decorations.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/screens/home.dart';
@@ -48,12 +49,12 @@ class Animal_Info extends State<AnimalInfo> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("Choose your Option"),
+            title: Text(getTranslated(context, "Choose your Option")),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
                   GestureDetector(
-                    child: Text("Gallery"),
+                    child: Text(getTranslated(context, "Gallery")),
                     onTap: () {
                       _openGallery(context);
                     },
@@ -63,7 +64,7 @@ class Animal_Info extends State<AnimalInfo> {
                   ),
                   GestureDetector(
                     child: Text(
-                      "Camera",
+                      getTranslated(context, "Camera"),
                     ),
                     onTap: () {
                       _openCamera(context);
@@ -87,7 +88,8 @@ class Animal_Info extends State<AnimalInfo> {
           child: Column(
             children: <Widget>[
               SizedBox(height: 5),
-              Text('Enter Price you expect for this Animal'),
+              Text(getTranslated(
+                  context, 'Enter Price you expect for this Animal')),
               SizedBox(height: 5),
             ],
           ),
@@ -97,12 +99,12 @@ class Animal_Info extends State<AnimalInfo> {
           margin: EdgeInsets.all(8),
           child: TextFormField(
             decoration: InputDecoration(
-              labelText: "Enter Price",
+              labelText: getTranslated(context, "Enter Price"),
             ),
             keyboardType: TextInputType.number,
             validator: (value) {
               if (value.length > 8) {
-                return "please Enter approprite value";
+                return getTranslated(context, "please Enter approprite value");
               }
             },
             onChanged: (value) => {
@@ -117,7 +119,7 @@ class Animal_Info extends State<AnimalInfo> {
           ),
           child: FlatButton(
             padding: EdgeInsets.all(6.0),
-            child: Text("Submit"),
+            child: Text(getTranslated(context, "Submit")),
             color: Colors.blue[200],
             onPressed: () => {_showChoiceDialogue(context)},
           ),
@@ -129,7 +131,7 @@ class Animal_Info extends State<AnimalInfo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Animal Information"),
+        title: Text(getTranslated(context, "ANIMAL INFORMATION")),
         backgroundColor: Colors.blue.shade900,
       ),
       body: Center(

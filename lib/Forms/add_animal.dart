@@ -1,4 +1,5 @@
 import 'package:Kamadhenu/UI/decorations.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:Kamadhenu/methods/database.dart';
 import 'package:Kamadhenu/screens/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,31 +40,31 @@ class AddAnimalForm extends State<AddAnimal> {
     return Container(
       child: Row(
         children: <Widget>[
-          const Text(
-            "Species    ",
+          Text(
+            getTranslated(context, "Species"),
             style: TextStyle(fontSize: 16),
           ),
           DropdownButton(
               value: _species,
-              items: const <DropdownMenuItem<String>>[
+              items: <DropdownMenuItem<String>>[
                 DropdownMenuItem<String>(
-                  child: Text("Cow"),
+                  child: Text(getTranslated(context, "Cow")),
                   value: "Cow",
                 ),
                 DropdownMenuItem<String>(
-                  child: Text("Buffalo"),
+                  child: Text(getTranslated(context, "Buffalo")),
                   value: 'Buffalo',
                 ),
                 DropdownMenuItem<String>(
-                  child: Text("Goat"),
+                  child: Text(getTranslated(context, "Goat")),
                   value: 'Goat',
                 ),
                 DropdownMenuItem<String>(
-                  child: Text("Sheep"),
+                  child: Text(getTranslated(context, "Sheep")),
                   value: "Sheep",
                 ),
                 DropdownMenuItem<String>(
-                  child: Text("Pig"),
+                  child: Text(getTranslated(context, "Pig")),
                   value: "Pig",
                 )
               ],
@@ -91,29 +92,30 @@ class AddAnimalForm extends State<AddAnimal> {
                 style: TextStyle(fontSize: 16),
               ),
               DropdownButton(
-                items: const <DropdownMenuItem<String>>[
+                items: <DropdownMenuItem<String>>[
                   DropdownMenuItem<String>(
-                    child: Text("Surh"),
+                    child: Text(getTranslated(context, "Surh")),
                     value: "Surh",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Murrah"),
+                    child: Text(getTranslated(context, "Murrah")),
                     value: "Murrah",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Pandharpuri"),
+                    child: Text(getTranslated(context, "Pandharpuri")),
                     value: "Pndharpuri",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Nagpuri"),
+                    child: Text(getTranslated(context, "Nagpuri")),
                     value: "Nagpuri",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Jaffarbadi"),
+                    child: Text(getTranslated(context, "Jaffarbadi")),
                     value: "Jaffarbadi",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Non Descriptant (Gavthi)"),
+                    child: Text(
+                        getTranslated(context, "Non Descriptant (Gavthi)")),
                     value: "non_descript",
                   ),
                 ],
@@ -123,7 +125,7 @@ class AddAnimalForm extends State<AddAnimal> {
                     _breed = value;
                   });
                 },
-                hint: Text(_breed ?? 'Select'),
+                hint: Text(_breed ?? getTranslated(context, 'select')),
               )
             ],
           ),
@@ -135,45 +137,46 @@ class AddAnimalForm extends State<AddAnimal> {
           child: Row(
             children: <Widget>[
               Text(
-                "Breed   ",
+                getTranslated(context, "Breed"),
                 style: TextStyle(fontSize: 16),
               ),
               DropdownButton(
-                items: const <DropdownMenuItem<String>>[
+                items: <DropdownMenuItem<String>>[
                   DropdownMenuItem<String>(
-                    child: Text("Khilar"),
+                    child: Text(getTranslated(context, "Khilar")),
                     value: "khilar",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Dangi"),
+                    child: Text(getTranslated(context, "Dangi")),
                     value: "dangi",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Kankrej"),
+                    child: Text(getTranslated(context, "Kankrej")),
                     value: "kankrej",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Jarsi"),
+                    child: Text(getTranslated(context, "Jarsi")),
                     value: "Jarsi",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("hoisten"),
+                    child: Text(getTranslated(context, "hoisten")),
                     value: "hoisten",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Ongole"),
+                    child: Text(getTranslated(context, "Ongole")),
                     value: "ongole",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Khandhari"),
+                    child: Text(getTranslated(context, "Khandhari")),
                     value: "khandhari",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Red Khandhari"),
+                    child: Text(getTranslated(context, "Red Khandhari")),
                     value: "Red Khandhari",
                   ),
                   DropdownMenuItem<String>(
-                    child: Text("Non Descriptant (Gavthi)"),
+                    child: Text(
+                        getTranslated(context, "Non Descriptant (Gavthi)")),
                     value: "Gavathi",
                   ),
                 ],
@@ -183,7 +186,7 @@ class AddAnimalForm extends State<AddAnimal> {
                     _breed = value;
                   });
                 },
-                hint: Text(_breed ?? 'Select'),
+                hint: Text(_breed ?? getTranslated(context, 'select')),
               )
             ],
           ),
@@ -209,10 +212,10 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
-                  _cgender = "Male";
+                  _cgender = getTranslated(context, "Male");
                 });
               }),
-          const Text("Male"),
+          Text(getTranslated(context, "Male")),
           Radio<Gender>(
               groupValue: _ugender,
               value: Gender.female,
@@ -224,7 +227,7 @@ class AddAnimalForm extends State<AddAnimal> {
                   _cgender = "Female";
                 });
               }),
-          const Text("Female"),
+          Text(getTranslated(context, "Female")),
         ],
       ),
     );
@@ -253,7 +256,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Row(
       children: <Widget>[
         Text(
-          "Birth Date : ",
+          getTranslated(context, "Birth Date"),
           style: TextStyle(fontSize: 16),
         ),
         Text(
@@ -293,7 +296,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Row(
       children: <Widget>[
         Text(
-          "Last Calving Date : ",
+          getTranslated(context, "Last Calving Date"),
           style: TextStyle(fontSize: 16),
         ),
         Text(
@@ -312,11 +315,12 @@ class AddAnimalForm extends State<AddAnimal> {
 
   Widget _calving() {
     return TextFormField(
-      decoration: InputDecoration(labelText: "Number of Calvings"),
+      decoration: InputDecoration(
+          labelText: getTranslated(context, "Number of Calvings")),
       keyboardType: TextInputType.number,
       validator: (value) {
         if (value.length > 8) {
-          return "Please Enter Valid Information";
+          return getTranslated(context, "Please Enter Valid Information");
         }
       },
       onSaved: (String value) {
@@ -329,7 +333,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Container(
       //margin: EdgeInsets.symmetric(vertical: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-        Text("Currently Pregnent  "),
+        Text(getTranslated(context, "Currently Pregnent")),
         Switch(
             value: isPregnent,
             onChanged: (s) {
@@ -353,7 +357,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 _c = val;
               });
             }),
-        const Text("Parent Details Available ")
+        Text(getTranslated(context, "Parent Details Available"))
       ],
     );
   }
@@ -364,11 +368,13 @@ class AddAnimalForm extends State<AddAnimal> {
         return Column(
           children: <Widget>[
             TextFormField(
-              decoration: InputDecoration(labelText: "Sire ID"),
+              decoration:
+                  InputDecoration(labelText: getTranslated(context, "Sire ID")),
               keyboardType: TextInputType.number,
             ),
             TextFormField(
-              decoration: InputDecoration(labelText: "Dam ID"),
+              decoration:
+                  InputDecoration(labelText: getTranslated(context, "Dam ID")),
               keyboardType: TextInputType.number,
             )
           ],
@@ -382,26 +388,24 @@ class AddAnimalForm extends State<AddAnimal> {
   }
 
   void _showDialog() {
-    
     // flutter defined function
     showDialog(
       context: context,
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(20.0)),
-          title: new Text("Cattle Data Submitted"),
-          content:
-              new Text("Contact AHD office near you for RFID registration"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          title: new Text(getTranslated(context, "Cattle Data Submitted")),
+          content: new Text(getTranslated(
+              context, "Contact AHD office near you for RFID registration")),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             RaisedButton(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                ),
-                                                onPressed: () {
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.push(
                     context,
@@ -409,12 +413,12 @@ class AddAnimalForm extends State<AddAnimal> {
                       builder: (context) => HomePage(),
                     ));
               },
-                                                child: Text(
-                                                  "Yes",
-                                                  style: TextStyle(color: Colors.white),
-                                                ),
-                                                color: const Color(0xFF0D47A1),
-                                              )
+              child: Text(
+                "Yes",
+                style: TextStyle(color: Colors.white),
+              ),
+              color: const Color(0xFF0D47A1),
+            )
           ],
         );
       },
@@ -426,7 +430,7 @@ class AddAnimalForm extends State<AddAnimal> {
       margin: EdgeInsets.all(5),
       child: TextField(
           decoration: InputDecoration(
-            labelText: 'More Details',
+            labelText: getTranslated(context, 'More Details'),
           ),
           onChanged: (String value) {
             note = value;
@@ -438,7 +442,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
-        title: Text("Register"),
+        title: Text(getTranslated(context, "Register")),
       ),
       body: Container(
           margin: EdgeInsets.all(16),
@@ -450,7 +454,8 @@ class AddAnimalForm extends State<AddAnimal> {
                   Container(
                     decoration: Deco().decoBox(Colors.blue.shade50),
                     child: Column(children: <Widget>[
-                      Deco().titleCon('ANIMAL INFORMATION'),
+                      Deco().titleCon(
+                          getTranslated(context, 'ANIMAL INFORMATION')),
                       _buildGender(),
                       _buildSpecies(),
                       SizedBox(height: 10),
@@ -461,44 +466,50 @@ class AddAnimalForm extends State<AddAnimal> {
                     ]),
                   ),
                   SizedBox(height: 20),
-                  _cgender == 'Female'?
-                  Column(
-                    children: <Widget>[
-                      Container(
-                          decoration: Deco().decoBox(Colors.blue.shade50),
-                          child: Column(
-                            children: <Widget>[
-                              Deco().titleCon('REPRODUCTION DETAILS'),
-                              _calving(),
-                              SizedBox(height: 15),
-                              _checkPre(),
-                              SizedBox(height:1),
-                              _lastcalfBOB(),
-                              SizedBox(height: 10),
-                            ],
-                          )),
-                      SizedBox(height:20),
-                    ],
-                  ):
-                  
-                  SizedBox(height: 0),
+                  _cgender == 'Female'
+                      ? Column(
+                          children: <Widget>[
+                            Container(
+                                decoration: Deco().decoBox(Colors.blue.shade50),
+                                child: Column(
+                                  children: <Widget>[
+                                    Deco().titleCon(getTranslated(
+                                        context, 'REPRODUCTION DETAILS')),
+                                    _calving(),
+                                    SizedBox(height: 15),
+                                    _checkPre(),
+                                    SizedBox(height: 1),
+                                    _lastcalfBOB(),
+                                    SizedBox(height: 10),
+                                  ],
+                                )),
+                            SizedBox(height: 20),
+                          ],
+                        )
+                      : SizedBox(height: 0),
                   Container(
                     decoration: Deco().decoBox(Colors.blue.shade50),
-                    child: Column(children: <Widget>[
-                        Deco().titleCon('ADDITIONAL INFORMATION'),
-                        Center(child: Text('You can add any information like birthmark'),),
-                        SizedBox(height:10),
+                    child: Column(
+                      children: <Widget>[
+                        Deco().titleCon(
+                            getTranslated(context, 'ADDITIONAL INFORMATION')),
+                        Center(
+                          child: Text(getTranslated(context,
+                              'You can add any information like birthmark')),
+                        ),
+                        SizedBox(height: 10),
                         moreDetails(),
                       ],
                     ),
                   ),
-                  SizedBox(height:10),
+                  SizedBox(height: 10),
 
                   SizedBox(height: 20),
                   Container(
                     decoration: Deco().decoBox(Colors.blue.shade50),
                     child: Column(children: <Widget>[
-                      Deco().titleCon('PARENT\'S DETAILS'),
+                      Deco()
+                          .titleCon(getTranslated(context, "PARENT'S DETAILS")),
                       _parentdetailsCB(),
                       SizedBox(height: 10),
                       _parentdetails(),
@@ -514,24 +525,24 @@ class AddAnimalForm extends State<AddAnimal> {
                         color: Colors.blue[400],
                         borderRadius: BorderRadius.all(Radius.circular(10))),
                     child: FlatButton(
-                        child: Text("SUBMIT"),
+                        child: Text(getTranslated(context, "Submit")),
                         onPressed: () {
                           _showDialog();
 
                           _addAnimalkey.currentState.save();
 
                           DataBaseService().updateCattle(
-                              _species,
-                              _breed,
-                              _cgender,
-                              _birthdate,
-                              _lastcalf,
-                              _calvings,
-                              isPregnent,
-                              regn,
-                              ownerID,
-                              note,
-                              );
+                            _species,
+                            _breed,
+                            _cgender,
+                            _birthdate,
+                            _lastcalf,
+                            _calvings,
+                            isPregnent,
+                            regn,
+                            ownerID,
+                            note,
+                          );
                         }),
                   ),
                   // _next(),

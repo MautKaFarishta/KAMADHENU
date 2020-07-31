@@ -1,10 +1,16 @@
+import 'package:Kamadhenu/localization/localizationConstant.dart';
 import 'package:Kamadhenu/screens/help.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import './about.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends StatefulWidget {
+  @override
+  _MainDrawerState createState() => _MainDrawerState();
+}
+
+class _MainDrawerState extends State<MainDrawer> {
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
@@ -18,19 +24,19 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.input),
-            title: Text('My Animals'),
+            title: Text(getTranslated(context, 'My Animals')),
             onTap: () => {
               Navigator.of(context).pop(),
             },
           ),
           ListTile(
             leading: Icon(Icons.explore),
-            title: Text('Buy/Sell Animal'),
+            title: Text(getTranslated(context, 'Buy/Sell Animal')),
             onTap: () => {Navigator.pushNamed(context, '/portal')},
           ),
           ListTile(
             leading: Icon(Icons.info),
-            title: Text('Help'),
+            title: Text(getTranslated(context, 'Help')),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
@@ -42,7 +48,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.info),
-            title: Text('About Us'),
+            title: Text(getTranslated(context, 'About Us')),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
@@ -54,7 +60,7 @@ class MainDrawer extends StatelessWidget {
           ),
           ListTile(
             leading: Icon(Icons.exit_to_app),
-            title: Text('LogOut'),
+            title: Text(getTranslated(context, 'LogOut')),
             onTap: () => {AuthService().signOut(), Navigator.of(context).pop()},
           ),
         ],

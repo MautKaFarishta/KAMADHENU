@@ -1,5 +1,9 @@
 import 'package:Kamadhenu/Profiles/cattle_profile.dart';
 import 'package:Kamadhenu/UI/decorations.dart';
+import 'package:Kamadhenu/classes/language.dart';
+import 'package:Kamadhenu/localization/demolocalization.dart';
+import 'package:Kamadhenu/localization/localizationConstant.dart';
+import 'package:Kamadhenu/main.dart';
 import 'package:Kamadhenu/methods/authservice.dart';
 import 'package:Kamadhenu/models/user.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +23,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _changeLanguage(Language language) async {
+    Locale _temp = await setLocale(language.languageCode);
+    MyApp.setLocale(context, _temp);
+  }
+
+  Future<void> _showchangeLanguage() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Choose Language"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                    child: Text("English"),
+                    onTap: () {
+                      print(Language.languageList().elementAt(0).languageCode);
+                      _changeLanguage(Language.languageList().elementAt(0));
+                      Navigator.of(context).pop();
+                    }),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: Text("हिन्दी"),
+                  onTap: () {
+                    print(Language.languageList().elementAt(1).languageCode);
+                    _changeLanguage(Language.languageList().elementAt(1));
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   // StreamSubscription _subscription;
 
   KamadhenuUser getid(String foo) {
@@ -64,7 +105,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
         //icon:Icon(Icons.add),
-        label: Text('REGISTER'),
+        label: Text(getTranslated(context, "REGISTER")),
         backgroundColor: Colors.green,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -83,14 +124,18 @@ class _HomePageState extends State<HomePage> {
                               NotificationPanel(region: currentUser.district),
                         ),
                       );
+                    }),
+                IconButton(
+                    icon: Icon(Icons.language),
+                    onPressed: () {
+                      _showchangeLanguage();
                     })
               ],
               backgroundColor: Colors.blue.shade900,
               titleSpacing: 50,
               title: Center(
                 child: Text(
-                  'Kamadhenu',
-                  style: TextStyle(fontSize: 28),
+                  getTranslated(context, "app_Title"),
                 ),
               ),
               expandedHeight: 170.0,
@@ -137,9 +182,8 @@ class _HomePageState extends State<HomePage> {
         },
         body: Column(
           children: <Widget>[
-            Deco().titleCon(
-              'Your Cattles',
-            ),
+            Deco().titleCon(DemoLocalization.of(context)
+                .getTransValue(getTranslated(context, "Your Cattles"))),
             Center(
               child: ListPage(),
             ),
@@ -197,6 +241,7 @@ class _ListPageState extends State<ListPage> {
                                     width: 1.0, color: Colors.black38),
                               ),
                               child: Row(
+                                mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   SizedBox(width: 5.0),
                                   CircleAvatar(
@@ -224,7 +269,7 @@ class _ListPageState extends State<ListPage> {
                                   ),
                                   SizedBox(width: 20.0),
                                   Icon(Icons.chevron_right,
-                                      color: Colors.black38, size: 40.0),
+                                      color: Colors.black38),
                                 ],
                               )),
                         ],
