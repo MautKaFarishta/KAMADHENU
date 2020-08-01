@@ -36,24 +36,27 @@ import 'package:provider/provider.dart';
 import 'permanent.dart';
 
 String userType;
-
-void main() {
-  getUserType().then((value) {
-    _assignValue(value);
-  });
-  if (userType == 'User') {
-    runApp(MyApp());
-  } else if (userType == 'Admin') {
-    runApp(MyAppAdmin());
-  } else {
-    runApp(StartApp());
-  }
-}
-
-_assignValue(String value) {
+assignValue(String value) {
   userType = value;
   print(userType);
 }
+
+
+void main() {
+  //getUserType().then((value) => assignValue(value)
+  //);
+  print(userType);
+  //if (userType == 'User') {
+  //  runApp(MyApp());
+  //} else if (userType == 'Admin') {
+  //  runApp(MyAppAdmin());
+  //} else {
+  //  runApp(StartApp());
+  //}
+  runApp(StartApp());
+}
+
+
 
 // _homepage(String userType) {
 //   if (userType == 'Admin')
@@ -71,7 +74,7 @@ class StartApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Start(),
+      home: MyApp(),
     );
   }
 }
