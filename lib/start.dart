@@ -15,21 +15,29 @@ class StartState extends State<Start> {
         appBar: AppBar(
           title: Text("Choose Your type"),
         ),
-        body: Column(
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
               onPressed: () {
                 runApp(MyApp());
               },
-              child: Text("User"),
+              child: Text(
+                "User",
+                textScaleFactor: 2,
+              ),
             ),
             RaisedButton(
               onPressed: () {
                 runApp(MyAppAdmin());
               },
-              child: Text("Admin"),
+              child: Text(
+                "Admin",
+                textScaleFactor: 2,
+              ),
             ),
           ],
-        ));
+        )));
   }
 }
