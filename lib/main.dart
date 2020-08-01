@@ -25,7 +25,7 @@ import 'Admin/main1.dart' as M;
 import 'Admin/methods/user.dart';
 import 'package:Kamadhenu/Admin/Broadcast/broadcast.dart';
 import 'package:Kamadhenu/Admin/admin_screens/Cattles/cattles.dart';
-import 'package:Kamadhenu/Admin/admin_screens/Users/users.dart';
+import 'package:Kamadhenu/Admin/admin_screens/Users/users.dart' as Auser;
 import 'package:Kamadhenu/Admin/admin_screens/wrapper.dart';
 import 'package:Kamadhenu/Admin/methods/auth.dart';
 import 'package:Kamadhenu/Admin/methods/user.dart';
@@ -33,11 +33,26 @@ import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Admin/admin_screens/home.dart';
 import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 import 'package:provider/provider.dart';
+import 'permanent.dart';
 
 String userType;
 
 void main() {
-  runApp(StartApp());
+  getUserType().then((value) {
+    _assignValue(value);
+  });
+  if (userType == 'User') {
+    runApp(MyApp());
+  } else if (userType == 'Admin') {
+    runApp(MyAppAdmin());
+  } else {
+    runApp(StartApp());
+  }
+}
+
+_assignValue(String value) {
+  userType = value;
+  print(userType);
 }
 
 // _homepage(String userType) {

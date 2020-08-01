@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:Kamadhenu/permanent.dart' as P;
 
+import 'User/Forms/create.dart';
+import 'main.dart';
 import 'main.dart';
 
 class Start extends StatefulWidget {
@@ -20,7 +23,9 @@ class StartState extends State<Start> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
+                userType = "User";
+                P.addUserType(userType);
                 runApp(MyApp());
               },
               child: Text(
@@ -29,7 +34,9 @@ class StartState extends State<Start> {
               ),
             ),
             RaisedButton(
-              onPressed: () {
+              onPressed: () async {
+                userType = "Admin";
+                P.addUserType(userType);
                 runApp(MyAppAdmin());
               },
               child: Text(
