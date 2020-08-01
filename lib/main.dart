@@ -1,87 +1,64 @@
 // import 'dart:js';
 
-import 'package:Kamadhenu/Forms/create.dart';
-import 'package:Kamadhenu/screens/AnimalInfo.dart';
-import 'package:Kamadhenu/screens/ChangeOwnership.dart';
-import 'package:Kamadhenu/screens/ImagePicker.dart';
-import 'package:Kamadhenu/screens/Portal.dart';
-import 'package:Kamadhenu/screens/buySell.dart';
-import 'package:Kamadhenu/methods/authservice.dart';
-import 'package:Kamadhenu/screens/home.dart';
+import 'package:Kamadhenu/Admin/admin_screens/login.dart';
+import 'package:Kamadhenu/User/Forms/create.dart';
+import 'package:Kamadhenu/User/Forms/login.dart';
+import 'package:Kamadhenu/User/screens/AnimalInfo.dart';
+import 'package:Kamadhenu/User/screens/ChangeOwnership.dart';
+import 'package:Kamadhenu/User/screens/ImagePicker.dart';
+import 'package:Kamadhenu/User/screens/Portal.dart';
+import 'package:Kamadhenu/User/screens/buySell.dart';
+import 'package:Kamadhenu/User/methods/authservice.dart' as Uauth;
+import 'package:Kamadhenu/User/screens/home.dart' as uhome;
+import 'package:Kamadhenu/start.dart';
 import 'package:flutter/material.dart';
-import 'package:Kamadhenu/UI/AnimalProfile.dart';
+import 'package:Kamadhenu/User/UI/AnimalProfile.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:Kamadhenu/localization/demolocalization.dart';
+import 'package:Kamadhenu/User/localization/demolocalization.dart';
+import 'package:provider/provider.dart';
+import 'Admin/admin_screens/Cattles/cattles.dart';
+import 'Admin/admin_screens/Users/users.dart';
+import 'Admin/admin_screens/wrapper.dart';
+import 'Admin/main1.dart';
+import 'package:Kamadhenu/User/localization/localizationConstant.dart';
+import 'Admin/main1.dart' as M;
+import 'Admin/methods/user.dart';
+import 'package:Kamadhenu/Admin/Broadcast/broadcast.dart';
+import 'package:Kamadhenu/Admin/admin_screens/Cattles/cattles.dart';
+import 'package:Kamadhenu/Admin/admin_screens/Users/users.dart';
+import 'package:Kamadhenu/Admin/admin_screens/wrapper.dart';
+import 'package:Kamadhenu/Admin/methods/auth.dart';
+import 'package:Kamadhenu/Admin/methods/user.dart';
+import 'package:flutter/material.dart';
+import 'package:Kamadhenu/Admin/admin_screens/home.dart';
+import 'package:Kamadhenu/Admin/admin_screens/login.dart';
+import 'package:provider/provider.dart';
 
-import 'localization/localizationConstant.dart';
+String userType;
 
-// void main() {
-//   //Main Function
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatefulWidget {
-//   static void setLocale(BuildContext context, Locale locale) {
-//     _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
-//     state.setLocale(locale);
-//   }
-
-//   @override
-//   _MyAppState createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   Locale _locale;
-
-//   void setLocale(Locale locale) {
-//     setState(() {
-//       _locale = locale;
-//     });
-//   }
-
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//         title:
-//             'Kamadhenu', //title of app shown  when we press 'recent apps' button on android
-//         theme: ThemeData(
-//           primarySwatch: Colors.blue,
-//         ),
-//         home: AuthService().handleAuth(),
-//         routes: {
-//           // '/': (BuildContext ctx) => AuthService().handleAuth(),
-//           '/home': (BuildContext ctx) => HomePage(),
-//           '/portal': (BuildContext ctx) => Portal(),
-//           '/ImagePicker': (BuildContext ctx) => ImagePicker(),
-//           '/animalProfile': (BuildContext ctx) => AnimalProfile(),
-//           '/animalInfo': (BuildContext ctx) => AnimalInfo(),
-//           '/changeOwnership': (BuildContext ctx) => ChangeOwnership(),
-//         },
-//         supportedLocales: [
-//           Locale('en', 'US'),
-//           Locale('hi', 'IN'),
-//         ],
-//         localizationsDelegates: [
-//           // ... app-specific localization delegate[s] here
-//           GlobalMaterialLocalizations.delegate,
-//           GlobalWidgetsLocalizations.delegate,
-//           GlobalCupertinoLocalizations.delegate,
-//           DemoLocalization.delegate,
-//         ],
-//         localeListResolutionCallback: (deviceLocale, supportedLocales) {
-//           // for (var locale in supportedLocales) {
-//           //   if (locale.languageCode == deviceLocale.languageCode &&
-//           //       locale.countryCode == deviceLocale.countryCode) {
-//           //     return deviceLocale;
-//           //   }
-//           // }
-
-//           return supportedLocales.first;
-//         });
-//   }
-// }
 void main() {
-  //Main Function
-  runApp(MyApp());
+  runApp(StartApp());
+}
+
+// _homepage(String userType) {
+//   if (userType == 'Admin')
+//     return MyAppAdmin();
+//   else if (userType == 'User')
+//     return Uauth.AuthService().handleAuth();
+//   else
+//     return LoginPageUser();
+// }
+
+class StartApp extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Choose ",
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Start(),
+    );
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -127,10 +104,10 @@ class _MyAppState extends State<MyApp> {
             primarySwatch: Colors.blue,
           ),
           locale: _locale,
-          home: AuthService().handleAuth(),
+          home: Uauth.AuthService().handleAuth(),
           routes: {
             // '/': (BuildContext ctx) => AuthService().handleAuth(),
-            '/home': (BuildContext ctx) => HomePage(),
+            '/home': (BuildContext ctx) => uhome.HomePage(),
             '/portal': (BuildContext ctx) => Portal(),
             '/ImagePicker': (BuildContext ctx) => ImagePicker(),
             '/animalProfile': (BuildContext ctx) => AnimalProfile(),
@@ -158,5 +135,28 @@ class _MyAppState extends State<MyApp> {
             return supportedLocales.first;
           });
     }
+  }
+}
+
+class MyAppAdmin extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return StreamProvider<User>.value(
+      value: AuthService().user,
+      child: new MaterialApp(
+        title: 'Kamadhenu Administrator',
+        theme: new ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        //new HomePage()//Redirect To Login PAge
+        routes: {
+          '/': (BuildContext context) => Wrapper(),
+          //'/': (BuildContext context) => BroadCast(),
+          '/cattles': (BuildContext context) => Cattles(),
+          '/home': (BuildContext context) => HomePage(),
+          '/Users': (BuildContext ctx) => Users(),
+          //'/Users' : (BuildContext ctx) => AddAnimal(),
+        },
+      ),
+    );
   }
 }

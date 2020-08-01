@@ -1,0 +1,6 @@
+class demo{
+
+  demo1() {
+
+  }
+}
