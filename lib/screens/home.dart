@@ -182,8 +182,8 @@ class _HomePageState extends State<HomePage> {
         },
         body: Column(
           children: <Widget>[
-            Deco().titleCon(DemoLocalization.of(context)
-                .getTransValue(getTranslated(context, "Your Cattles"))),
+            Deco().titleCon(
+                DemoLocalization.of(context).getTransValue("Your Cattles")),
             Center(
               child: ListPage(),
             ),

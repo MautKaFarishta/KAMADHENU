@@ -93,7 +93,7 @@
   "Livestock Ownership Database Controlled and Managed by Team Kamadhenu":"Livestock Ownership Database Controlled and Managed by Team Kamadhenu",
   "For any queries contact us at -kamadhenu.helpdesk@gmail.com":"For any queries contact us at -kamadhenu.helpdesk@gmail.com",
   "Choose your Option":"Choose your Option",
-  "Gallery":"***********Gallery",
+  "Gallery":"Gallery",
   "Camera":"Camera",
   "Enter Price you expect for this Animal":"Enter Price you expect for this Animal",
   "Enter Price":"Enter Price",
@@ -118,7 +118,9 @@
   "Price":"Price:",
   "No data":"No data",
   "REQUEST SENT":"REQUEST SENT",
-  " Information":" Information",
+  "Animal Information":"Animal Information",
+  "Seller's Contact":"Seller's Contact ",
   "req_will_be":"A request will be sent to the owner of the cattle, you need to contact the owner for exchage of money and Livestock, \n\n\nPress OK to continue.",
-  "Seller's Contact: ":"Contact Details: "
+  "View Contact Details":"View Contact Details",
+  "end":"end"
 }

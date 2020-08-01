@@ -64,7 +64,7 @@ class PortalDisp extends State<Portal> {
                                     ),
                                   ),
                                   Text(
-                                    getTranslated(context, "Price:") +
+                                    getTranslated(context, "Price") +
                                         snapshot.data.documents[index]
                                             .data["price"],
                                     style:

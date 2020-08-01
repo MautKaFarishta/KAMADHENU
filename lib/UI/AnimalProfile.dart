@@ -68,7 +68,7 @@ class _AnimalProfile extends State<AnimalProfile> {
               Container(
                 decoration: Deco().decoBox(Colors.blue.shade50),
                 child: Column(children: <Widget>[
-                  Deco().titleCon('ANIMAL INFORMATION'),
+                  Deco().titleCon(getTranslated(context, 'ANIMAL INFORMATION')),
                   SizedBox(height: 10),
                   Text(
                     'Animal Type : ${snapshot.data['Species']}',
@@ -125,7 +125,7 @@ class _AnimalProfile extends State<AnimalProfile> {
                     _showContactDetails();
                   });
                 },
-                child: Text("View Contact Details"),
+                child: Text(getTranslated(context, "View Contact Details")),
               )
             ]));
           },
