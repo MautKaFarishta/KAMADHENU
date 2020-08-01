@@ -28,7 +28,7 @@ class _WrapperState extends State<Wrapper> {
     getStringValuesSF().then((value) => demo1(value));
   }
 
-  final AuthService _auth = AuthService();
+//  final AuthService _auth = AuthService();
 
   @override
   Widget build(BuildContext context) {

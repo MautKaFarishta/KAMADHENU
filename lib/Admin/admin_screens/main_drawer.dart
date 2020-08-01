@@ -1,6 +1,7 @@
 import 'package:Kamadhenu/Admin/Broadcast/broadcast.dart';
 import 'package:Kamadhenu/Admin/admin_screens/Cattles/cattleRedirect.dart';
 import 'package:Kamadhenu/Admin/admin_screens/Cattles/cattles.dart';
+import 'package:Kamadhenu/Admin/admin_screens/Users/users.dart';
 import 'package:Kamadhenu/Admin/admin_screens/home.dart';
 import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 
@@ -58,7 +59,8 @@ class MainDrawer extends StatelessWidget {
               //Navigator.of(context).push(MaterialPageRoute(
               //builder: (BuildContext context) => Users())),
               Navigator.of(context).pop(),
-              Navigator.of(context).pushNamed('/Users'),
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => Users())),
             },
           ),
           ListTile(

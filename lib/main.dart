@@ -1,5 +1,7 @@
 // import 'dart:js';
 
+import 'dart:async';
+
 import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 import 'package:Kamadhenu/User/Forms/create.dart';
 import 'package:Kamadhenu/User/Forms/login.dart';
@@ -35,7 +37,7 @@ import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 import 'package:provider/provider.dart';
 import 'permanent.dart';
 
-String userType;
+String userType ;
 assignValue(String value) {
   userType = value;
   print(userType);
@@ -45,7 +47,7 @@ assignValue(String value) {
 void main() {
   //getUserType().then((value) => assignValue(value)
   //);
-  print(userType);
+
   //if (userType == 'User') {
   //  runApp(MyApp());
   //} else if (userType == 'Admin') {
@@ -53,7 +55,9 @@ void main() {
   //} else {
   //  runApp(StartApp());
   //}
+
   runApp(StartApp());
+
 }
 
 
@@ -67,17 +71,60 @@ void main() {
 //     return LoginPageUser();
 // }
 
-class StartApp extends StatelessWidget {
+class StartApp extends StatefulWidget {
+  @override
+  _StartAppState createState() => _StartAppState();
+}
+
+class _StartAppState extends State<StartApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     getUserType().then((value) => assignValue(value));
+    setState(() {
+      getUserType().then((value) => assignValue(value));
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Choose ",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyApp(),
-    );
+setState(() {
+  getUserType().then((value) => assignValue(value));
+});
+
+
+    if(userType == 'User'){
+      setState(() {
+
+      });
+      return MyApp();
+    }
+    else if(userType == 'Admin'){
+      return MyAppAdmin();
+    }
+    else {
+      //final AuthService _auth = AuthService();
+      //_auth.signOut();
+      print(userType);
+      return MyApp();
+    }
+
+   // return MaterialApp(
+     // title: "Choose ",
+      //theme: ThemeData(
+      //  primarySwatch: Colors.blue,
+     // ),
+     // home: userType == 'Admin' ? MyAppAdmin() : MyApp(),
+    //);
   }
 }
+class redir extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
 
 class MyApp extends StatefulWidget {
   static void setLocale(BuildContext context, Locale locale) {
@@ -108,7 +155,7 @@ class _MyAppState extends State<MyApp> {
     super.didChangeDependencies();
   }
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext usercontext) {
     if (_locale == null) {
       return Container(
           child: Center(
@@ -165,15 +212,17 @@ class MyAppAdmin extends StatelessWidget {
         theme: new ThemeData(
           primarySwatch: Colors.blue,
         ),
+        home: Wrapper(),
         //new HomePage()//Redirect To Login PAge
-        routes: {
-          '/': (BuildContext context) => Wrapper(),
+
+        //routes: {
+          //'/': (BuildContext context) => Wrapper(),
           //'/': (BuildContext context) => BroadCast(),
-          '/cattles': (BuildContext context) => Cattles(),
-          '/home': (BuildContext context) => HomePage(),
-          '/Users': (BuildContext ctx) => Users(),
+          //'/cattles': (BuildContext context) => Cattles(),
+          //'/home': (BuildContext context) => HomePage(),
+          //'/Users': (BuildContext ctx) => Users(),
           //'/Users' : (BuildContext ctx) => AddAnimal(),
-        },
+       // },
       ),
     );
   }
