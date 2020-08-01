@@ -92,22 +92,8 @@ setState(() {
   getUserType().then((value) => assignValue(value));
 });
 
+return redir();
 
-    if(userType == 'User'){
-      setState(() {
-
-      });
-      return MyApp();
-    }
-    else if(userType == 'Admin'){
-      return MyAppAdmin();
-    }
-    else {
-      //final AuthService _auth = AuthService();
-      //_auth.signOut();
-      print(userType);
-      return MyApp();
-    }
 
    // return MaterialApp(
      // title: "Choose ",
@@ -121,7 +107,19 @@ setState(() {
 class redir extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if(userType == 'User'){
+
+      return MyApp();
+    }
+    else if(userType == 'Admin'){
+      return MyAppAdmin();
+    }
+    else {
+      //final AuthService _auth = AuthService();
+      //_auth.signOut();
+      print(userType);
+      return MyApp();
+    }
   }
 }
 
