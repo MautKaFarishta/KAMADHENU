@@ -62,7 +62,6 @@
   "ongole":"ఒంగోలు",
   "khandhari":"ఖందరి",
   "Birth Date":"పుట్టిన తేదీ",
-  "Birth" : "పుట్టిన",
   "Last Calving Date":"చివరి కాల్వింగ్ తేదీ",
   "Number of Calvings":"కాల్వింగ్స్ సంఖ్య",
   "Please Enter Valid Information":"దయచేసి చెల్లుబాటు అయ్యే సమాచారాన్ని నమోదు చేయండి",
@@ -126,5 +125,11 @@
   "REQUEST SENT":"అభ్యర్ధన పంపబడినది",
   " Information":"సమాచారం",
   "req_will_be":"పశువుల యజమానికి ఒక అభ్యర్థన పంపబడుతుంది, మీరు డబ్బు మరియు పశువుల మార్పిడి కోసం యజమానిని సంప్రదించాలి, కొనసాగించడానికి సరే నొక్కండి.",
-  "Seller's Contact: ":"విక్రేత యొక్క పరిచయం: "
+  "Seller's Contact: ":"విక్రేత యొక్క పరిచయం: ",
+  "end":"ముగింపు",
+  "Birth":"పుట్టిన",
+  "Animal Information":"జంతు సమాచారం",
+  "Seller's Contact":"విక్రేత యొక్క పరిచయం ",
+  "Gallery":"గ్యాలరీ",
+  "getTranslated(context, 'Animal Type')+'Birth Date":"పుట్టిన తేదీ: "
 }
