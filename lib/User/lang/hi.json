@@ -126,6 +126,7 @@
     "req_will_be":"A request will be sent to the owner of the cattle, you need to contact the owner for exchage of money and Livestock, \n\n\nPress OK to continue.",
     "Seller's Contact":"विक्रेता का संपर्क: ",
     "View Contact Details":"विक्रेता की जानकारी",
-    "end":"end",
-    "Birth":"जन्म"
+    "Birth":"जन्म",
+    "NA" : "--",
+    "end":"end"
 }
