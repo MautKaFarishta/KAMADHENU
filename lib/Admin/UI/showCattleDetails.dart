@@ -152,34 +152,41 @@ class ShowCattleDetails {
                 ]),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: Deco().decoBox(Colors.lightBlue.shade100),
-                child: Column(children: <Widget>[
-                  Deco().titleCon('PREGNANCY DETAILS'),
-                  SizedBox(height: 10),
-                  Text(
-                    'Last Calving Date',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
+              catDoc['Gender']=='Female'?
+              
+              Column(
+                children: <Widget>[
+                  Container(
+                    decoration: Deco().decoBox(Colors.lightBlue.shade100),
+                    child: Column(children: <Widget>[
+                      Deco().titleCon('PREGNANCY DETAILS'),
+                      SizedBox(height: 10),
+                      Text(
+                        'Last Calving Date',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      Text(
+                        '$ldOC',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Total Calvings : ${catDoc['Calvings']}',
+                        style: TextStyle(
+                          fontSize: 17,
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ]),
                   ),
-                  Text(
-                    '$ldOC',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Total Calvings : ${catDoc['Calvings']}',
-                    style: TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                ]),
-              ),
-              SizedBox(height: 20),
+                  SizedBox(height: 20),
+                ],
+              ):
+              SizedBox(height:1),
               Container(
                 decoration: Deco().decoBox(Colors.lightBlue.shade100),
                 child: Column(children: <Widget>[
@@ -206,36 +213,42 @@ class ShowCattleDetails {
                 ]),
               ),
               SizedBox(height: 20),
-              Container(
-                decoration: Deco().decoBox(Colors.lightBlue.shade100),
-                child: Column(children: <Widget>[
-                  Deco().titleCon('PREGNANCY HISTORY'),
-                  StreamBuilder(
-                    stream: Firestore.instance
-                        .collection('Admin')
-                        .document(regn)
-                        .collection('pregnency_details')
-                        .where('CattleID', isEqualTo: catID)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null)
-                        return Text(
-                          "No Details are Added.",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        );
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data.documents.length,
-                        itemBuilder: (context, index) => getList(
-                            context,
-                            snapshot.data.documents[
-                                index]), //pass index of every fetched document
-                      );
-                    },
+              catDoc['Gender']=='Female'?
+              Column(
+                children: <Widget>[
+                  Container(
+                    decoration: Deco().decoBox(Colors.lightBlue.shade100),
+                    child: Column(children: <Widget>[
+                      Deco().titleCon('PREGNANCY HISTORY'),
+                      StreamBuilder(
+                        stream: Firestore.instance
+                            .collection('Admin')
+                            .document(regn)
+                            .collection('pregnency_details')
+                            .where('CattleID', isEqualTo: catID)
+                            .snapshots(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null)
+                            return Text(
+                              "No Details are Added.",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            );
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data.documents.length,
+                            itemBuilder: (context, index) => getList(
+                                context,
+                                snapshot.data.documents[
+                                    index]), //pass index of every fetched document
+                          );
+                        },
+                      ),
+                    ]),
                   ),
-                ]),
-              ),
+                  SizedBox(height:1),
+                ],
+              ):
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

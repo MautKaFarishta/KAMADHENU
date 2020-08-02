@@ -336,6 +336,7 @@ class CatPro extends StatelessWidget {
                                   ),
                                 ),
                                 onPressed: () {
+                                  A.gender=catDoc['Gendr'];
                                   A.catID = catID;
                                   A.region = catDoc['Region'];
                                   print(

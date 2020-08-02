@@ -38,7 +38,7 @@ assignValue(String value) {
 }
 
 void main() {
-  runApp(MyApp());
+  runApp(MyAppAdmin());
 }
 
 class StartApp extends StatefulWidget {

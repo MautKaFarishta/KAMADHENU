@@ -137,6 +137,7 @@ class _BroadcastState extends State<Broadcast> {
                   detailDate1,
                 );
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
             ),
           ],

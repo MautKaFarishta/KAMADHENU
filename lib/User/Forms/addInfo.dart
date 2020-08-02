@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 String catID;
 String region;
+String gender;
 
 class MoreInfo extends StatefulWidget {
   @override
@@ -25,25 +26,41 @@ class _MoreInfoState extends State<MoreInfo> {
             "Details     ",
             style: TextStyle(fontSize: 16),
           ),
-          DropdownButton(
-              value: detailType,
-              items: const <DropdownMenuItem<String>>[
-                DropdownMenuItem<String>(
-                  child: Text("Pregnency Detail"),
-                  value: "pregnency_details",
-                ),
-                DropdownMenuItem<String>(
-                  child: Text("Vaccine Details"),
-                  value: 'vaccine_details',
-                ),
-              ],
-              onChanged: (value) {
-                detailType = value;
-                //print(_species);
-                setState(() {
-                  detailType = value;
-                });
-              })
+          gender == 'Female'
+              ? DropdownButton(
+                  value: detailType,
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem<String>(
+                      child: Text("Pregnancy Detail"),
+                      value: "pregnency_details",
+                    ),
+                    DropdownMenuItem<String>(
+                      child: Text("Vaccine Details"),
+                      value: 'vaccine_details',
+                    ),
+                  ],
+                  onChanged: (value) {
+                    detailType = value;
+                    //print(_species);
+                    setState(() {
+                      detailType = value;
+                    });
+                  })
+              : DropdownButton(
+                  value: detailType,
+                  items: const <DropdownMenuItem<String>>[
+                    DropdownMenuItem<String>(
+                      child: Text("Vaccine Details"),
+                      value: 'vaccine_details',
+                    ),
+                  ],
+                  onChanged: (value) {
+                    detailType = value;
+                    //print(_species);
+                    setState(() {
+                      detailType = value;
+                    });
+                  }),
         ],
       ),
     );

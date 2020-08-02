@@ -95,6 +95,7 @@ class _StatState extends State<Stat> {
                         Container(
                           child: Deco().titleConNew('User Registrations'),
                         ),
+                        Icon(Icons.group),
                         Row(
                           children: <Widget>[
                             getEl('Total User Registrations', stat['user_Reg']),
@@ -112,8 +113,9 @@ class _StatState extends State<Stat> {
                     child: Column(
                       children: <Widget>[
                         Container(
-                          child: Deco().titleConNew('Registration'),
+                          child: Deco().titleConNew('Cattle Registration'),
                         ),
+                        Icon(Icons.pets),
                         Row(
                           children: <Widget>[
                             getEl('App Registrations', stat['ByApp_Reg']),
@@ -124,32 +126,7 @@ class _StatState extends State<Stat> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Container(
-                    //margin: EdgeInsets.all(7),
-                    decoration: Deco().decoBoxNew(),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          child: Deco().titleConNew('Reproduction'),
-                        ),
-                        Row(
-                          children: <Widget>[
-                            getEl('Total New Born', stat['newBorn']),
-                          ],
-                        ),
-                        Divider(
-                          thickness: 2,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            getEl('AI', stat['AI']),
-                            getEl('PD', stat['PD']),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                  
                   SizedBox(height: 10),
                   Container(
                     //margin: EdgeInsets.all(7),
@@ -159,6 +136,7 @@ class _StatState extends State<Stat> {
                         Container(
                           child: Deco().titleConNew('Vaccination'),
                         ),
+                        Icon(Icons.healing),
                         Row(
                           children: <Widget>[
                             getEl('Total Vaccinations', stat['TotalVaccines']),
@@ -205,7 +183,32 @@ class _StatState extends State<Stat> {
                       ],
                     ),
                   ),
-
+                  SizedBox(height: 10),
+                  Container(
+                    //margin: EdgeInsets.all(7),
+                    decoration: Deco().decoBoxNew(),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          child: Deco().titleConNew('Reproduction'),
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getEl('Total New Born', stat['newBorn']),
+                          ],
+                        ),
+                        Divider(
+                          thickness: 2,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getEl('AI', stat['AI']),
+                            getEl('PD', stat['PD']),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                   // getStat('Total Pregnency', stat['PregnencyCount'].toString()),
                   // getStat('Total Pregnency Diagnosis', stat['PregnencyDiagnosis'].toString()),
                   // getStat('Total AI', stat['AI'].toString()),
