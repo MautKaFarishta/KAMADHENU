@@ -103,7 +103,7 @@ class AddAnimalForm extends State<AddAnimal> {
                   ),
                   DropdownMenuItem<String>(
                     child: Text(getTranslated(context, "Pandharpuri")),
-                    value: "Pndharpuri",
+                    value: "Pandharpuri",
                   ),
                   DropdownMenuItem<String>(
                     child: Text(getTranslated(context, "Nagpuri")),
@@ -212,7 +212,7 @@ class AddAnimalForm extends State<AddAnimal> {
                 print(_ugender);
                 setState(() {
                   _ugender = val;
-                  _cgender = getTranslated(context, "Male");
+                  _cgender = "Male";
                 });
               }),
           Text(getTranslated(context, "Male")),
@@ -256,7 +256,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Row(
       children: <Widget>[
         Text(
-          getTranslated(context, "Birth Date"),
+          getTranslated(context, "Birth"),
           style: TextStyle(fontSize: 16),
         ),
         Text(
@@ -333,7 +333,7 @@ class AddAnimalForm extends State<AddAnimal> {
     return Container(
       //margin: EdgeInsets.symmetric(vertical: 10),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: <Widget>[
-        Text(getTranslated(context, "Currently Pregnent")),
+        Text(getTranslated(context, "Currently Pregnant")),
         Switch(
             value: isPregnent,
             onChanged: (s) {

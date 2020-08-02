@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:Kamadhenu/User/Forms/add_animal.dart' as A;
 import 'package:Kamadhenu/User/Forms/add_animal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'main_drawer.dart';
 import 'notifications.dart';
 
@@ -208,6 +209,12 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  getDate(date) {
+    DateTime dOB = date.toDate();
+    var formattedDate = DateFormat.yMMMd().format(dOB);
+    return formattedDate;
+  }
+
   Widget build(BuildContext context) {
     return Center(
       child: Container(
@@ -241,6 +248,7 @@ class _ListPageState extends State<ListPage> {
                         children: <Widget>[
                           SizedBox(height: 7),
                           new Container(
+
                               //width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Colors.lightBlue.shade200,
@@ -250,6 +258,8 @@ class _ListPageState extends State<ListPage> {
                                     width: 1.0, color: Colors.black38),
                               ),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 mainAxisSize: MainAxisSize.max,
                                 children: <Widget>[
                                   SizedBox(width: 5.0),
@@ -266,11 +276,11 @@ class _ListPageState extends State<ListPage> {
                                       ),
                                       Row(
                                         children: <Widget>[
-                                          Text(
-                                            getTranslated(
-                                                context, document['Gender']),
-                                            style: TextStyle(fontSize: 20),
-                                          ),
+                                          // Text(
+                                          //   getTranslated(
+                                          //       context, document['Gender']),
+                                          //   style: TextStyle(fontSize: 20),
+                                          // ),
                                           Text(
                                             getTranslated(
                                                 context, document['Species']),
@@ -286,17 +296,21 @@ class _ListPageState extends State<ListPage> {
                                         children: <Widget>[
                                           Text(
                                               '${getTranslated(context, "Birth")}  '),
-                                          Text(document['DOB']
-                                              .toDate()
-                                              .toString()),
+                                          Text(getDate(document['DOB'])),
                                         ],
                                       ),
                                       SizedBox(height: 10),
                                     ],
                                   ),
                                   SizedBox(width: 20.0),
-                                  Icon(Icons.chevron_right,
-                                      color: Colors.black38),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Icon(Icons.chevron_right,
+                                          color: Colors.black38),
+                                    ],
+                                  ),
                                 ],
                               )),
                         ],
