@@ -80,12 +80,12 @@ class FormscreenState extends State<Formscreen> {
     return Container(
       child: Row(
         children: <Widget>[
-          Text(getTranslated(context, "State"), style: TextStyle(fontSize: 14)),
+          Text(getTranslated(context, "state"), style: TextStyle(fontSize: 14)),
           DropdownButton(
             value: stt,
             items: <DropdownMenuItem<String>>[
               DropdownMenuItem<String>(
-                child: Text(getTranslated(context, "Maha")),
+                child: Text(getTranslated(context, "maha")),
                 value: 'Maharashtra',
               ),
               DropdownMenuItem<String>(
