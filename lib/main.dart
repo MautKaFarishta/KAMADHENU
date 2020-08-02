@@ -1,5 +1,10 @@
 // import 'dart:js';
 
+import 'dart:async';
+
+import 'package:Kamadhenu/Admin/admin_screens/login.dart';
+import 'package:Kamadhenu/User/Forms/create.dart';
+import 'package:Kamadhenu/User/Forms/login.dart';
 import 'package:Kamadhenu/User/screens/AnimalInfo.dart';
 import 'package:Kamadhenu/User/screens/ChangeOwnership.dart';
 import 'package:Kamadhenu/User/screens/ImagePicker.dart';
@@ -27,23 +32,24 @@ import 'package:provider/provider.dart';
 import 'permanent.dart';
 
 String userType;
-
-void main() {
-  getUserType().then((value) {
-    _assignValue(value);
-  });
-  if (userType == 'User') {
-    runApp(MyApp());
-  } else if (userType == 'Admin') {
-    runApp(MyAppAdmin());
-  } else {
-    runApp(StartApp());
-  }
-}
-
-_assignValue(String value) {
+assignValue(String value) {
   userType = value;
   print(userType);
+}
+
+void main() {
+  //getUserType().then((value) => assignValue(value)
+  //);
+
+  //if (userType == 'User') {
+  //  runApp(MyApp());
+  //} else if (userType == 'Admin') {
+  //  runApp(MyAppAdmin());
+  //} else {
+  //  runApp(StartApp());
+  //}
+
+  runApp(StartApp());
 }
 
 // _homepage(String userType) {
@@ -55,15 +61,53 @@ _assignValue(String value) {
 //     return LoginPageUser();
 // }
 
-class StartApp extends StatelessWidget {
+class StartApp extends StatefulWidget {
+  @override
+  _StartAppState createState() => _StartAppState();
+}
+
+class _StartAppState extends State<StartApp> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserType().then((value) => assignValue(value));
+    setState(() {
+      getUserType().then((value) => assignValue(value));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Choose ",
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Start(),
-    );
+    setState(() {
+      getUserType().then((value) => assignValue(value));
+    });
+
+    return redir();
+
+    // return MaterialApp(
+    // title: "Choose ",
+    //theme: ThemeData(
+    //  primarySwatch: Colors.blue,
+    // ),
+    // home: userType == 'Admin' ? MyAppAdmin() : MyApp(),
+    //);
+  }
+}
+
+class redir extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if (userType == 'User') {
+      return MyApp();
+    } else if (userType == 'Admin') {
+      return MyAppAdmin();
+    } else {
+      //final AuthService _auth = AuthService();
+      // _auth.signOut();
+      print(userType);
+      return MyAppAdmin();
+    }
   }
 }
 
@@ -96,7 +140,7 @@ class _MyAppState extends State<MyApp> {
     super.didChangeDependencies();
   }
 
-  Widget build(BuildContext context) {
+  Widget build(BuildContext usercontext) {
     if (_locale == null) {
       return Container(
           child: Center(
@@ -153,15 +197,17 @@ class MyAppAdmin extends StatelessWidget {
         theme: new ThemeData(
           primarySwatch: Colors.blue,
         ),
+        home: Wrapper(),
         //new HomePage()//Redirect To Login PAge
-        routes: {
-          '/': (BuildContext context) => Wrapper(),
-          //'/': (BuildContext context) => BroadCast(),
-          '/cattles': (BuildContext context) => Cattles(),
-          '/home': (BuildContext context) => HomePage(),
-          '/Users': (BuildContext ctx) => Users(),
-          //'/Users' : (BuildContext ctx) => AddAnimal(),
-        },
+
+        //routes: {
+        //'/': (BuildContext context) => Wrapper(),
+        //'/': (BuildContext context) => BroadCast(),
+        //'/cattles': (BuildContext context) => Cattles(),
+        //'/home': (BuildContext context) => HomePage(),
+        //'/Users': (BuildContext ctx) => Users(),
+        //'/Users' : (BuildContext ctx) => AddAnimal(),
+        // },
       ),
     );
   }

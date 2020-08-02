@@ -2,6 +2,7 @@ import 'package:Kamadhenu/Admin/admin_screens/home.dart';
 import 'package:Kamadhenu/Admin/methods/auth.dart';
 import 'package:Kamadhenu/Admin/methods/getregn.dart';
 import 'package:Kamadhenu/Admin/methods/key.dart';
+import 'package:Kamadhenu/permanent.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,10 @@ class _LoginPageState extends State<LoginPage>
   @override
   void deactivate() {
     super.deactivate();
+  }
+  dem(String value) {
+    userType = value;
+    print(userType);
   }
 
   String regn1;
@@ -80,7 +85,7 @@ class _LoginPageState extends State<LoginPage>
   //Future ano(bool val) async{
 
   //}
-  final AuthService _auth = AuthService();
+  final AuthService _auth1 = AuthService();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -176,7 +181,7 @@ class _LoginPageState extends State<LoginPage>
 
                                                 if (val == true) {
                                                   dynamic result =
-                                                      await _auth.signInAnon();
+                                                      await _auth1.signInAnon();
                                                   if (result == null) {
                                                     setState(() {
                                                       flag = false;
@@ -226,6 +231,22 @@ class _LoginPageState extends State<LoginPage>
                                     ),
                                   ),
                                 ),
+                                SizedBox(height: 20,),
+                                FlatButton(
+                                  onPressed: (){
+                                    String a = 'User';
+                                    addUserType(a);
+                                    getUserType().then((value) => dem(value));
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              MyApp()), //Route to Create Acc PAge
+                                    );
+
+                                  },
+                                  child: Text('Login as User'),
+                                )
                               ]),
                             ),
                           ),

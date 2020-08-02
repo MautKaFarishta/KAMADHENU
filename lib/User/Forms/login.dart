@@ -1,5 +1,7 @@
 import 'package:Kamadhenu/User/localization/localizationConstant.dart';
 import 'package:Kamadhenu/User/methods/other.dart';
+import 'package:Kamadhenu/main.dart';
+import 'package:Kamadhenu/permanent.dart';
 import 'package:flutter/material.dart';
 import './create.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,7 +54,10 @@ class _LoginPageState extends State<LoginPageUser> {
     }
   }
   //////////ui code from here////////////////
-
+  dem(String value) {
+    userType = value;
+    print(userType);
+  }
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(
@@ -183,12 +188,15 @@ class _LoginPageState extends State<LoginPageUser> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
-                              MO.userType = "Admin";
+                              String a = 'Admin';
+                              addUserType(a);
+                              getUserType().then((value) => dem(value));
+                             // MO.userType = "Admin";
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        MO.MyApp()), //Route to Create Acc PAge
+                                        MO.MyAppAdmin()), //Route to Create Acc PAge
                               );
                             }),
                       ]),

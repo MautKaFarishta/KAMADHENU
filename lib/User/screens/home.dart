@@ -87,9 +87,16 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     AuthService().getCurrentUID().then((value) => getid(value));
     super.initState();
+    if(currentUser == null){
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => MyAppAdmin()));
+    }
   }
 
   Widget build(BuildContext context) {
+    if(currentUser == null){
+      return MyAppAdmin();
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -255,15 +262,26 @@ class _ListPageState extends State<ListPage> {
                                         'RFID:${document['RFID']}',
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      Text(
-                                        '${document['Gender']}  ${document['Species']}',
+                                      Row(children: <Widget>[Text(
+                                        getTranslated(context,document['Gender']),
                                         style: TextStyle(fontSize: 20),
                                       ),
                                       Text(
-                                        document['Breed'],
-                                      ),
+                                        getTranslated(context,document['Species']),
+                                        style: TextStyle(fontSize: 20),
+                                      ),],),
+                                      
                                       Text(
-                                          'Birth :${document['DOB'].toDate().toString()}'),
+                                        getTranslated(context,document['Breed']),
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                              '${getTranslated(context,"Birth")}  '),
+                                              Text(
+                                            document['DOB'].toDate().toString()),
+                                        ],
+                                      ),
                                       SizedBox(height: 10),
                                     ],
                                   ),
