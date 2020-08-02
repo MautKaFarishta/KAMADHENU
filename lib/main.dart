@@ -1,13 +1,9 @@
 // import 'dart:js';
 
-import 'package:Kamadhenu/Admin/admin_screens/login.dart';
-import 'package:Kamadhenu/User/Forms/create.dart';
-import 'package:Kamadhenu/User/Forms/login.dart';
 import 'package:Kamadhenu/User/screens/AnimalInfo.dart';
 import 'package:Kamadhenu/User/screens/ChangeOwnership.dart';
 import 'package:Kamadhenu/User/screens/ImagePicker.dart';
 import 'package:Kamadhenu/User/screens/Portal.dart';
-import 'package:Kamadhenu/User/screens/buySell.dart';
 import 'package:Kamadhenu/User/methods/authservice.dart' as Uauth;
 import 'package:Kamadhenu/User/screens/home.dart' as uhome;
 import 'package:Kamadhenu/start.dart';
@@ -19,19 +15,14 @@ import 'package:provider/provider.dart';
 import 'Admin/admin_screens/Cattles/cattles.dart';
 import 'Admin/admin_screens/Users/users.dart';
 import 'Admin/admin_screens/wrapper.dart';
-import 'Admin/main1.dart';
 import 'package:Kamadhenu/User/localization/localizationConstant.dart';
-import 'Admin/main1.dart' as M;
 import 'Admin/methods/user.dart';
-import 'package:Kamadhenu/Admin/Broadcast/broadcast.dart';
 import 'package:Kamadhenu/Admin/admin_screens/Cattles/cattles.dart';
-import 'package:Kamadhenu/Admin/admin_screens/Users/users.dart' as Auser;
 import 'package:Kamadhenu/Admin/admin_screens/wrapper.dart';
 import 'package:Kamadhenu/Admin/methods/auth.dart';
 import 'package:Kamadhenu/Admin/methods/user.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/Admin/admin_screens/home.dart';
-import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 import 'package:provider/provider.dart';
 import 'permanent.dart';
 
