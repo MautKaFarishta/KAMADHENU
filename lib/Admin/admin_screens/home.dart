@@ -11,11 +11,11 @@ import 'main_drawer.dart';
 String regn;
 final AuthService _auth = AuthService();
 
-class HomePage extends StatefulWidget {
-  State<StatefulWidget> createState() => new _HomePageState(); //Define State
+class HomePagea extends StatefulWidget {
+  State<StatefulWidget> createState() => new _HomePageaState(); //Define State
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageaState extends State<HomePagea> {
   void demo1(String val) {
     // val1 = val;
     setState(() {
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop:  _onBackPressed,
-      child: new Scaffold(
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Home'),
           backgroundColor: Colors.blue[900],

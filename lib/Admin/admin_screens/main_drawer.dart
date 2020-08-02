@@ -13,7 +13,7 @@ import 'package:Kamadhenu/Admin/profile/profile_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainDrawer extends StatelessWidget {
-  final AuthService _auth = AuthService();
+  final AuthService _auth1 = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class MainDrawer extends StatelessWidget {
               //Navigator.of(context).pop(),
               Navigator.of(context).pop(),
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (BuildContext context) => HomePage())),
+                  builder: (BuildContext context) => HomePagea())),
               //Navigator.of(context).pushNamed('/cattles'),
             },
           ),
@@ -88,7 +88,7 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('LogOut'),
             onTap: () async {
-              await _auth.signOut();
+              await _auth1.signOut();
               // Navigator.of(context).push(MaterialPageRoute(
               //builder: (BuildContext context) => LoginPage()));
             },

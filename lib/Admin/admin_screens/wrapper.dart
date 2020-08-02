@@ -40,7 +40,7 @@ class _WrapperState extends State<Wrapper> {
     if (user == null) {
       return LoginPage();
     } else {
-      return HomePage();
+      return HomePagea();
     }
   }
 }

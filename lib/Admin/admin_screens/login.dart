@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage>
   //Future ano(bool val) async{
 
   //}
-  final AuthService _auth = AuthService();
+  final AuthService _auth1 = AuthService();
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -181,7 +181,7 @@ class _LoginPageState extends State<LoginPage>
 
                                                 if (val == true) {
                                                   dynamic result =
-                                                      await _auth.signInAnon();
+                                                      await _auth1.signInAnon();
                                                   if (result == null) {
                                                     setState(() {
                                                       flag = false;

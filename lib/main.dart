@@ -116,9 +116,9 @@ class redir extends StatelessWidget {
     }
     else {
       //final AuthService _auth = AuthService();
-      //_auth.signOut();
+     // _auth.signOut();
       print(userType);
-      return MyApp();
+      return MyAppAdmin();
     }
   }
 }

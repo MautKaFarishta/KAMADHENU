@@ -87,9 +87,16 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     AuthService().getCurrentUID().then((value) => getid(value));
     super.initState();
+    if(currentUser == null){
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (BuildContext context) => MyAppAdmin()));
+    }
   }
 
   Widget build(BuildContext context) {
+    if(currentUser == null){
+      return MyAppAdmin();
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
