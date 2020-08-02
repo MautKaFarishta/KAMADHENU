@@ -12,6 +12,7 @@ String getTranslated(BuildContext context, String key) {
 //language code
 const String English = 'en';
 const String Hindi = 'hi';
+const String Telgu = 'te';
 
 //language code
 const String Language_Code = 'languageCode';
@@ -29,6 +30,9 @@ Locale _locale(String languageCode) {
       _temp = Locale(languageCode, 'US');
       break;
     case Hindi:
+      _temp = Locale(languageCode, 'IN');
+      break;
+    case Telgu:
       _temp = Locale(languageCode, 'IN');
       break;
     default:

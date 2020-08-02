@@ -46,9 +46,18 @@ class _HomePageState extends State<HomePage> {
                     }),
                 Padding(padding: EdgeInsets.all(8.0)),
                 GestureDetector(
-                  child: Text("हिन्दी"),
+                  child: Text("తెలుగు"),
                   onTap: () {
                     print(Language.languageList().elementAt(1).languageCode);
+                    _changeLanguage(Language.languageList().elementAt(2));
+                    Navigator.of(context).pop();
+                  },
+                ),
+                Padding(padding: EdgeInsets.all(8.0)),
+                GestureDetector(
+                  child: Text("हिन्दी"),
+                  onTap: () {
+                    print(Language.languageList().elementAt(2).languageCode);
                     _changeLanguage(Language.languageList().elementAt(1));
                     Navigator.of(context).pop();
                   },
@@ -87,16 +96,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     AuthService().getCurrentUID().then((value) => getid(value));
     super.initState();
-    if(currentUser == null){
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (BuildContext context) => MyAppAdmin()));
-    }
   }
 
   Widget build(BuildContext context) {
-    if(currentUser == null){
-      return MyAppAdmin();
-    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       resizeToAvoidBottomPadding: false,
@@ -262,24 +264,31 @@ class _ListPageState extends State<ListPage> {
                                         'RFID:${document['RFID']}',
                                         style: TextStyle(fontSize: 20),
                                       ),
-                                      Row(children: <Widget>[Text(
-                                        getTranslated(context,document['Gender']),
-                                        style: TextStyle(fontSize: 20),
+                                      Row(
+                                        children: <Widget>[
+                                          Text(
+                                            getTranslated(
+                                                context, document['Gender']),
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            getTranslated(
+                                                context, document['Species']),
+                                            style: TextStyle(fontSize: 20),
+                                          ),
+                                        ],
                                       ),
                                       Text(
-                                        getTranslated(context,document['Species']),
-                                        style: TextStyle(fontSize: 20),
-                                      ),],),
-                                      
-                                      Text(
-                                        getTranslated(context,document['Breed']),
+                                        getTranslated(
+                                            context, document['Breed']),
                                       ),
                                       Row(
                                         children: <Widget>[
                                           Text(
-                                              '${getTranslated(context,"Birth")}  '),
-                                              Text(
-                                            document['DOB'].toDate().toString()),
+                                              '${getTranslated(context, "Birth")}  '),
+                                          Text(document['DOB']
+                                              .toDate()
+                                              .toString()),
                                         ],
                                       ),
                                       SizedBox(height: 10),

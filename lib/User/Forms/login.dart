@@ -53,11 +53,13 @@ class _LoginPageState extends State<LoginPageUser> {
       print('User Not Found!--$phoneNo FROM LOGINPAGE');
     }
   }
+
   //////////ui code from here////////////////
   dem(String value) {
     userType = value;
     print(userType);
   }
+
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(
@@ -181,24 +183,6 @@ class _LoginPageState extends State<LoginPageUser> {
                         SizedBox(
                           height: 20,
                         ),
-                        new FlatButton(
-                            //Button TO NAvigate to create account Page
-                            child: Text(
-                              "Login as Admin",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              String a = 'Admin';
-                              addUserType(a);
-                              getUserType().then((value) => dem(value));
-                             // MO.userType = "Admin";
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        MO.MyAppAdmin()), //Route to Create Acc PAge
-                              );
-                            }),
                       ]),
                     ),
                   ),

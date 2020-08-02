@@ -38,28 +38,8 @@ assignValue(String value) {
 }
 
 void main() {
-  //getUserType().then((value) => assignValue(value)
-  //);
-
-  //if (userType == 'User') {
-  //  runApp(MyApp());
-  //} else if (userType == 'Admin') {
-  //  runApp(MyAppAdmin());
-  //} else {
-  //  runApp(StartApp());
-  //}
-
-  runApp(StartApp());
+  runApp(MyApp());
 }
-
-// _homepage(String userType) {
-//   if (userType == 'Admin')
-//     return MyAppAdmin();
-//   else if (userType == 'User')
-//     return Uauth.AuthService().handleAuth();
-//   else
-//     return LoginPageUser();
-// }
 
 class StartApp extends StatefulWidget {
   @override
@@ -167,6 +147,7 @@ class _MyAppState extends State<MyApp> {
           supportedLocales: [
             Locale('en', 'US'),
             Locale('hi', 'IN'),
+            Locale('te', 'IN'),
           ],
           localizationsDelegates: [
             DemoLocalization.delegate,
