@@ -57,6 +57,8 @@ flutter:
     - assets/tileimages/
     - lib/User/lang/en.json
     - lib/User/lang/hi.json
+    - lib/User/lang/te.json
+    
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
