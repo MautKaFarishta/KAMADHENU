@@ -60,7 +60,7 @@
     "Ongole":"ओंगोले ",
     "Khandhari":"कांधारी ",
     "Red Khandhari":"लाल  कांधारी ",
-    "Birth Date":"जन्म दिन",
+    "Birth Date":"जन्म दिन: ",
     "Last Calving Date":"अंतिम कैलविंग तिथि",
     "Number of Calvings":"कैलविंग की संख्या",
     "Please Enter Valid Information":"कृपया मान्य जानकारी दर्ज करें",
@@ -128,5 +128,6 @@
     "View Contact Details":"विक्रेता की जानकारी",
     "Birth":"जन्म",
     "NA" : "--",
+    "YES":"हाँ",
     "end":"end"
 }

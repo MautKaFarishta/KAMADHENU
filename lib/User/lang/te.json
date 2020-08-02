@@ -61,7 +61,7 @@
   "kankrej":"మాయాజాలం",
   "ongole":"ఒంగోలు",
   "khandhari":"ఖందరి",
-  "Birth Date":"పుట్టిన తేదీ",
+  "Birth Date":"పుట్టిన తేదీ: ",
   "Last Calving Date":"చివరి కాల్వింగ్ తేదీ",
   "Number of Calvings":"కాల్వింగ్స్ సంఖ్య",
   "Please Enter Valid Information":"దయచేసి చెల్లుబాటు అయ్యే సమాచారాన్ని నమోదు చేయండి",
@@ -130,7 +130,7 @@
   "Animal Information":"జంతు సమాచారం",
   "Seller's Contact":"విక్రేత యొక్క పరిచయం ",
   "Gallery":"గ్యాలరీ",
-  "getTranslated(context, 'Animal Type')+'Birth Date":"పుట్టిన తేదీ: ",
   "NA" : "--",
+  "YES": "హాజరు",
   "end":"ముగింపు"
 }

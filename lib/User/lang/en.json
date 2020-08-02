@@ -61,7 +61,7 @@
   "ongole":"Ongole",
   "khandhari":"Khandhari",
   "Red Khandhari":"Red Khandhari",
-  "getTranslated(context, 'Animal Type')+'Birth Date":"Birth Date: ",
+  "Birth Date":"Birth Date: ",
   "Last Calving Date":"Last Calving Date: ",
   "Number of Calvings":"Number of Calvings",
   "Please Enter Valid Information":"Please Enter Valid Information",
@@ -130,5 +130,6 @@
   "View Contact Details":"View Contact Details",
   "Birth":"Birth",
   "NA":"--",
+  "YES" : "YES",
   "end":"end"
 }
