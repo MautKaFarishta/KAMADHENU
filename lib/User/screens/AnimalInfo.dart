@@ -4,6 +4,9 @@ import 'dart:io';
 
 import 'package:Kamadhenu/User/UI/decorations.dart';
 import 'package:Kamadhenu/User/localization/localizationConstant.dart';
+import 'package:Kamadhenu/User/screens/ImagePicker1.dart';
+//import 'package:Kamadhenu/User/screens/ImagePicker1.dart';
+import 'package:Kamadhenu/User/screens/VideoPicker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:Kamadhenu/User/screens/home.dart';
@@ -15,6 +18,7 @@ String animal_id;
 String price;
 String breed;
 File imageFile;
+File videoFile;
 String rfid;
 
 class AnimalInfo extends StatefulWidget {
@@ -123,9 +127,76 @@ class Animal_Info extends State<AnimalInfo> {
             color: Colors.blue[200],
             onPressed: () => {_showChoiceDialogue(context)},
           ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.blue[200],
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
+          child: FlatButton(
+            padding: EdgeInsets.all(6.0),
+            child: Text(getTranslated(context, "Submit")),
+            color: Colors.blue[200],
+            onPressed: () => {_showChoiceDialogue2(context)},
+          ),
         )
       ],
     );
+  }
+
+  //video pick
+  _openGallery2(BuildContext context) async {
+    final video = await ImagePicker()
+        .getVideo(source: ImageSource.gallery);
+    this.setState(() {
+      videoFile = File(video.path);
+    });
+    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => VideoPicker()));
+  }
+
+  _openCameravideo(BuildContext context) async {
+    var video = await ImagePicker()
+        .getVideo(source: ImageSource.camera);
+    this.setState(() {
+      videoFile = File(video.path);
+    });
+    Navigator.of(context).pop();
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (BuildContext context) => VideoPicker()));
+  }
+  Future<void> _showChoiceDialogue2(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(getTranslated(context, "Choose your Option")),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text(getTranslated(context, "Gallery")),
+                    onTap: () {
+                      _openGallery2(context);
+                    },
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                  ),
+                  GestureDetector(
+                    child: Text(
+                      getTranslated(context, "Camera"),
+                    ),
+                    onTap: () {
+                      _openCameravideo(context);
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 
   Widget build(BuildContext context) {
