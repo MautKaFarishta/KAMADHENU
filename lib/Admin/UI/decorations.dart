@@ -51,10 +51,6 @@ class Deco{
 
     return BoxDecoration(
       color:Colors.lightBlue.shade200,
-      borderRadius: BorderRadius.only(
-        bottomLeft:Radius.circular(40),
-        bottomRight:Radius.circular(40)
-      ),
       border: Border.all(width: 1.0, color: Colors.blue.shade300,),
     );
 
