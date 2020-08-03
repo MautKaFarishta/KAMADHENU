@@ -27,6 +27,9 @@ class DataBaseService {
       'District': dis,
       'Region': regn,
     });
+    _firestore.collection('Admin').document(region).updateData({
+      'user_Reg': FieldValue.increment(1),
+    });
   }
 
   updateCattle(

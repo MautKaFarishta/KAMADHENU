@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../Forms/addInfo.dart' as A;
 import 'package:Kamadhenu/User/screens/AnimalInfo.dart' as AI;
-import 'package:Kamadhenu/User/screens/ImagePicker.dart' as IP;
+import 'package:Kamadhenu/User/screens/ImagePicker1.dart' as IP;
 import 'package:Kamadhenu/User/screens/ChangeOwnership.dart' as ChaO;
 
 class CatPro extends StatelessWidget {

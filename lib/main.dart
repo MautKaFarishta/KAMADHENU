@@ -8,7 +8,7 @@ import 'package:Kamadhenu/User/Forms/login.dart';
 import 'package:Kamadhenu/User/Forms/speech.dart';
 import 'package:Kamadhenu/User/screens/AnimalInfo.dart';
 import 'package:Kamadhenu/User/screens/ChangeOwnership.dart';
-import 'package:Kamadhenu/User/screens/ImagePicker.dart';
+import 'package:Kamadhenu/User/screens/ImagePicker1.dart';
 import 'package:Kamadhenu/User/screens/Portal.dart';
 import 'package:Kamadhenu/User/methods/authservice.dart' as Uauth;
 import 'package:Kamadhenu/User/screens/home.dart' as uhome;
@@ -140,7 +140,7 @@ class _MyAppState extends State<MyApp> {
             // '/': (BuildContext ctx) => AuthService().handleAuth(),
             '/home': (BuildContext ctx) => uhome.HomePage(),
             '/portal': (BuildContext ctx) => Portal(),
-            '/ImagePicker': (BuildContext ctx) => ImagePicker(),
+            '/ImagePicker': (BuildContext ctx) => ImagePicker1(),
             '/animalProfile': (BuildContext ctx) => AnimalProfile(),
             '/animalInfo': (BuildContext ctx) => AnimalInfo(),
             '/changeOwnership': (BuildContext ctx) => ChangeOwnership(),
