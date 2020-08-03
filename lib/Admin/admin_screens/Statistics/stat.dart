@@ -94,7 +94,12 @@ class _StatState extends State<Stat> {
   }
 
   getBar(Color col,int total,int fothis){
-    double factor =fothis/total;
+    double factor;
+    if(fothis==null){
+      factor=0;
+    }else{
+      factor=fothis/total;
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -201,82 +206,55 @@ class _StatState extends State<Stat> {
                           ],
                         ),
                         Divider(thickness: 2),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: <Widget>[
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'FMD',)));
-                              },
-                              child:getElNew('FMD', stat['FMD']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'HS',)));
-                              },
-                              child:getElNew('HS', stat['HS']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'BQ',)));
-                              },
-                              child:getElNew('BQ', stat['BQ']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'Theileriosis',)));
-                              },
-                              child:getElNew('Theiriolisis', stat['Theileriosis']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'Rabies',)));
-                              },
-                              child:getElNew('Rabies', stat['Rabies']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'Brucellosis',)));
-                              },
-                              child:getElNew('Brucellosis', stat['Brucellosis']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'Anthrax',)));
-                              },
-                              child:getElNew('Anthrax', stat['Anthrax']),),
-                              Container(
-                                  height: 80,
-                                  child: VerticalDivider(color: Colors.black)),
-                              FlatButton(
-                              onPressed: (){
-                                Navigator.of(context).push(MaterialPageRoute(
-                                builder: (BuildContext context) => DetailStat(collection: 'vaccine_details',detail: 'IBR',)));
-                              },
-                              child:getElNew('IBR', stat['IBR']),),
-                            ],
-                          ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('FMD', stat['FMD']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['FMD']),
+                          ],
                         ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('HS', stat['HS']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['HS']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('BQ', stat['BQ']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['BQ']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('Theileriosis', stat['Theileriosis']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['Theileriosis']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('Rabies', stat['Rabies']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['Rabies']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('Brucellosis', stat['Brucellosis']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['Brucellosis']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('Anthrax', stat['Anthrax']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['Athrax']),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            getElNewAgain('IBR', stat['IBR']),
+                            getBar(Colors.green,stat['TotalVaccines'],stat['IBR']),
+                          ],
+                        ),
+                        
                         SizedBox(height: 10),
                       ],
                     ),

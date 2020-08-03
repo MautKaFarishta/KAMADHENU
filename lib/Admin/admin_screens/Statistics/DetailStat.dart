@@ -1,9 +1,10 @@
 
 
+import 'package:Kamadhenu/Admin/admin_screens/Statistics/Pie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import '../home.dart';
 
 class DetailStat extends StatelessWidget {
@@ -57,9 +58,11 @@ class DetailStat extends StatelessWidget {
     );
   }
 
+
   
   @override
   Widget build(BuildContext context) {
+    Map<String, double> dataMap = new Map();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue.shade900,
@@ -69,11 +72,7 @@ class DetailStat extends StatelessWidget {
               child: Center(
           child: Column(
             children: <Widget>[
-              Container(
-                height:30
-
-
-              ),
+              
               Container(
                 padding: const EdgeInsets.only(top: 10.0),
                 child: StreamBuilder<QuerySnapshot>(
@@ -92,19 +91,23 @@ class DetailStat extends StatelessWidget {
                       case ConnectionState.waiting:
                         return CircularProgressIndicator();
                       default:
-                        return new ListView(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: snapshot.data.documents
-                              .map((DocumentSnapshot document) {
-                            return FlatButton(
-                              onPressed: () {
-                                print(" Button Pressed");
-                                
-                              },
-                              child: detailCard(document),
-                            );
-                          }).toList(),
+                        return Column(
+                          children: <Widget>[
+                            new ListView(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              children: snapshot.data.documents
+                                  .map((DocumentSnapshot document) {
+                                return FlatButton(
+                                  onPressed: () {
+                                    print(" Button Pressed");
+                                    
+                                  },
+                                  child: detailCard(document),
+                                );
+                              }).toList(),
+                            ),
+                          ],
                         );
                     }
                   },
