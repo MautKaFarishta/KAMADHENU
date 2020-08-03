@@ -35,6 +35,10 @@ dependencies:
   firebase_storage: ^3.1.5
   cloud_firestore: ^0.13.4+2
   shared_preferences: ^0.5.8
+  speech_to_text: ^2.3.0
+  highlight_text: ^0.7.2
+  avatar_glow: ^1.2.0
+  flutter_tts: ^1.2.6
   intl:
   uuid: ^2.2.0
 

@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:Kamadhenu/Admin/admin_screens/login.dart';
 import 'package:Kamadhenu/User/Forms/create.dart';
 import 'package:Kamadhenu/User/Forms/login.dart';
+import 'package:Kamadhenu/User/Forms/speech.dart';
 import 'package:Kamadhenu/User/screens/AnimalInfo.dart';
 import 'package:Kamadhenu/User/screens/ChangeOwnership.dart';
 import 'package:Kamadhenu/User/screens/ImagePicker.dart';
@@ -38,7 +39,7 @@ assignValue(String value) {
 }
 
 void main() {
-  runApp(MyAppAdmin());
+  runApp(MyApp());
 }
 
 class StartApp extends StatefulWidget {
@@ -143,6 +144,7 @@ class _MyAppState extends State<MyApp> {
             '/animalProfile': (BuildContext ctx) => AnimalProfile(),
             '/animalInfo': (BuildContext ctx) => AnimalInfo(),
             '/changeOwnership': (BuildContext ctx) => ChangeOwnership(),
+            '/speech': (BuildContext ctx) => SpeechScreen(),
           },
           supportedLocales: [
             Locale('en', 'US'),

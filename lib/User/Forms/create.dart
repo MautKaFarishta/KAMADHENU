@@ -310,6 +310,12 @@ class FormscreenState extends State<Formscreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.mic),
+          onPressed: () {
+            Navigator.pushNamed(context, "/speech");
+          },
+        ),
         appBar: AppBar(
           title: Text(getTranslated(context, "create_acc")),
           backgroundColor: Colors.blue.shade900,
