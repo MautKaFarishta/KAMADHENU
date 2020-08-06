@@ -1,10 +1,9 @@
 
 
-import 'package:Kamadhenu/Admin/admin_screens/Statistics/Pie.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+
 import '../home.dart';
 
 class DetailStat extends StatelessWidget {
